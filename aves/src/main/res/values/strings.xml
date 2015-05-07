@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="filtering">Lista</string>
+    <string name="sort_order">Sortering</string>
+    <string name="app_name">Fåglar</string>
+    <string name="action_settings">Settings</string>
+    <string name="alphabetic_swedish">Svenskt namn</string>
+    <string name="alphabetic_english">Engelskt namn</string>
+    <string name="phylogenic_sort">Fylogenetisk</string>
+    <string name="alphabetic_latin">Vetenskapligt namn</string>
+    <string name="breeding">Häckfågel</string>
+    <string name="breeding_unclear">Oregelbundet häckande</string>
+    <string name="migrant">Flyttfågel</string>
+    <string name="regular_visitor">Tillfällig gäst</string>
+    <string name="rare">Raritet</string>
+    <string name="unseen">Aldrig observerad</string>
+    <string name="non_spontaneous">Icke-spontan</string>
+
+</resources>

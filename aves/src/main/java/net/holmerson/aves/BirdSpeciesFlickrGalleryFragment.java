@@ -1,0 +1,31 @@
+package net.holmerson.aves;
+
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+public class BirdSpeciesFlickrGalleryFragment extends Fragment {
+
+	public static final String LATIN_SPECIES = "LATIN_SPECIES";
+	
+	public static final BirdSpeciesFlickrGalleryFragment newInstance(String latinSpecies)
+	{
+		BirdSpeciesFlickrGalleryFragment f = new BirdSpeciesFlickrGalleryFragment();
+		Bundle bundle = new Bundle(1);
+	    bundle.putString(LATIN_SPECIES, latinSpecies);
+	    f.setArguments(bundle);
+	    return f;
+	}
+	
+	@Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, 
+        Bundle savedInstanceState) {
+		String species = getArguments().getString(LATIN_SPECIES);
+        View view = inflater.inflate(R.layout.gallery_layout, container, false);
+        new LoadPhotosOperation(view).execute(species);
+        return view;
+    }
+	
+}
