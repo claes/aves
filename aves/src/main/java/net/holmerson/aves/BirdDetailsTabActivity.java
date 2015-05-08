@@ -24,15 +24,15 @@ public class BirdDetailsTabActivity extends FragmentActivity {
 		setContentView(R.layout.bird_details_tab_layout);
 
 		final String latinSpecies = getIntent().getExtras().getString(
-				MainActivity.LATIN_SPECIES);
+				BirdListActivity.LATIN_SPECIES);
 		final String englishSpecies = getIntent().getExtras().getString(
-				MainActivity.ENGLISH_SPECIES);
+				BirdListActivity.ENGLISH_SPECIES);
 		final String swedishSpecies = getIntent().getExtras().getString(
-				MainActivity.SWEDISH_SPECIES);
+				BirdListActivity.SWEDISH_SPECIES);
 		final String swedishFamily = getIntent().getExtras().getString(
-				MainActivity.SWEDISH_FAMILY);
+				BirdListActivity.SWEDISH_FAMILY);
 		final String swedishOrder = getIntent().getExtras().getString(
-				MainActivity.SWEDISH_ORDER);
+				BirdListActivity.SWEDISH_ORDER);
 
 		{
 			LinearLayout linearLayout = new LinearLayout(this);

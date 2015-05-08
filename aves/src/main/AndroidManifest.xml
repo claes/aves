@@ -8,7 +8,6 @@
         android:targetSdkVersion="16" />
     <uses-permission android:name="android.permission.INTERNET" />    
     <application
-        android:debuggable="true"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -23,12 +22,17 @@
                 android:name="net.holmerson.aves.BirdSpeciesWikipediaActivity"
                 android:configChanges="orientation" >
         </activity>
+
         <activity
-                android:name="net.holmerson.aves.MainActivity" >
+            android:name="net.holmerson.aves.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+                android:name=".BirdListActivity" >
         </activity>
         <activity
             android:name=".BirdDetailsActivity"
