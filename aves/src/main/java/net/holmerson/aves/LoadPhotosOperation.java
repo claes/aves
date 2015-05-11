@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -51,8 +52,28 @@ public class LoadPhotosOperation extends
 				FrameLayout frameLayout = (FrameLayout) view.findViewById(R.id.gallery_frame_layout);
 				final View meta = (View) frameLayout.findViewById(R.id.gallery_meta_layout);
 
+				final GalleryViewPager galleryViewPager = (GalleryViewPager) view
+						.findViewById(R.id.gallery_view_layout);
+				galleryViewPager.setOffscreenPageLimit(10);
+
 				UrlPagerAdapter pagerAdapter = new UrlPagerAdapter(
-						view.getContext(), photos);
+						view.getContext(), photos) {
+					public void setPrimaryItem(ViewGroup container, int position, Object object) {
+						super.setPrimaryItem(container, position, object);
+						galleryViewPager.mCurrentView.setOnClickListener(new OnClickListener() {
+							@Override
+							public void onClick(View v) {
+								if (meta.getVisibility() == View.GONE) {
+									meta.setVisibility(View.VISIBLE);
+								} else if (meta.getVisibility() == View.VISIBLE) {
+									meta.setVisibility(View.GONE);
+								}
+							}
+						});
+					}
+				};
+				galleryViewPager.setAdapter(pagerAdapter);
+
 				pagerAdapter
 						.setOnItemChangeListener(new OnItemChangeListener() {
 							@Override
@@ -63,25 +84,23 @@ public class LoadPhotosOperation extends
 								((TextView) meta.findViewById(R.id.photoLicense)).setText("" + photo.getLicense());
 							}
 						});
-				final GalleryViewPager galleryViewPager = (GalleryViewPager) view
-						.findViewById(R.id.gallery_view_layout);
-				galleryViewPager.setOffscreenPageLimit(10);
-				galleryViewPager.setAdapter(pagerAdapter);
-				galleryViewPager.mCurrentView.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						if (meta.getVisibility() == View.GONE) {
-							meta.setVisibility(View.VISIBLE);
-						} else if (meta.getVisibility() == View.VISIBLE) {
-							meta.setVisibility(View.GONE);
-						}
-					}
-				});
+
+/*
 				galleryViewPager.setOnPageChangeListener(new OnPageChangeListener() {
 					
 					@Override
 					public void onPageSelected(int arg0) {
 						//Same as set above
+						galleryViewPager.mCurrentView.setOnClickListener(new OnClickListener() {
+							@Override
+							public void onClick(View v) {
+								if (meta.getVisibility() == View.GONE) {
+									meta.setVisibility(View.VISIBLE);
+								} else if (meta.getVisibility() == View.VISIBLE) {
+									meta.setVisibility(View.GONE);
+								}
+							}
+						});
 						galleryViewPager.mCurrentView.setOnClickListener(new OnClickListener() {
 							@Override
 							public void onClick(View v) {
@@ -103,7 +122,9 @@ public class LoadPhotosOperation extends
 					}
 					
 				});
-				frameLayout.setVisibility(View.VISIBLE);
+		*/
+
+		frameLayout.setVisibility(View.VISIBLE);
 				
 			} else {
 				WebView webView = (WebView) view

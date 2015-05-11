@@ -1,188 +1,151 @@
 package net.holmerson.aves;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.StrictMode;
-import android.app.ActionBar;
-import android.app.ListActivity;
-import android.content.Intent;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v4.app.FragmentManager;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListAdapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+public class MainActivity extends FragmentActivity {
 
-public class MainActivity extends ListActivity {
-
-	public static final String LATIN_SPECIES = "latinSpecies";
-	public static final String ENGLISH_SPECIES = "englishSpecies";
-	public static final String SWEDISH_SPECIES = "swedishSpecies";
-	public static final String SWEDISH_FAMILY = "swedishFamily";
-	public static final String SWEDISH_ORDER = "swedishOrder";
-
-	ImageLoader imageLoader = ImageLoader.getInstance();
+	private DrawerLayout drawerLayout;
+	private ListView drawerList;
+	private ActionBarDrawerToggle drawerToggle;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		imageLoader.init(ImageLoaderConfiguration.createDefault(this));
-		//setContentView(R.layout.activity_main);
-		
-		ListView listView = getListView();
-		listView.setFastScrollEnabled(true);
+		setContentView(R.layout.activity_main);
+		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		drawerList = (ListView) findViewById(R.id.left_drawer);
 
-		//
-		// BirdListLoader loader = new BirdListLoader(this);
-		//
-		// ItemManager.Builder builder = new ItemManager.Builder(loader);
-		// builder.setPreloadItemsEnabled(true).setPreloadItemsCount(5);
-		// builder.setThreadPoolSize(4);
-		// ItemManager itemManager = builder.build();
-		//
-		// AsyncListView listView = (AsyncListView) findViewById(R.id.listView);
-		// listView.setItemManager(itemManager);
-		//
+		// Set the adapter for the list view
+		String[] drawerMenuItems = getResources().getStringArray(R.array.drawer_menu_list);
+		drawerList.setAdapter(new ArrayAdapter<String>(this,
+				R.layout.drawer_list_item, drawerMenuItems));
+		// Set the list's click listener
+		drawerList.setOnItemClickListener(new DrawerItemClickListener());
 
-		setListAdapter(createAdapter());
+		// enable ActionBar app icon to behave as action to toggle nav drawer
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
+
+		// ActionBarDrawerToggle ties together the the proper interactions
+		// between the sliding drawer and the action bar app icon
+		drawerToggle = new ActionBarDrawerToggle(
+				this,                  /* host Activity */
+				drawerLayout,         /* DrawerLayout object */
+				R.drawable.ic_drawer,  /* nav drawer image to replace 'Up' caret */
+				R.string.drawer_open,  /* "open drawer" description for accessibility */
+				R.string.drawer_close  /* "close drawer" description for accessibility */
+		) {
+			public void onDrawerClosed(View view) {
+				getActionBar().setTitle(R.string.app_name);
+				invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+			}
+
+			public void onDrawerOpened(View drawerView) {
+				getActionBar().setTitle(R.string.app_name);
+				invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+			}
+		};
+		drawerLayout.setDrawerListener(drawerToggle);
+
+		if (savedInstanceState == null) {
+			selectItem(0);
+		}
 	}
 
-	private MenuItem breedingItem;
-	private MenuItem breedingUnclearItem;
-	private MenuItem rareItem;
-	private MenuItem unseenItem;
-	private MenuItem migrantItem;
-	private MenuItem regularVisitorItem;
-	private MenuItem nonSpontaneousItem;
-
-	private MenuItem swedishSortItem;
-	private MenuItem englishSortItem;
-	private MenuItem latinSortItem;
-	private MenuItem phylogeneticSortItem;
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.main_menu, menu);
-		return true;
-	}
-
+	/* Called whenever we call invalidateOptionsMenu() */
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		BirdListAdapter birdListAdapter = (BirdListAdapter) getListAdapter();
+		// If the nav drawer is open, hide action items related to the content view
 
-		// Filtering
-		breedingItem = menu.findItem(R.id.breeding);
-		breedingItem.setChecked(birdListAdapter.isShowBreeding());
-		breedingUnclearItem = menu.findItem(R.id.breeding_unclear);
-		breedingUnclearItem.setChecked(birdListAdapter.isShowBreedingUnclear());
-		migrantItem = menu.findItem(R.id.migrant);
-		migrantItem.setChecked(birdListAdapter.isShowMigrant());
-		unseenItem = menu.findItem(R.id.unseen);
-		unseenItem.setChecked(birdListAdapter.isShowUnseen());
-		regularVisitorItem = menu.findItem(R.id.regular_visitor);
-		regularVisitorItem.setChecked(birdListAdapter.isShowRegularVisitor());
-		nonSpontaneousItem = menu.findItem(R.id.non_spontaneous);
-		nonSpontaneousItem.setChecked(birdListAdapter.isShowNonSpontaneous());
-		rareItem = menu.findItem(R.id.rare);
-		rareItem.setChecked(birdListAdapter.isShowRare());
+		boolean drawerOpen = drawerLayout.isDrawerOpen(drawerList);
 
-		// Sorting
-		swedishSortItem = menu.findItem(R.id.alphabetic_swedish);
-		swedishSortItem.setChecked(birdListAdapter.getSortOption().equals(
-				BirdListAdapter.SortOption.SWEDISH));
-		englishSortItem = menu.findItem(R.id.alphabetic_english);
-		englishSortItem.setChecked(birdListAdapter.getSortOption().equals(
-				BirdListAdapter.SortOption.ENGLISH));
-		latinSortItem = menu.findItem(R.id.alphabetic_latin);
-		latinSortItem.setChecked(birdListAdapter.getSortOption().equals(
-				BirdListAdapter.SortOption.SCIENTIFIC));
-		phylogeneticSortItem = menu.findItem(R.id.phylogenic_sort);
-		phylogeneticSortItem.setChecked(birdListAdapter.getSortOption().equals(
-				BirdListAdapter.SortOption.PHYLOGENETIC));
-		
+		MenuItem sortOrder = menu.findItem(R.id.sort_order);
+		MenuItem filteringOptions = menu.findItem(R.id.filtering_options);
+		if (sortOrder != null) {
+			sortOrder.setVisible(!drawerOpen);
+		}
+		if (filteringOptions!= null) {
+			filteringOptions.setVisible(!drawerOpen);
+		}
 		return super.onPrepareOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-
-		if (item.isCheckable()) {
-
-			if (R.id.filtering_group == item.getGroupId()) {
-				item.setChecked(!item.isChecked());
-			} else if (R.id.sort_order_group == item.getGroupId()) {
-				swedishSortItem.setChecked(false);
-				englishSortItem.setChecked(false);
-				latinSortItem.setChecked(false);
-				phylogeneticSortItem.setChecked(false);
-				item.setChecked(true);
-			}
-
-			BirdListAdapter birdListAdapter = (BirdListAdapter) getListAdapter();
-			switch (item.getItemId()) {
-			case R.id.alphabetic_latin:
-				birdListAdapter
-						.setSortOption(BirdListAdapter.SortOption.SCIENTIFIC);
-				break;
-			case R.id.alphabetic_swedish:
-				birdListAdapter
-						.setSortOption(BirdListAdapter.SortOption.SWEDISH);
-				break;
-			case R.id.alphabetic_english:
-				birdListAdapter
-						.setSortOption(BirdListAdapter.SortOption.ENGLISH);
-				break;
-			case R.id.phylogenic_sort:
-				birdListAdapter
-						.setSortOption(BirdListAdapter.SortOption.PHYLOGENETIC);
-				break;
-
-			}
-
-			birdListAdapter.setShowBreeding(breedingItem.isChecked());
-			birdListAdapter.setShowBreedingUnclear(breedingUnclearItem
-					.isChecked());
-			birdListAdapter.setShowMigrant(migrantItem.isChecked());
-			birdListAdapter.setShowRare(rareItem.isChecked());
-			birdListAdapter.setShowRegularVisitor(regularVisitorItem
-					.isChecked());
-			birdListAdapter.setShowUnseen(unseenItem.isChecked());
-			birdListAdapter.setShowNonSpontaneous(nonSpontaneousItem
-					.isChecked());
-
-			birdListAdapter.refresh();
-			birdListAdapter.notifyDataSetChanged();
+		// The action bar home/up action should open or close the drawer.
+		// ActionBarDrawerToggle will take care of this.
+		if (drawerToggle.onOptionsItemSelected(item)) {
+			return true;
 		}
-		return true;
+		return super.onOptionsItemSelected(item);
 	}
 
-	public ListAdapter createAdapter() {
-		DatabaseHandler databaseHandler = ((BirdApplication) getApplication())
-				.getDbHandler();
-		return new BirdListAdapter(this, databaseHandler);
+	/* The click listener for ListView in the navigation drawer */
+	private class DrawerItemClickListener implements ListView.OnItemClickListener {
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			selectItem(position);
+		}
 	}
 
-	public BirdListAdapter getBirdListAdapter() {
-		return (BirdListAdapter) getListAdapter();
+
+	private void selectItem(int position) {
+		// update the main content by replacing fragments
+		Fragment fragment;
+
+		if (position == 0) {
+			fragment = new BirdListFragment();
+		} else if (position == 1) {
+			fragment = new BirdSpeciesWikipediaSwedishFragment();
+			Bundle args = new Bundle();
+			args.putString(BirdListActivity.LATIN_SPECIES, "Cinclus cinclus");
+			args.putString(BirdListActivity.ENGLISH_SPECIES, "White-throated Dipper");
+			fragment.setArguments(args);
+		} else {
+			fragment = new AboutFragment();
+		}
+
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+		// update selected item and title, then close the drawer
+		drawerList.setItemChecked(position, true);
+		//setTitle(position);
+		drawerLayout.closeDrawer(drawerList);
+	}
+
+
+	/**
+	 * When using the ActionBarDrawerToggle, you must call it during
+	 * onPostCreate() and onConfigurationChanged()...
+	 */
+
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		// Sync the toggle state after onRestoreInstanceState has occurred.
+		drawerToggle.syncState();
 	}
 
 	@Override
-	protected void onListItemClick(ListView l, View v, int position, long id) {
-		Taxon taxon = getBirdListAdapter().getItem(position);
-		if (taxon instanceof Bird) {
-			Intent intent = new Intent(this, BirdDetailsTabActivity.class);
-			Bundle bundle = new Bundle();
-			bundle.putString(LATIN_SPECIES, ((Bird) taxon).getLatinSpecies()); 																				
-			bundle.putString(ENGLISH_SPECIES, ((Bird) taxon).getEnglishSpecies()); 																				
-			bundle.putString(SWEDISH_SPECIES, ((Bird) taxon).getSwedishSpecies()); 																				
-			bundle.putString(SWEDISH_FAMILY, ((Bird) taxon).getSwedishFamily());
-			bundle.putString(SWEDISH_ORDER, ((Bird) taxon).getSwedishOrder());
-			intent.putExtras(bundle);
-			startActivity(intent);
-		}
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		// Pass any configuration change to the drawer toggls
+		drawerToggle.onConfigurationChanged(newConfig);
 	}
+
+
 }

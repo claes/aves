@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,7 @@ import android.widget.TextView;
 class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 
 	private List<Bird> localBirdList = null;
-	private MainActivity context;
+	private Activity context;
 	private DatabaseHandler databaseHandler;
 	private Map<String, Bird> birds = new LinkedHashMap<String, Bird>();
 	private List<Taxon> taxonList = new ArrayList<Taxon>(); // For optimization,
@@ -45,7 +46,7 @@ class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 		SWEDISH, ENGLISH, SCIENTIFIC, PHYLOGENETIC;
 	}
 
-	public BirdListAdapter(MainActivity context, DatabaseHandler databaseHandler) {
+	public BirdListAdapter(Activity context, DatabaseHandler databaseHandler) {
 		this.context = context;
 		this.databaseHandler = databaseHandler;
 		refresh();
@@ -279,7 +280,7 @@ class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 
 		protected Object[] sections = new String[] { "A", "B", "C", "D", "E",
 				"F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q",
-				"R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Å", "Ä", "Ö" };
+				"R", "S", "T", "U", "V", "W", "X", "Y", "Z", "\u00C5", "\u00C4", "\u00D6" };
 		
 		private Collator collator = Collator.getInstance(new Locale("sv"));		
 

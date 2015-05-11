@@ -53,10 +53,12 @@ public class FlickrPhoto {
 		  }
 		  
 		public boolean isUsable() {
-			return true;
-			/*return (this == BY_NC) || (this == BY_NC_SA) || (this == BY_NC_ND)
+            return true;
+            /*
+			return (this == BY_NC) || (this == BY_NC_SA) || (this == BY_NC_ND)
 					|| (this == BY) || (this == BY_SA) || (this == BY_ND)
-					|| (this == NO_KNOWN);*/
+					|| (this == NO_KNOWN);
+					*/
 		}
 
 	}

@@ -13,7 +13,7 @@ public class BirdSpeciesWikipediaActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wikipedia_layout);
         
-        final String species = getIntent().getExtras().getString(MainActivity.ENGLISH_SPECIES);
+        final String species = getIntent().getExtras().getString(BirdListActivity.ENGLISH_SPECIES);
         String modifiedSpecies = species.replaceAll(" ", "_");
 
         WebView webView = (WebView) findViewById(R.id.webview);
