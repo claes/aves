@@ -35,18 +35,7 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements
     private MenuItem audioAutoNext;
     private ProgressBar progressBar;
 
-    private boolean ignoreCompletion = false;
-
     private int currentPosition = 0;
-	/*
-    public static final Fragment newInstance(String latinSpecies) {
-		Fragment f = new BirdSpeciesXenoCantoPlayerFragment();
-		Bundle bundle = new Bundle(1);
-		bundle.putString(LATIN_SPECIES, latinSpecies);
-		f.setArguments(bundle);
-		return f;
-	}
-	*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -117,10 +106,8 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements
         return view;
     }
 
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // TODO Add your menu entries here
         inflater.inflate(R.menu.audio_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -136,7 +123,9 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.isCheckable()) {
-            item.setChecked(!item.isChecked());
+            audioAutoNext.setChecked(false);
+            audioRepeat.setChecked(false);
+            item.setChecked(true);
         }
         return true;
     }

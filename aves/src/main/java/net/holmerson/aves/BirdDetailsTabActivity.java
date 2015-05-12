@@ -70,16 +70,21 @@ public class BirdDetailsTabActivity extends FragmentActivity {
 		tabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
 		tabHost.setup(this, getSupportFragmentManager(), R.id.tabFrameLayout);
 
+//		tabHost.addTab(
+//				tabHost.newTabSpec("Wikipedia (sv)").setIndicator(
+//						"Wikipedia (sv)",
+//						getResources().getDrawable(android.R.drawable.star_on)),
+//				BirdSpeciesWikipediaSwedishFragment.class, bundle);
+//		tabHost.addTab(
+//				tabHost.newTabSpec("Wikipedia (en)").setIndicator(
+//						"Wikipedia (en)",
+//						getResources().getDrawable(android.R.drawable.star_on)),
+//				BirdSpeciesWikipediaEnglishFragment.class, bundle);
+
 		tabHost.addTab(
-				tabHost.newTabSpec("Wikipedia (sv)").setIndicator(
-						"Wikipedia (sv)",
+				tabHost.newTabSpec("Wikipedia").setIndicator("Wikipedia",
 						getResources().getDrawable(android.R.drawable.star_on)),
-				BirdSpeciesWikipediaSwedishFragment.class, bundle);
-		tabHost.addTab(
-				tabHost.newTabSpec("Wikipedia (en)").setIndicator(
-						"Wikipedia (en)",
-						getResources().getDrawable(android.R.drawable.star_on)),
-				BirdSpeciesWikipediaEnglishFragment.class, bundle);
+				BirdSpeciesWikipediaFragment.class, bundle);
 		tabHost.addTab(
 				tabHost.newTabSpec("Flickr").setIndicator("Flickr",
 						getResources().getDrawable(android.R.drawable.star_on)),

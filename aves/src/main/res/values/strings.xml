@@ -48,5 +48,8 @@
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="wikipedia_options">Språk</string>
+    <string name="wikipedia_swedish">Svenska</string>
+    <string name="wikipedia_english">Engelska</string>
 
 </resources>

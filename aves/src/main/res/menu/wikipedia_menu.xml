@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/audio_options"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="@string/wikipedia_options">
+        <menu>
+            <group
+                android:id="@+id/audio_group"
+                android:checkableBehavior="single" >
+                <item
+                    android:id="@+id/wikipedia_swedish"
+                    android:checkable="true"
+                    android:orderInCategory="100"
+                    android:showAsAction="always"
+                    android:title="@string/wikipedia_swedish" />
+                <item
+                    android:id="@+id/wikipedia_english"
+                    android:checkable="true"
+                    android:orderInCategory="100"
+                    android:showAsAction="always"
+                    android:title="@string/wikipedia_english" />
+            </group>
+        </menu>
+    </item>
+</menu>
