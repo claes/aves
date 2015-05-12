@@ -8,7 +8,7 @@
         <menu>
             <group
                 android:id="@+id/audio_group"
-                android:checkableBehavior="all" >
+                android:checkableBehavior="single" >
             <item
                 android:id="@+id/audio_repeat"
                 android:checkable="true"

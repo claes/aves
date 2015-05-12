@@ -33,7 +33,11 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements
     private Handler handler = new Handler();
     private MenuItem audioRepeat;
     private MenuItem audioAutoNext;
+    private ProgressBar progressBar;
 
+    private boolean ignoreCompletion = false;
+
+    private int currentPosition = 0;
 	/*
     public static final Fragment newInstance(String latinSpecies) {
 		Fragment f = new BirdSpeciesXenoCantoPlayerFragment();
@@ -60,6 +64,55 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements
         mediaController.setMediaPlayer(this);
         mediaController.setAnchorView(view);
 
+        mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+
+            @Override
+            public boolean onError(MediaPlayer mp, int what, int extra) {
+                if (what == -38) {
+                    return true; //not pretty.. http://stackoverflow.com/questions/15205855/error-19-0-mediaplayer/15206308#15206308
+                } else {
+                    return false;
+                }
+            }
+        });
+
+        mediaPlayer
+                .setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
+                    @Override
+                    public void onBufferingUpdate(MediaPlayer mp,
+                                                  int percent) {
+                        progressBar.setProgress(percent);
+                    }
+                });
+        mediaPlayer
+                .setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        handler.post(new Runnable() {
+                            public void run() {
+                                progressBar.setVisibility(ProgressBar.GONE);
+                                mediaController.show(0);
+                                mediaPlayer.start();
+                            }
+                        });
+                    }
+                });
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                if (audioAutoNext.isChecked()) {
+                    int count = getListAdapter().getCount();
+                    XenoCantoAudio nextAudio;
+                    if (currentPosition < (count - 1)) {
+                        nextAudio = (XenoCantoAudio) getListAdapter().getItem(++currentPosition);
+                    } else {
+                        nextAudio = (XenoCantoAudio) getListAdapter().getItem(0);
+                    }
+                    initiatePlay(nextAudio);
+                }
+            }
+        });
+
         new LoadAudiosOperation(view, this).execute(species);
         return view;
     }
@@ -76,8 +129,8 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         audioRepeat = menu.findItem(R.id.audio_repeat);
-        audioRepeat.setChecked(true);
         audioAutoNext = menu.findItem(R.id.audio_autonext);
+        audioAutoNext.setChecked(true);
     }
 
     @Override
@@ -153,98 +206,49 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements
     @Override
     public void onListItemClick(ListView l, View v, final int position, long id) {
 
+        XenoCantoAudio audio = (XenoCantoAudio) getListAdapter().getItem(
+                position);
+        progressBar = (ProgressBar) getActivity()
+                .findViewById(R.id.downloadProgress);
+
+        currentPosition = position;
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
         }
-        XenoCantoAudio audio = (XenoCantoAudio) getListAdapter().getItem(
-                position);
 
+
+
+        initiatePlay(audio);
+    }
+
+    private void initiatePlay(XenoCantoAudio audio) {
         try {
+            progressBar.setProgress(0);
             mediaPlayer.reset();
+            mediaPlayer.setLooping(audioRepeat.isChecked());
             mediaPlayer.setDataSource(audio.getAudioURL());
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            final ProgressBar progressBar = (ProgressBar) getActivity()
-                    .findViewById(R.id.downloadProgress);
             progressBar.setVisibility(ProgressBar.VISIBLE);
-            progressBar.setProgress(0);
+            updateForCurrentAudio(audio);
             mediaPlayer.prepareAsync();
-
-            mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-
-                @Override
-                public boolean onError(MediaPlayer mp, int what, int extra) {
-                    // TODO Auto-generated method stub
-                    return false;
-                }
-            });
-
-            mediaPlayer
-                    .setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
-                        @Override
-                        public void onBufferingUpdate(MediaPlayer mp,
-                                                      int percent) {
-                            progressBar.setProgress(percent);
-                        }
-                    });
-            mediaPlayer
-                    .setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                        @Override
-                        public void onPrepared(MediaPlayer mp) {
-                            handler.post(new Runnable() {
-                                public void run() {
-                                    progressBar.setVisibility(ProgressBar.GONE);
-                                    mediaController.show(0);
-                                    mediaPlayer.start();
-                                }
-                            });
-                        }
-                    });
-            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mediaPlayer) {
-                    if (audioRepeat.isChecked()) {
-                        mediaPlayer.seekTo(0);
-                        progressBar.setVisibility(ProgressBar.VISIBLE);
-                        progressBar.setProgress(0);
-                        mediaPlayer.start();
-                    } else if (audioAutoNext.isChecked()) {
-                        int count = getListAdapter().getCount();
-                        XenoCantoAudio nextAudio;
-                        if (position < (count - 1)) {
-                            nextAudio = (XenoCantoAudio) getListAdapter().getItem(position + 1);
-                        } else {
-                            nextAudio = (XenoCantoAudio) getListAdapter().getItem(0);
-                        }
-                        try {
-                            mediaPlayer.reset();
-                            mediaPlayer.setDataSource(nextAudio.getAudioURL());
-                            progressBar.setVisibility(ProgressBar.VISIBLE);
-                            progressBar.setProgress(0);
-                            mediaPlayer.prepareAsync();
-                        } catch (IOException ex) {
-                            Log.e(TAG, "Could not open " + nextAudio.getAudioURL()
-                                    + " for playback.", ex);
-                        }
-                    }
-                }
-            });
-        } catch (IOException e) {
+        } catch (IOException ex) {
             Log.e(TAG, "Could not open " + audio.getAudioURL()
-                    + " for playback.", e);
+                    + " for playback.", ex);
         }
     }
 
-    //Doesn't work. Not sure how to update to highlight the "correct one" in a long list
-    private void updateRow(int position) {
-        ListView listView = getListView();
-        int firstPos = listView.getFirstVisiblePosition();
-        int lastPos = listView.getLastVisiblePosition();
-        for (int i = firstPos; i <= lastPos; i++) {
-            View view = listView.getChildAt(i);
-            if (position == i) {
-                view.setBackgroundColor(Color.RED);
+    private void updateForCurrentAudio(XenoCantoAudio currentAudio) {
+
+        XenoCantoAudioListAdapter audioListAdapter = (XenoCantoAudioListAdapter) getListAdapter();
+        audioListAdapter.setIsPlaying(currentAudio);
+        ListView list = getListView();
+        int start = list.getFirstVisiblePosition();
+        for (int i = start, j = list.getLastVisiblePosition(); i <= j; i++) {
+            View view = list.getChildAt(i - start);
+            if (currentAudio == list.getItemAtPosition(i)) {
+                audioListAdapter.getView(i, view, list).setSelected(true);
             } else {
-                view.setBackgroundColor(Color.GREEN);
+                view.setSelected(false);
             }
         }
     }

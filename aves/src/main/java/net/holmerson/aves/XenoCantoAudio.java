@@ -13,7 +13,9 @@ public class XenoCantoAudio implements Comparable<XenoCantoAudio> {
 	private String longitude; 
 	private String songtype;
 	private String audioURL;
-	
+	private boolean isPlaying = false;
+
+
 	public XenoCantoAudio() {
 		
 	}
@@ -89,6 +91,14 @@ public class XenoCantoAudio implements Comparable<XenoCantoAudio> {
 	}
 	public void setAudioURL(String audioURL) {
 		this.audioURL = audioURL;
+	}
+
+	public boolean isPlaying() {
+		return isPlaying;
+	}
+
+	public void setIsPlaying(boolean isPlaying) {
+		this.isPlaying = isPlaying;
 	}
 
 	@Override

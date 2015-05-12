@@ -3,6 +3,8 @@ package net.holmerson.aves;
 import java.util.List;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +39,15 @@ public class XenoCantoAudioListAdapter extends BaseAdapter implements ListAdapte
 			return position;
 	}
 
+	public void setIsPlaying(XenoCantoAudio currentAudio) {
+		for (XenoCantoAudio audio : audioList) {
+			if (currentAudio == audio) {
+				audio.setIsPlaying(true);
+			} else {
+				audio.setIsPlaying(false);
+			}
+		}
+	}
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -58,6 +69,8 @@ public class XenoCantoAudioListAdapter extends BaseAdapter implements ListAdapte
 				audio.getSongtype().substring(1));
 		holder.country.setText(audio.getCountry());
 		holder.recordist.setText("\u00A9 " + audio.getRecordist());
+
+		convertView.setSelected(audio.isPlaying());
 		return convertView;
 	}
 
@@ -67,6 +80,5 @@ public class XenoCantoAudioListAdapter extends BaseAdapter implements ListAdapte
 		TextView songtype;
 		ProgressBar progressBar;
 	}
-	
-	
+
 }
