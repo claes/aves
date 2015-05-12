@@ -36,11 +36,19 @@
         </activity>
         <activity
             android:name=".BirdDetailsActivity"
+            android:parentActivityName=".BirdListActivity"
             >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".BirdListActivity" />
         </activity>
         <activity
             android:name=".BirdDetailsTabActivity"
+            android:parentActivityName=".BirdListActivity"
             >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".BirdListActivity" />
         </activity>
         </application>
     

@@ -58,7 +58,9 @@ public class BirdDetailsTabActivity extends FragmentActivity {
 			linearLayout.addView(speciesView);
 
 			getActionBar().setCustomView(linearLayout);
-			getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+			//getActionBar().setDisplayHomeAsUpEnabled(true);
+			getActionBar().setDisplayOptions(ActionBar.DISPLAY_HOME_AS_UP
+					| ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM);
 		}
 
 		Bundle bundle = new Bundle(1);
