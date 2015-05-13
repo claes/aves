@@ -15,15 +15,6 @@
         android:name="net.holmerson.aves.BirdApplication">
 
         <activity
-                android:name="net.holmerson.aves.BirdSpeciesFlickrGalleryActivity"
-                android:configChanges="orientation" >
-        </activity>
-        <activity
-                android:name="net.holmerson.aves.BirdSpeciesWikipediaActivity"
-                android:configChanges="orientation" >
-        </activity>
-
-        <activity
             android:name="net.holmerson.aves.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,23 +23,12 @@
         </activity>
 
         <activity
-                android:name=".BirdListActivity" >
-        </activity>
-        <activity
-            android:name=".BirdDetailsActivity"
-            android:parentActivityName=".BirdListActivity"
-            >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".BirdListActivity" />
-        </activity>
-        <activity
             android:name=".BirdDetailsTabActivity"
-            android:parentActivityName=".BirdListActivity"
+            android:parentActivityName=".MainActivity"
             >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".BirdListActivity" />
+                android:value=".MainActivity" />
         </activity>
         </application>
     

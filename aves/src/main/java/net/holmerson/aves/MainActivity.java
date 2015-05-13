@@ -108,12 +108,6 @@ public class MainActivity extends FragmentActivity {
 
 		if (position == 0) {
 			fragment = new BirdListFragment();
-		} else if (position == 1) {
-			fragment = new BirdSpeciesWikipediaSwedishFragment();
-			Bundle args = new Bundle();
-			args.putString(BirdListActivity.LATIN_SPECIES, "Cinclus cinclus");
-			args.putString(BirdListActivity.ENGLISH_SPECIES, "White-throated Dipper");
-			fragment.setArguments(args);
 		} else {
 			fragment = new AboutFragment();
 		}

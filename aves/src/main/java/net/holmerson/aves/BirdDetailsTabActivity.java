@@ -6,12 +6,16 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.view.Gravity;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TabWidget;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class BirdDetailsTabActivity extends FragmentActivity {
 
@@ -24,15 +28,15 @@ public class BirdDetailsTabActivity extends FragmentActivity {
 		setContentView(R.layout.bird_details_tab_layout);
 
 		final String latinSpecies = getIntent().getExtras().getString(
-				BirdListActivity.LATIN_SPECIES);
+				BirdListFragment.LATIN_SPECIES);
 		final String englishSpecies = getIntent().getExtras().getString(
-				BirdListActivity.ENGLISH_SPECIES);
+				BirdListFragment.ENGLISH_SPECIES);
 		final String swedishSpecies = getIntent().getExtras().getString(
-				BirdListActivity.SWEDISH_SPECIES);
+				BirdListFragment.SWEDISH_SPECIES);
 		final String swedishFamily = getIntent().getExtras().getString(
-				BirdListActivity.SWEDISH_FAMILY);
+				BirdListFragment.SWEDISH_FAMILY);
 		final String swedishOrder = getIntent().getExtras().getString(
-				BirdListActivity.SWEDISH_ORDER);
+				BirdListFragment.SWEDISH_ORDER);
 
 		{
 			LinearLayout linearLayout = new LinearLayout(this);
@@ -57,31 +61,31 @@ public class BirdDetailsTabActivity extends FragmentActivity {
 			linearLayout.addView(familyView);
 			linearLayout.addView(speciesView);
 
+			/*
+			ArrayList<String> spinnerArray = new ArrayList<String>();
+			spinnerArray.add("1");
+			spinnerArray.add("2");
+			Spinner spinner = new Spinner(this);
+			ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this,
+					android.R.layout.simple_spinner_dropdown_item,
+					spinnerArray);
+			spinner.setAdapter(spinnerArrayAdapter);
+			spinner.addView(linearLayout);
+			*/
+
 			getActionBar().setCustomView(linearLayout);
-			//getActionBar().setDisplayHomeAsUpEnabled(true);
 			getActionBar().setDisplayOptions(ActionBar.DISPLAY_HOME_AS_UP
 					| ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM);
 		}
 
 		Bundle bundle = new Bundle(1);
-		bundle.putString(AbstractBirdSpeciesWikipediaFragment.ENGLISH_SPECIES,
+		bundle.putString(BirdSpeciesWikipediaFragment.ENGLISH_SPECIES,
 				englishSpecies);
 		bundle.putString(BirdSpeciesXenoCantoPlayerFragment.LATIN_SPECIES,
 				latinSpecies);
 
 		tabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
 		tabHost.setup(this, getSupportFragmentManager(), R.id.tabFrameLayout);
-
-//		tabHost.addTab(
-//				tabHost.newTabSpec("Wikipedia (sv)").setIndicator(
-//						"Wikipedia (sv)",
-//						getResources().getDrawable(android.R.drawable.star_on)),
-//				BirdSpeciesWikipediaSwedishFragment.class, bundle);
-//		tabHost.addTab(
-//				tabHost.newTabSpec("Wikipedia (en)").setIndicator(
-//						"Wikipedia (en)",
-//						getResources().getDrawable(android.R.drawable.star_on)),
-//				BirdSpeciesWikipediaEnglishFragment.class, bundle);
 
 		tabHost.addTab(
 				tabHost.newTabSpec("Wikipedia").setIndicator("Wikipedia",

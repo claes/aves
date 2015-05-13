@@ -9,7 +9,6 @@
 </string>
 <string-array name="drawer_menu_list">
         <item>Fågelindex</item>
-        <item>Gissa lätet</item>
         <item>Om Fågelappen</item>
     </string-array>
 <string name="action_settings">Settings
@@ -51,5 +50,7 @@
     <string name="wikipedia_options">Språk</string>
     <string name="wikipedia_swedish">Svenska</string>
     <string name="wikipedia_english">Engelska</string>
+    <string name="search_title">Sök</string>
+    <string name="search_hint">Artnamn</string>
 
 </resources>
