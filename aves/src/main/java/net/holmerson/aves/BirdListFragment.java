@@ -3,12 +3,14 @@ package net.holmerson.aves;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v4.view.MenuItemCompat;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -76,6 +78,39 @@ public class BirdListFragment extends ListFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.main_menu, menu);
+
+
+        MenuItem item = menu.findItem(R.id.species_search);
+        SearchView searchView = new SearchView(((MainActivity) getActivity()).getActionBar().getThemedContext());
+        MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
+        MenuItemCompat.setActionView(item, searchView);
+        final BirdListAdapter birdListAdapter = (BirdListAdapter) getListAdapter();
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                birdListAdapter.setFilterString(null);
+                birdListAdapter.refresh();
+                birdListAdapter.notifyDataSetChanged();
+                return false;
+            }
+        });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                birdListAdapter.setFilterString(query);
+                birdListAdapter.refresh();
+                birdListAdapter.notifyDataSetChanged();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                birdListAdapter.setFilterString(newText);
+                birdListAdapter.refresh();
+                birdListAdapter.notifyDataSetChanged();
+                return true;
+            }
+        });
     }
 
     @Override

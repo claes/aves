@@ -1,13 +1,49 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item android:id="@+id/search"
-        android:title="@string/search_title"
-        android:showAsAction="collapseActionView|ifRoom"
-        android:actionViewClass="android.widget.SearchView" />
+
+    <item
+        android:id="@+id/sort_order"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_swap_vert_white_36dp"
+        android:showAsAction="always"
+        android:title="@string/sort_order">
+        <menu>
+            <group
+                android:id="@+id/sort_order_group"
+                android:checkableBehavior="single" >
+                <item
+                    android:id="@+id/alphabetic_swedish"
+                    android:checkable="true"
+                    android:orderInCategory="100"
+                    android:showAsAction="always"
+                    android:title="@string/alphabetic_swedish"/>
+                <item
+                    android:id="@+id/alphabetic_latin"
+                    android:checkable="true"
+                    android:orderInCategory="100"
+                    android:showAsAction="always"
+                    android:title="@string/alphabetic_latin"/>
+                <item
+                    android:id="@+id/alphabetic_english"
+                    android:checkable="true"
+                    android:orderInCategory="100"
+                    android:showAsAction="always"
+                    android:title="@string/alphabetic_english"/>
+                <item
+                    android:id="@+id/phylogenic_sort"
+                    android:checkable="true"
+                    android:orderInCategory="100"
+                    android:showAsAction="always"
+                    android:title="@string/phylogenic_sort"/>
+            </group>
+        </menu>
+    </item>
     <item
         android:id="@+id/filtering_options"
         android:orderInCategory="100"
         android:showAsAction="always"
+        android:icon="@drawable/ic_filter_list_white_36dp"
+
         android:title="@string/filtering">
         <menu>
             <group
@@ -58,41 +94,10 @@
             </group>
         </menu>
     </item>
-    <item
-        android:id="@+id/sort_order"
-        android:orderInCategory="100"
-        android:showAsAction="always"
-        android:title="@string/sort_order">
-        <menu>
-            <group
-                android:id="@+id/sort_order_group"
-                android:checkableBehavior="single" >
-                <item
-                    android:id="@+id/alphabetic_swedish"
-                    android:checkable="true"
-                    android:orderInCategory="100"
-                    android:showAsAction="always"
-                    android:title="@string/alphabetic_swedish"/>
-                <item
-                    android:id="@+id/alphabetic_latin"
-                    android:checkable="true"
-                    android:orderInCategory="100"
-                    android:showAsAction="always"
-                    android:title="@string/alphabetic_latin"/>
-                <item
-                    android:id="@+id/alphabetic_english"
-                    android:checkable="true"
-                    android:orderInCategory="100"
-                    android:showAsAction="always"
-                    android:title="@string/alphabetic_english"/>
-                <item
-                    android:id="@+id/phylogenic_sort"
-                    android:checkable="true"
-                    android:orderInCategory="100"
-                    android:showAsAction="always"
-                    android:title="@string/phylogenic_sort"/>
-            </group>
-        </menu>
-    </item>
+    <item android:id="@+id/species_search"
+        android:title="@string/search_title"
+        android:icon="@drawable/action_search"
+        android:showAsAction="collapseActionView|ifRoom"
+        android:actionViewClass="android.widget.SearchView" />
 
 </menu>

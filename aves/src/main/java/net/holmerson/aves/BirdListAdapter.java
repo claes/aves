@@ -39,6 +39,7 @@ class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 	private boolean showRare = true;
 	private boolean showUnseen = false;
 	private boolean showNonSpontaneous = false;
+	private String filterString = null;
 
 	private SortOption sortOption = SortOption.SWEDISH;
 
@@ -137,9 +138,9 @@ class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 	}
 
 	public void refresh() {
-		if (localBirdList == null) {
-			localBirdList = databaseHandler.getAllSpecies();
-		}
+		//if (localBirdList == null) {
+			localBirdList = databaseHandler.getAllSpecies(filterString);
+		//}
 
 		switch (sortOption) {
 		case SWEDISH:
@@ -448,4 +449,11 @@ class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 		return sectionIndexer.getSectionForPosition(position);
 	}
 
+	public String getFilterString() {
+		return filterString;
+	}
+
+	public void setFilterString(String filterString) {
+		this.filterString = filterString;
+	}
 }
