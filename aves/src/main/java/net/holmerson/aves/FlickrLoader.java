@@ -73,7 +73,7 @@ public class FlickrLoader {
         try {
             Uri.Builder builder = Uri.parse("https://api.flickr.com/services/rest/").buildUpon();
             builder.appendQueryParameter("method", "flickr.groups.pools.getPhotos");
-            builder.appendQueryParameter("api_key", ApiKeys.FLICKR_API_KEY);
+            builder.appendQueryParameter("api_key", Constants.FLICKR_API_KEY);
             builder.appendQueryParameter("tags", species);
             builder.appendQueryParameter("group_id", "42637302@N00");
             builder.appendQueryParameter("format", "json");

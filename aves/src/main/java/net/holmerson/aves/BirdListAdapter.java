@@ -4,6 +4,7 @@ import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -43,8 +44,34 @@ class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 
 	private SortOption sortOption = SortOption.SWEDISH;
 
-	public static enum SortOption {
-		SWEDISH, ENGLISH, SCIENTIFIC, PHYLOGENETIC;
+	public enum SortOption {
+
+		SWEDISH("swedish"),
+		ENGLISH("english"),
+		SCIENTIFIC("latin"),
+		PHYLOGENETIC("phylogenetic");
+
+		private final String code;
+		private static final Map<String,SortOption> valuesByCode;
+
+		static {
+			valuesByCode = new HashMap<String,SortOption>();
+			for(SortOption vehicleType : SortOption.values()) {
+				valuesByCode.put(vehicleType.code, vehicleType);
+			}
+		}
+
+		private SortOption(String code) {
+			this.code = code;
+		}
+
+		public static SortOption lookupByCode(String code) {
+			return valuesByCode.get(code);
+		}
+
+		public String getCode() {
+			return code;
+		}
 	}
 
 	public BirdListAdapter(Activity context, DatabaseHandler databaseHandler) {

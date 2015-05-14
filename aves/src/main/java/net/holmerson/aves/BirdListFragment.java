@@ -1,6 +1,8 @@
 package net.holmerson.aves;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.MenuItemCompat;
@@ -8,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -28,16 +29,6 @@ public class BirdListFragment extends ListFragment {
 
     ImageLoader imageLoader = ImageLoader.getInstance();
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        imageLoader.init(ImageLoaderConfiguration.createDefault(getActivity()));
-
-
-    }
-
-
     private MenuItem breedingItem;
     private MenuItem breedingUnclearItem;
     private MenuItem rareItem;
@@ -51,6 +42,13 @@ public class BirdListFragment extends ListFragment {
     private MenuItem latinSortItem;
     private MenuItem phylogeneticSortItem;
 
+    private String filterString;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        imageLoader.init(ImageLoaderConfiguration.createDefault(getActivity()));
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -58,27 +56,42 @@ public class BirdListFragment extends ListFragment {
         ListView listView = getListView();
         listView.setFastScrollEnabled(true);
 
-        //
-        // BirdListLoader loader = new BirdListLoader(this);
-        //
-        // ItemManager.Builder builder = new ItemManager.Builder(loader);
-        // builder.setPreloadItemsEnabled(true).setPreloadItemsCount(5);
-        // builder.setThreadPoolSize(4);
-        // ItemManager itemManager = builder.build();
-        //
-        // AsyncListView listView = (AsyncListView) findViewById(R.id.listView);
-        // listView.setItemManager(itemManager);
-        //
+        BirdListAdapter birdListAdapter = createAdapter();
+        if (savedInstanceState == null) {
+            SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, Context.MODE_PRIVATE);
+            birdListAdapter.setShowBreeding(settings.getBoolean(Constants.BIRD_LIST_SHOW_BREEDING, true));
+            birdListAdapter.setShowBreedingUnclear(settings.getBoolean(Constants.BIRD_LIST_SHOW_BREEDING_UNCLEAR, true));
+            birdListAdapter.setShowMigrant(settings.getBoolean(Constants.BIRD_LIST_SHOW_MIGRANT, true));
+            birdListAdapter.setShowNonSpontaneous(settings.getBoolean(Constants.BIRD_LIST_SHOW_NON_SPONTANEOUS, false));
+            birdListAdapter.setShowRare(settings.getBoolean(Constants.BIRD_LIST_SHOW_RARE, false));
+            birdListAdapter.setShowUnseen(settings.getBoolean(Constants.BIRD_LIST_SHOW_UNSEEN, false));
+            String sortOption = settings.getString(Constants.BIRD_LIST_SHOW_OPTION, BirdListAdapter.SortOption.SWEDISH.getCode());
+            birdListAdapter.setSortOption(BirdListAdapter.SortOption.lookupByCode(sortOption));
+        } else {
+            birdListAdapter.setFilterString(savedInstanceState.getString(Constants.BIRD_LIST_FILTER_STRING));
+            birdListAdapter.setShowBreeding(savedInstanceState.getBoolean(Constants.BIRD_LIST_SHOW_BREEDING, true));
+            birdListAdapter.setShowBreedingUnclear(savedInstanceState.getBoolean(Constants.BIRD_LIST_SHOW_BREEDING_UNCLEAR, true));
+            birdListAdapter.setShowMigrant(savedInstanceState.getBoolean(Constants.BIRD_LIST_SHOW_MIGRANT, true));
+            birdListAdapter.setShowNonSpontaneous(savedInstanceState.getBoolean(Constants.BIRD_LIST_SHOW_NON_SPONTANEOUS, false));
+            birdListAdapter.setShowRare(savedInstanceState.getBoolean(Constants.BIRD_LIST_SHOW_RARE, false));
+            birdListAdapter.setShowUnseen(savedInstanceState.getBoolean(Constants.BIRD_LIST_SHOW_UNSEEN, false));
 
-        setListAdapter(createAdapter());
+            BirdListAdapter.SortOption sortOption =
+                    (BirdListAdapter.SortOption) savedInstanceState.getSerializable(Constants.BIRD_LIST_SHOW_OPTION);
+            if (sortOption != null) {
+                birdListAdapter.setSortOption(sortOption);
+            }
+        }
+
+        setListAdapter(birdListAdapter);
         setHasOptionsMenu(true);
     }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.main_menu, menu);
-
 
         MenuItem item = menu.findItem(R.id.species_search);
         SearchView searchView = new SearchView(((MainActivity) getActivity()).getActionBar().getThemedContext());
@@ -149,6 +162,35 @@ public class BirdListFragment extends ListFragment {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putString(Constants.BIRD_LIST_FILTER_STRING, filterString);
+        savedInstanceState.putBoolean(Constants.BIRD_LIST_SHOW_BREEDING, getBirdListAdapter().isShowBreeding());
+        savedInstanceState.putBoolean(Constants.BIRD_LIST_SHOW_BREEDING_UNCLEAR, getBirdListAdapter().isShowBreedingUnclear());
+        savedInstanceState.putBoolean(Constants.BIRD_LIST_SHOW_MIGRANT, getBirdListAdapter().isShowMigrant());
+        savedInstanceState.putBoolean(Constants.BIRD_LIST_SHOW_NON_SPONTANEOUS, getBirdListAdapter().isShowNonSpontaneous());
+        savedInstanceState.putBoolean(Constants.BIRD_LIST_SHOW_RARE, getBirdListAdapter().isShowRare());
+        savedInstanceState.putBoolean(Constants.BIRD_LIST_SHOW_UNSEEN, getBirdListAdapter().isShowUnseen());
+        savedInstanceState.putSerializable(Constants.BIRD_LIST_SHOW_OPTION, getBirdListAdapter().getSortOption());
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+
+        SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean(Constants.BIRD_LIST_SHOW_BREEDING, getBirdListAdapter().isShowBreeding());
+        editor.putBoolean(Constants.BIRD_LIST_SHOW_BREEDING_UNCLEAR, getBirdListAdapter().isShowBreedingUnclear());
+        editor.putBoolean(Constants.BIRD_LIST_SHOW_MIGRANT, getBirdListAdapter().isShowMigrant());
+        editor.putBoolean(Constants.BIRD_LIST_SHOW_NON_SPONTANEOUS, getBirdListAdapter().isShowNonSpontaneous());
+        editor.putBoolean(Constants.BIRD_LIST_SHOW_RARE, getBirdListAdapter().isShowRare());
+        editor.putBoolean(Constants.BIRD_LIST_SHOW_UNSEEN, getBirdListAdapter().isShowUnseen());
+        editor.putString(Constants.BIRD_LIST_SHOW_OPTION, getBirdListAdapter().getSortOption().getCode());
+        editor.commit();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.isCheckable()) {
@@ -201,7 +243,8 @@ public class BirdListFragment extends ListFragment {
         return true;
     }
 
-    public ListAdapter createAdapter() {
+
+    public BirdListAdapter createAdapter() {
         DatabaseHandler databaseHandler = ((BirdApplication) getActivity().getApplication())
                 .getDbHandler();
         return new BirdListAdapter(getActivity(), databaseHandler);

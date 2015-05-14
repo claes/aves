@@ -74,11 +74,15 @@ public class MainActivity extends FragmentActivity {
 
 		MenuItem sortOrder = menu.findItem(R.id.sort_order);
 		MenuItem filteringOptions = menu.findItem(R.id.filtering_options);
+		MenuItem speciesSearch = menu.findItem(R.id.species_search);
 		if (sortOrder != null) {
 			sortOrder.setVisible(!drawerOpen);
 		}
 		if (filteringOptions!= null) {
 			filteringOptions.setVisible(!drawerOpen);
+		}
+		if (speciesSearch != null) {
+			speciesSearch.setVisible(!drawerOpen);
 		}
 		return super.onPrepareOptionsMenu(menu);
 	}

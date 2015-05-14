@@ -200,6 +200,7 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements
         progressBar = (ProgressBar) getActivity()
                 .findViewById(R.id.downloadProgress);
 
+
         currentPosition = position;
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
