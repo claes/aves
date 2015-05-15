@@ -85,8 +85,13 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements
                         handler.post(new Runnable() {
                             public void run() {
                                 progressBar.setVisibility(ProgressBar.GONE);
-                                mediaController.show(0);
-                                mediaPlayer.start();
+                                if (mediaController != null) {
+                                    mediaController.show(0);
+                                }
+                                if (mediaPlayer != null) {
+                                    mediaPlayer.start();
+                                }
+
                             }
                         });
                     }
@@ -136,8 +141,10 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onStop() {
+        mediaController.hide();
+        mediaController = null;
+        super.onStop();
         mediaPlayer.stop();
         mediaPlayer.release();
         mediaPlayer = null;
