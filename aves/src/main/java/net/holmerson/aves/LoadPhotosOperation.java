@@ -85,45 +85,6 @@ public class LoadPhotosOperation extends
 							}
 						});
 
-/*
-				galleryViewPager.setOnPageChangeListener(new OnPageChangeListener() {
-					
-					@Override
-					public void onPageSelected(int arg0) {
-						//Same as set above
-						galleryViewPager.mCurrentView.setOnClickListener(new OnClickListener() {
-							@Override
-							public void onClick(View v) {
-								if (meta.getVisibility() == View.GONE) {
-									meta.setVisibility(View.VISIBLE);
-								} else if (meta.getVisibility() == View.VISIBLE) {
-									meta.setVisibility(View.GONE);
-								}
-							}
-						});
-						galleryViewPager.mCurrentView.setOnClickListener(new OnClickListener() {
-							@Override
-							public void onClick(View v) {
-								if (meta.getVisibility() == View.GONE) {
-									meta.setVisibility(View.VISIBLE);
-								} else if (meta.getVisibility() == View.VISIBLE) {
-									meta.setVisibility(View.GONE);
-								}
-							}
-						});
-					}
-
-					@Override
-					public void onPageScrollStateChanged(int arg0) {
-					}
-
-					@Override
-					public void onPageScrolled(int arg0, float arg1, int arg2) {
-					}
-					
-				});
-		*/
-
 		frameLayout.setVisibility(View.VISIBLE);
 				
 			} else {

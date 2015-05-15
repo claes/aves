@@ -100,6 +100,11 @@ public class BirdDetailsTabActivity extends FragmentActivity {
 						getResources().getDrawable(android.R.drawable.star_on)),
 				BirdSpeciesXenoCantoPlayerFragment.class, bundle);
 
+		tabHost.addTab(
+				tabHost.newTabSpec("Karta").setIndicator("Karta",
+						getResources().getDrawable(android.R.drawable.star_on)),
+				BirdSpeciesOccurrencesGBIFMapFragment.class, bundle);
+
 		{
 			TabWidget tabWidget = (TabWidget) findViewById(android.R.id.tabs);
 			LinearLayout linearLayout = (LinearLayout) tabWidget.getParent();

@@ -22,9 +22,7 @@ public class BirdSpeciesFlickrGalleryFragment extends Fragment {
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, 
         Bundle savedInstanceState) {
-//		String species = getArguments().getString(LATIN_SPECIES);
         View view = inflater.inflate(R.layout.gallery_layout, container, false);
-//        new LoadPhotosOperation(view).execute(species);
         return view;
     }
 
