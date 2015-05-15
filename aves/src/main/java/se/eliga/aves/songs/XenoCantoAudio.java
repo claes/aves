@@ -4,6 +4,8 @@
 
 package se.eliga.aves.songs;
 
+import se.eliga.aves.model.License;
+
 public class XenoCantoAudio implements Comparable<XenoCantoAudio> {
 	private String xenoCantoIdNumber; 
 	private String genus; 
@@ -17,6 +19,8 @@ public class XenoCantoAudio implements Comparable<XenoCantoAudio> {
 	private String longitude; 
 	private String songtype;
 	private String audioURL;
+	private License license;
+
 	private boolean isPlaying = false;
 
 
@@ -95,6 +99,14 @@ public class XenoCantoAudio implements Comparable<XenoCantoAudio> {
 	}
 	public void setAudioURL(String audioURL) {
 		this.audioURL = audioURL;
+	}
+
+	public License getLicense() {
+		return license;
+	}
+
+	public void setLicense(License license) {
+		this.license = license;
 	}
 
 	public boolean isPlaying() {

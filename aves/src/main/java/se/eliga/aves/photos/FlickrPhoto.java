@@ -6,6 +6,8 @@ package se.eliga.aves.photos;
 
 import android.graphics.Bitmap;
 
+import se.eliga.aves.model.License;
+
 public class FlickrPhoto {
 
     public static final String PX_800 = "c";
@@ -23,50 +25,7 @@ public class FlickrPhoto {
     private String mServer;
     private Bitmap image;
     private License license;
-    
-	public static enum License {
-		ALL_RIGHTS_RESERVED("0"),
-		BY_NC_SA("1"),
-		BY_NC("2"),
-		BY_NC_ND("3"),
-		BY("4"),
-		BY_SA("5"),
-		BY_ND("6"),
-		NO_KNOWN("7"),
-		US_GOV("8");		
-		
-		 private String text;
 
-		  License(String text) {
-		    this.text = text;
-		  }
-
-		  public String getText() {
-		    return this.text;
-		  }
-
-		  public static License fromString(String text) {
-		    if (text != null) {
-		      for (License b : License.values()) {
-		        if (text.equals(b.text)) {
-		          return b;
-		        }
-		      }
-		    }
-		    return null;
-		  }
-		  
-		public boolean isUsable() {
-            return true;
-            /*
-			return (this == BY_NC) || (this == BY_NC_SA) || (this == BY_NC_ND)
-					|| (this == BY) || (this == BY_SA) || (this == BY_ND)
-					|| (this == NO_KNOWN);
-					*/
-		}
-
-	}
-    
     public FlickrPhoto(String id, int farm, String secret, String server, String title, String ownerName, License license) {
         this.id = id;
         this.title = title;

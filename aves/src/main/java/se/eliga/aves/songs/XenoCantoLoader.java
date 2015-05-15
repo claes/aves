@@ -13,11 +13,18 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.net.Uri;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import se.eliga.aves.model.Bird;
+import se.eliga.aves.model.License;
+import se.eliga.aves.photos.FlickrPhoto;
 
 public class XenoCantoLoader {
 
@@ -38,29 +45,30 @@ public class XenoCantoLoader {
 		InputStream inputStream = getInputStreamForLatinSpecies(latinSpecies);
 		if (inputStream != null) {
 			try {
+				String json = is2s(inputStream);
+				JSONObject root = new JSONObject(json);
+				JSONArray audiosJson = root.getJSONArray("recordings");
 				List<XenoCantoAudio> audioList = new ArrayList<XenoCantoAudio>();
-				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(inputStream));
-				String line = reader.readLine();
-				while (line != null) {
-					String[] parts = line.split(";");
+				for (int i = 0; i < audiosJson.length(); i++) {
+
+					JSONObject audioObject = audiosJson.getJSONObject(i);
 					XenoCantoAudio audio = new XenoCantoAudio();
-					if (parts.length >= 11) {
-						audio.setXenoCantoIdNumber(parts[0]);
-						audio.setGenus(parts[1]);
-						audio.setSpecies(parts[2]);
-						audio.setEnglish(parts[3]);
-						audio.setSubspecies(parts[4]);
-						audio.setRecordist(parts[5]);
-						audio.setCountry(parts[6]);
-						audio.setLocation(parts[7]);
-						audio.setLatitude(parts[8]);
-						audio.setLongitude(parts[9]);
-						audio.setSongtype(parts[10]);
-						audio.setAudioURL(parts[12]);
+					audio.setXenoCantoIdNumber(audioObject.getString("id"));
+					audio.setGenus(audioObject.getString("gen"));
+					audio.setSpecies(audioObject.getString("sp"));
+					audio.setEnglish(audioObject.getString("en"));
+					audio.setSubspecies(audioObject.getString("ssp"));
+					audio.setRecordist(audioObject.getString("rec"));
+					audio.setCountry(audioObject.getString("cnt"));
+					audio.setLocation(audioObject.getString("loc"));
+					audio.setLatitude(audioObject.getString("lat"));
+					audio.setLongitude(audioObject.getString("lng"));
+					audio.setSongtype(audioObject.getString("type"));
+					audio.setAudioURL(unescapeUrl(audioObject.getString("file")));
+					audio.setLicense(parseLicense(unescapeUrl(audioObject.getString("lic"))));
+					if (audio.getLicense().isUsable()) {
 						audioList.add(audio);
 					}
-					line = reader.readLine();
 				}
 				return audioList;
 			} catch (Exception e) {
@@ -74,14 +82,27 @@ public class XenoCantoLoader {
 		return null;
 	}
 
+	private static String unescapeUrl(String url) {
+		return url.replace("\\", ""); //TODO this is strictly not correct but good enough for now
+	}
+
+	private static License parseLicense(String url) {
+		Pattern pattern = Pattern.compile("licenses/(by-nc|by-nc-nd|by-sa|by-nd|by-nc-sa)/");
+		Matcher matcher = pattern.matcher(url);
+		if (matcher.find()) {
+			String code = matcher.group(1);
+			return License.fromXenoCantoCode(code);
+		} else {
+			return License.ALL_RIGHTS_RESERVED;
+		}
+	}
+
 	private static InputStream getInputStreamForLatinSpecies(String species) {
 		InputStream is = null;
 		try {
 			Uri.Builder builder = Uri
-					.parse("http://www.xeno-canto.org/csv.php").buildUpon();
-			builder.appendQueryParameter("species", species);
-			builder.appendQueryParameter("representative=", "0");
-			builder.appendQueryParameter("fileinfo", "1");
+					.parse("http://www.xeno-canto.org/api/2/recordings").buildUpon();
+			builder.appendQueryParameter("query", species + " q>:C"); //better quality
 
 			URL url = new URL(builder.toString());
 			HttpURLConnection urlConn = (HttpURLConnection) url
@@ -99,5 +120,15 @@ public class XenoCantoLoader {
 		}
 		return is;
 	}
+
+	public static String is2s(InputStream is) throws IOException {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+		StringBuilder sb = new StringBuilder();
+		String line;
+		while ((line = reader.readLine()) != null)
+			sb.append(line).append("\n");
+		return sb.toString();
+	}
+
 
 }

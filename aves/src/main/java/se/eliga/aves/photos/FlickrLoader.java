@@ -24,6 +24,7 @@ import java.util.List;
 
 import se.eliga.aves.Keys;
 import se.eliga.aves.model.Bird;
+import se.eliga.aves.model.License;
 
 /**
  * Created by Claes on 2013-07-19.
@@ -124,7 +125,7 @@ public class FlickrLoader {
         String server = photoJson.getString("server");
         String title = photoJson.getString("title");
         String ownerName = photoJson.getString("ownername");
-        FlickrPhoto.License license = FlickrPhoto.License.fromString(photoJson.getString("license"));
+        License license = License.fromFlickrCode(photoJson.getString("license"));
         return new FlickrPhoto(id, farm, secret, server, title, ownerName, license);
     }
 

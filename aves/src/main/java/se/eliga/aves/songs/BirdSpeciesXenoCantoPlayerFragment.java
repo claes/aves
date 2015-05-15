@@ -208,15 +208,10 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements
                 position);
         progressBar = (ProgressBar) getActivity()
                 .findViewById(R.id.downloadProgress);
-
-
         currentPosition = position;
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
         }
-
-
-
         initiatePlay(audio);
     }
 

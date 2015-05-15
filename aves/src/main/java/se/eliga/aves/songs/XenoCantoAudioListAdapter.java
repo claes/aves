@@ -61,7 +61,7 @@ public class XenoCantoAudioListAdapter extends BaseAdapter implements ListAdapte
 			holder = new AudioHolder();
 			convertView = LayoutInflater.from(context).inflate(
 					R.layout.audio_row_layout, parent, false);
-			holder.country = (TextView) convertView.findViewById(R.id.countryTextView);
+			holder.location = (TextView) convertView.findViewById(R.id.locationTextView);
 			holder.recordist = (TextView) convertView.findViewById(R.id.recordistTextView);
 			holder.songtype = (TextView) convertView.findViewById(R.id.songtypeTextView);
 			holder.progressBar = (ProgressBar) convertView.findViewById(R.id.downloadProgress);
@@ -71,15 +71,15 @@ public class XenoCantoAudioListAdapter extends BaseAdapter implements ListAdapte
 		}
 		holder.songtype.setText(audio.getSongtype().substring(0, 1).toUpperCase() + 
 				audio.getSongtype().substring(1));
-		holder.country.setText(audio.getCountry());
-		holder.recordist.setText("\u00A9 " + audio.getRecordist());
+		holder.location.setText(audio.getLocation());
+		holder.recordist.setText("\u00A9 " + audio.getRecordist() +", " + audio.getCountry() +  ", " + audio.getLicense().getCode());
 
 		convertView.setSelected(audio.isPlaying());
 		return convertView;
 	}
 
 	class AudioHolder {
-		TextView country;
+		TextView location;
 		TextView recordist;
 		TextView songtype;
 		ProgressBar progressBar;
