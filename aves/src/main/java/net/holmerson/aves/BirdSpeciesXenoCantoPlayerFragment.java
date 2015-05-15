@@ -163,7 +163,11 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements
 
     @Override
     public int getCurrentPosition() {
-        return mediaPlayer.getCurrentPosition();
+        if (mediaPlayer != null) {
+            return mediaPlayer.getCurrentPosition();
+        } else {
+            return 0;
+        }
     }
 
     @Override
@@ -242,4 +246,6 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements
             }
         }
     }
+
+
 }
