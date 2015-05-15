@@ -12,7 +12,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
-        android:name="se.eliga.aves.BirdApplication">
+        android:name=".BirdApp">
 
         <activity
             android:name="se.eliga.aves.MainActivity" >

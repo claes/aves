@@ -19,13 +19,13 @@ import android.widget.MediaController;
 import android.widget.MediaController.MediaPlayerControl;
 import android.widget.ProgressBar;
 
-import se.eliga.aves.BirdApplication;
+import se.eliga.aves.BirdApp;
 import se.eliga.aves.R;
 
 public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements
         MediaPlayerControl {
 
-    private static String TAG = BirdApplication.class.getName();
+    private static String TAG = BirdApp.class.getName();
 
     public static final String LATIN_SPECIES = "LATIN_SPECIES";
 

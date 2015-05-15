@@ -16,7 +16,7 @@ import android.widget.SearchView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
-import se.eliga.aves.BirdApplication;
+import se.eliga.aves.BirdApp;
 import se.eliga.aves.birddetail.BirdDetailsTabActivity;
 import se.eliga.aves.Constants;
 import se.eliga.aves.MainActivity;
@@ -254,7 +254,7 @@ public class BirdListFragment extends ListFragment {
 
 
     public BirdListAdapter createAdapter() {
-        DatabaseHandler databaseHandler = ((BirdApplication) getActivity().getApplication())
+        DatabaseHandler databaseHandler = ((BirdApp) getActivity().getApplication())
                 .getDbHandler();
         return new BirdListAdapter(getActivity(), databaseHandler);
     }

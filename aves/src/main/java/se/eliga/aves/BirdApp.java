@@ -13,9 +13,9 @@ import se.eliga.aves.model.DatabaseHandler;
 /**
  * Created by Claes on 2013-07-19.
  */
-public class BirdApplication extends Application {
+public class BirdApp extends Application {
 
-    private static String TAG = BirdApplication.class.getName();
+    private static String TAG = BirdApp.class.getName();
 
     private DatabaseHandler dbHandler;
 
