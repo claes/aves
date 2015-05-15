@@ -18,8 +18,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.eliga.aves.Keys;
 import se.eliga.aves.model.Bird;
-import se.eliga.aves.Constants;
 
 /**
  * Created by Claes on 2013-07-19.
@@ -76,7 +76,7 @@ public class FlickrLoader {
         try {
             Uri.Builder builder = Uri.parse("https://api.flickr.com/services/rest/").buildUpon();
             builder.appendQueryParameter("method", "flickr.groups.pools.getPhotos");
-            builder.appendQueryParameter("api_key", Constants.FLICKR_API_KEY);
+            builder.appendQueryParameter("api_key", Keys.FLICKR_API_KEY);
             builder.appendQueryParameter("tags", species);
             builder.appendQueryParameter("group_id", "42637302@N00");
             builder.appendQueryParameter("format", "json");

@@ -1,8 +1,6 @@
 package se.eliga.aves;
 
 public class Constants {
-	
-	public static final String FLICKR_API_KEY = "ead1a52dcfb8bfe0a073dfe96b1fca9b";
 
 	public static final String BIRD_APP_SETTINGS = "BirdAppSettings";
 
