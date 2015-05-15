@@ -1,4 +1,4 @@
-package net.holmerson.aves;
+package se.eliga.aves.model;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -113,7 +113,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     
 
-//  private static String DB_PATH = "/data/data/" + "net.holmerson.aves" + "/databases/";
+//  private static String DB_PATH = "/data/data/" + "se.eliga.aves" + "/databases/";
 //  private SQLiteDatabase database;
 //  private final Context context;
 //

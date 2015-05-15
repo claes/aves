@@ -1,4 +1,4 @@
-package net.holmerson.aves;
+package se.eliga.aves.birdlist;
 
 import java.text.Collator;
 import java.util.ArrayList;
@@ -18,6 +18,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
+
+import se.eliga.aves.R;
+import se.eliga.aves.model.Taxon;
+import se.eliga.aves.model.Bird;
+import se.eliga.aves.model.DatabaseHandler;
+import se.eliga.aves.model.Family;
 
 /**
  * Created by Claes on 2013-07-20.

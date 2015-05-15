@@ -1,11 +1,9 @@
-package net.holmerson.aves;
+package se.eliga.aves.maps;
 
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -15,8 +13,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class to load data from gbif.org API's

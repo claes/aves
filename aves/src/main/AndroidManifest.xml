@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.holmerson.aves"
+    package="se.eliga.aves"
     android:versionCode="1"
     android:versionName="1.0" >
     <uses-sdk
@@ -12,10 +12,10 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
-        android:name="net.holmerson.aves.BirdApplication">
+        android:name="se.eliga.aves.BirdApplication">
 
         <activity
-            android:name="net.holmerson.aves.MainActivity" >
+            android:name="se.eliga.aves.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -23,7 +23,7 @@
         </activity>
 
         <activity
-            android:name=".BirdDetailsTabActivity"
+            android:name=".birddetail.BirdDetailsTabActivity"
             android:parentActivityName=".MainActivity"
             >
             <meta-data

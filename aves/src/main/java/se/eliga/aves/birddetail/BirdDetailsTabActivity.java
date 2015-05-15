@@ -1,4 +1,4 @@
-package net.holmerson.aves;
+package se.eliga.aves.birddetail;
 
 import android.app.ActionBar;
 import android.app.ActionBar.LayoutParams;
@@ -6,16 +6,18 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.view.Gravity;
-import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TabWidget;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import se.eliga.aves.R;
+import se.eliga.aves.birdlist.BirdListFragment;
+import se.eliga.aves.maps.BirdSpeciesOccurrencesGBIFMapFragment;
+import se.eliga.aves.photos.BirdSpeciesFlickrGalleryFragment;
+import se.eliga.aves.songs.BirdSpeciesXenoCantoPlayerFragment;
 
 public class BirdDetailsTabActivity extends FragmentActivity {
 

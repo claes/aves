@@ -1,22 +1,9 @@
-package net.holmerson.aves;
+package se.eliga.aves.maps;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import ru.truba.touchgallery.GalleryWidget.BasePagerAdapter.OnItemChangeListener;
-import ru.truba.touchgallery.GalleryWidget.GalleryViewPager;
-import ru.truba.touchgallery.GalleryWidget.UrlPagerAdapter;
 import android.os.AsyncTask;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
 public class LoadOccurrenceMapOperation extends
         AsyncTask<String, Void, String> {

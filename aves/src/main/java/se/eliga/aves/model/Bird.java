@@ -1,7 +1,10 @@
-package net.holmerson.aves;
+package se.eliga.aves.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import se.eliga.aves.photos.FlickrPhoto;
+import se.eliga.aves.songs.XenoCantoAudio;
 
 /**
  * Created by Claes on 2013-07-19.

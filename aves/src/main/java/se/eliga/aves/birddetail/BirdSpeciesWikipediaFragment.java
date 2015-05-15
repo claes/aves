@@ -1,4 +1,4 @@
-package net.holmerson.aves;
+package se.eliga.aves.birddetail;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,38 +8,30 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import se.eliga.aves.R;
+
 /**
- * Created by Claes on 2015-05-14.
+ * Created by Claes on 2015-05-12.
  */
-public class BirdSpeciesOccurrencesGBIFMapFragment  extends Fragment {
+public class BirdSpeciesWikipediaFragment extends Fragment {
 
     public static final String LATIN_SPECIES = "LATIN_SPECIES";
+    public static final String ENGLISH_SPECIES = "ENGLISH_SPECIES";
 
     private MenuItem menuItemSwedish;
     private MenuItem menuItemEnglish;
-
     private WebView webView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        webView = (WebView) inflater.inflate(R.layout.webview_layout, container, false);
-
-        webView.setWebChromeClient(new WebChromeClient());
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
+        View view = inflater.inflate(R.layout.wikipedia_layout, container, false);
         setHasOptionsMenu(true);
-        return webView;
-    }
 
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        String species = getArguments().getString(LATIN_SPECIES);
-        new LoadOccurrenceMapOperation(webView).execute(species);
+        webView = (WebView) view.findViewById(R.id.webview);
+        return view;
     }
 
     @Override
@@ -62,8 +54,35 @@ public class BirdSpeciesOccurrencesGBIFMapFragment  extends Fragment {
             menuItemEnglish.setChecked(false);
             menuItemSwedish.setChecked(false);
             item.setChecked(true);
-            //loadPage();
+            loadPage();
         }
         return true;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadPage();
+    }
+
+    private void loadPage() {
+        String url;
+        if (menuItemEnglish != null && menuItemEnglish.isChecked()) {
+            url = getEnglishUrl(getArguments().getString(LATIN_SPECIES), getArguments().getString(ENGLISH_SPECIES));
+        } else {
+            url = getSwedishUrl(getArguments().getString(LATIN_SPECIES), getArguments().getString(ENGLISH_SPECIES));
+        }
+        webView.loadUrl(url);
+    }
+
+    protected String getSwedishUrl(String latinSpecies, String englishSpecies) {
+        String modifiedSpecies = latinSpecies.replaceAll(" ", "_");
+        return "http://sv.m.wikipedia.org/wiki/"+modifiedSpecies;
+    }
+
+    protected String getEnglishUrl(String latinSpecies, String englishSpecies) {
+        String modifiedSpecies = englishSpecies.replaceAll(" ", "_");
+        return "http://en.m.wikipedia.org/wiki/"+modifiedSpecies;
+    }
+
 }

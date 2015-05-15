@@ -1,4 +1,4 @@
-package net.holmerson.aves;
+package se.eliga.aves;
 
 import android.app.Application;
 import android.util.Log;
@@ -7,6 +7,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.io.File;
+
+import se.eliga.aves.model.DatabaseHandler;
 
 /**
  * Created by Claes on 2013-07-19.

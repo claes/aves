@@ -1,4 +1,4 @@
-package net.holmerson.aves;
+package se.eliga.aves.birdlist;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,15 @@ import android.widget.SearchView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
+import se.eliga.aves.BirdApplication;
+import se.eliga.aves.birddetail.BirdDetailsTabActivity;
+import se.eliga.aves.Constants;
+import se.eliga.aves.MainActivity;
+import se.eliga.aves.R;
+import se.eliga.aves.model.Taxon;
+import se.eliga.aves.model.Bird;
+import se.eliga.aves.model.DatabaseHandler;
 
 /**
  * Created by Claes on 2015-05-08.

@@ -1,4 +1,4 @@
-package net.holmerson.aves;
+package se.eliga.aves;
 
 public class Constants {
 	

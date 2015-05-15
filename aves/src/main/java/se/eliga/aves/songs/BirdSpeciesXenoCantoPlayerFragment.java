@@ -1,13 +1,11 @@
-package net.holmerson.aves;
+package se.eliga.aves.songs;
 
 import java.io.IOException;
 
-import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +18,9 @@ import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.MediaController.MediaPlayerControl;
 import android.widget.ProgressBar;
+
+import se.eliga.aves.BirdApplication;
+import se.eliga.aves.R;
 
 public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements
         MediaPlayerControl {

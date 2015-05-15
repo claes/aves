@@ -1,4 +1,4 @@
-package net.holmerson.aves;
+package se.eliga.aves.photos;
 
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -17,6 +17,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import se.eliga.aves.model.Bird;
+import se.eliga.aves.Constants;
 
 /**
  * Created by Claes on 2013-07-19.

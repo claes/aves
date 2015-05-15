@@ -5,7 +5,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "net.holmerson.aves"
+        applicationId "se.eliga.aves"
         minSdkVersion 14
         targetSdkVersion 16
     }

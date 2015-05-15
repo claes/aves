@@ -1,4 +1,4 @@
-package net.holmerson.aves;
+package se.eliga.aves.songs;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -12,6 +12,8 @@ import java.util.List;
 
 import android.net.Uri;
 import android.util.Log;
+
+import se.eliga.aves.model.Bird;
 
 public class XenoCantoLoader {
 

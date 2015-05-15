@@ -1,4 +1,4 @@
-package net.holmerson.aves;
+package se.eliga.aves;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

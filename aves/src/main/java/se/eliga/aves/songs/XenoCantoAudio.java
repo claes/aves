@@ -1,4 +1,4 @@
-package net.holmerson.aves;
+package se.eliga.aves.songs;
 
 public class XenoCantoAudio implements Comparable<XenoCantoAudio> {
 	private String xenoCantoIdNumber; 
