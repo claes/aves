@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ Copyright (c) Claes Holmerson 2013, 2015. The program is licensed under GNU GPL v3. See LICENSE.txt for details.
-  -->
-
 <resources>
     <string name="app_name">ACTIVITY_ENTRY_NAME</string>
 </resources>
