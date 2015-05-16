@@ -9,11 +9,11 @@
 </string>
     <string name="sort_order">Sortering
 </string>
-    <string name="app_name">Fågelappen
+    <string name="app_name">Fågelappen Online
 </string>
 <string-array name="drawer_menu_list">
         <item>Fågelindex</item>
-        <item>Om Fågelappen</item>
+        <item>Om Fågelappen Online</item>
     </string-array>
 <string name="action_settings">Settings
 </string>
