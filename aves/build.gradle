@@ -26,4 +26,5 @@ dependencies {
     compile project(':library')
     compile files('libs/smoothie-0.1.jar')
     compile files('libs/universal-image-loader-1.8.5-with-sources.jar')
+    compile 'ch.acra:acra:4.6.1'
 }

@@ -56,5 +56,6 @@
     <string name="wikipedia_english">Engelska</string>
     <string name="search_title">Sök</string>
     <string name="search_hint">Artnamn</string>
+    <string name="crash_toast_text">Fågelappen kraschade! Vill du mejla kraschrapport?</string>
 
 </resources>

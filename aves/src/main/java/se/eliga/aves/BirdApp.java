@@ -10,6 +10,10 @@ import android.util.Log;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
+import org.acra.ACRA;
+import org.acra.ReportingInteractionMode;
+import org.acra.annotation.ReportsCrashes;
+
 import java.io.File;
 
 import se.eliga.aves.model.DatabaseHandler;
@@ -17,6 +21,11 @@ import se.eliga.aves.model.DatabaseHandler;
 /**
  * Created by Claes on 2013-07-19.
  */
+@ReportsCrashes(
+        mailTo = "claespost-birdapp@yahoo.se", // my email here
+        mode = ReportingInteractionMode.TOAST,
+        resToastText = R.string.crash_toast_text
+)
 public class BirdApp extends Application {
 
     private static String TAG = BirdApp.class.getName();
@@ -25,6 +34,8 @@ public class BirdApp extends Application {
 
     @Override
     public void onCreate() {
+        super.onCreate();
+        ACRA.init(this);
         enableHttpResponseCache();
     }
 

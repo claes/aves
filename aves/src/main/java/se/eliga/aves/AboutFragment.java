@@ -33,6 +33,7 @@ public class AboutFragment extends Fragment {
         webView.loadUrl("file:///android_asset/about.html");
         webView.setBackgroundColor(0x00FFFFFF);
         webView.setVisibility(View.VISIBLE);
+        throw new RuntimeException("Crash !!");
     }
 
 }
