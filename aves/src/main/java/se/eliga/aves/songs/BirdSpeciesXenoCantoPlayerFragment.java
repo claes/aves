@@ -22,17 +22,21 @@ import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.MediaController.MediaPlayerControl;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 
 import se.eliga.aves.BirdApp;
 import se.eliga.aves.R;
+import se.eliga.aves.birddetail.BirdSpeciesFragment;
+import se.eliga.aves.model.Bird;
 
-public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements
+public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements BirdSpeciesFragment,
         MediaPlayerControl {
 
     private static String TAG = BirdApp.class.getName();
 
     public static final String LATIN_SPECIES = "LATIN_SPECIES";
 
+    private View view;
     private MediaController mediaController;
     private MediaPlayer mediaPlayer;
     private Handler handler = new Handler();
@@ -45,10 +49,7 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        String species = getArguments().getString(LATIN_SPECIES);
-
-        View view = inflater.inflate(R.layout.audio_player_layout, container,
+        view = inflater.inflate(R.layout.audio_player_layout, container,
                 false);
 
         setHasOptionsMenu(true);
@@ -111,8 +112,7 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements
                 }
             }
         });
-
-        new LoadAudiosOperation(view, this).execute(species);
+        loadBird(getCurrentBird());
         return view;
     }
 
@@ -257,4 +257,13 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements
     }
 
 
+    public Bird getCurrentBird() {
+        Spinner spinner  = (Spinner) getActivity().getActionBar().getCustomView().findViewById(R.id.birdspecies_spinner);
+        return (Bird) spinner.getSelectedItem();
+    }
+
+    @Override
+    public void loadBird(Bird bird) {
+        new LoadAudiosOperation(view, this).execute(bird.getLatinSpecies());
+    }
 }

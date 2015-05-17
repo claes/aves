@@ -5,26 +5,16 @@
 package se.eliga.aves.photos;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import se.eliga.aves.R;
+import se.eliga.aves.birddetail.AbstractBirdSpeciesFragment;
+import se.eliga.aves.model.Bird;
 
-public class BirdSpeciesFlickrGalleryFragment extends Fragment {
+public class BirdSpeciesFlickrGalleryFragment extends AbstractBirdSpeciesFragment {
 
-	public static final String LATIN_SPECIES = "LATIN_SPECIES";
-	
-	public static final BirdSpeciesFlickrGalleryFragment newInstance(String latinSpecies)
-	{
-		BirdSpeciesFlickrGalleryFragment f = new BirdSpeciesFlickrGalleryFragment();
-		Bundle bundle = new Bundle(1);
-	    bundle.putString(LATIN_SPECIES, latinSpecies);
-	    f.setArguments(bundle);
-	    return f;
-	}
-	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, 
         Bundle savedInstanceState) {
@@ -32,9 +22,12 @@ public class BirdSpeciesFlickrGalleryFragment extends Fragment {
         return view;
     }
 
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		String species = getArguments().getString(LATIN_SPECIES);
-		new LoadPhotosOperation(getView()).execute(species);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        loadBird(getCurrentBird());
+    }
+
+	public void loadBird(Bird bird) {
+		new LoadPhotosOperation(getView()).execute(bird.getLatinSpecies());
 	}
 }

@@ -5,7 +5,6 @@
 package se.eliga.aves.maps;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,13 +16,13 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import se.eliga.aves.R;
+import se.eliga.aves.birddetail.AbstractBirdSpeciesFragment;
+import se.eliga.aves.model.Bird;
 
 /**
  * Created by Claes on 2015-05-14.
  */
-public class BirdSpeciesOccurrencesGBIFMapFragment  extends Fragment {
-
-    public static final String LATIN_SPECIES = "LATIN_SPECIES";
+public class BirdSpeciesOccurrencesGBIFMapFragment  extends AbstractBirdSpeciesFragment {
 
     private MenuItem menuItemSwedish;
     private MenuItem menuItemEnglish;
@@ -44,8 +43,7 @@ public class BirdSpeciesOccurrencesGBIFMapFragment  extends Fragment {
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        String species = getArguments().getString(LATIN_SPECIES);
-        new LoadOccurrenceMapOperation(webView).execute(species);
+        loadBird(getCurrentBird());
     }
 
     @Override
@@ -68,8 +66,12 @@ public class BirdSpeciesOccurrencesGBIFMapFragment  extends Fragment {
             menuItemEnglish.setChecked(false);
             menuItemSwedish.setChecked(false);
             item.setChecked(true);
-            //loadPage();
         }
         return true;
+    }
+
+    @Override
+    public void loadBird(Bird bird) {
+        new LoadOccurrenceMapOperation(webView).execute(bird.getLatinSpecies());
     }
 }

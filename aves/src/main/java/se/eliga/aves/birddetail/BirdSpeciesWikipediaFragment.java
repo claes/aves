@@ -5,7 +5,6 @@
 package se.eliga.aves.birddetail;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,11 +14,12 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 
 import se.eliga.aves.R;
+import se.eliga.aves.model.Bird;
 
 /**
  * Created by Claes on 2015-05-12.
  */
-public class BirdSpeciesWikipediaFragment extends Fragment {
+public class BirdSpeciesWikipediaFragment extends AbstractBirdSpeciesFragment {
 
     public static final String LATIN_SPECIES = "LATIN_SPECIES";
     public static final String ENGLISH_SPECIES = "ENGLISH_SPECIES";
@@ -33,8 +33,8 @@ public class BirdSpeciesWikipediaFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.wikipedia_layout, container, false);
         setHasOptionsMenu(true);
-
         webView = (WebView) view.findViewById(R.id.webview);
+        loadBird(getCurrentBird());
         return view;
     }
 
@@ -58,23 +58,18 @@ public class BirdSpeciesWikipediaFragment extends Fragment {
             menuItemEnglish.setChecked(false);
             menuItemSwedish.setChecked(false);
             item.setChecked(true);
-            loadPage();
+            loadBird(getCurrentBird());
         }
         return true;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        loadPage();
-    }
 
-    private void loadPage() {
+    public void loadBird(Bird bird) {
         String url;
         if (menuItemEnglish != null && menuItemEnglish.isChecked()) {
-            url = getEnglishUrl(getArguments().getString(LATIN_SPECIES), getArguments().getString(ENGLISH_SPECIES));
+            url = getEnglishUrl(bird.getLatinSpecies(), bird.getEnglishSpecies());
         } else {
-            url = getSwedishUrl(getArguments().getString(LATIN_SPECIES), getArguments().getString(ENGLISH_SPECIES));
+            url = getSwedishUrl(bird.getLatinSpecies(), bird.getEnglishSpecies());
         }
         webView.loadUrl(url);
     }

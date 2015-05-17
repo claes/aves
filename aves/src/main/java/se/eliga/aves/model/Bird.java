@@ -66,6 +66,11 @@ public class Bird implements Taxon {
         audios = new ArrayList<XenoCantoAudio>();
     }
 
+	public Bird(String latinSpecies) {
+		this.latinSpecies = latinSpecies;
+	}
+
+
     public int getPhylogeneticSortId() {
 		return phylogeneticSortId;
 	}
@@ -152,6 +157,22 @@ public class Bird implements Taxon {
 
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Bird bird = (Bird) o;
+
+		return !(latinSpecies != null ? !latinSpecies.equals(bird.latinSpecies) : bird.latinSpecies != null);
+
+	}
+
+	@Override
+	public int hashCode() {
+		return latinSpecies != null ? latinSpecies.hashCode() : 0;
 	}
 
 	@Override

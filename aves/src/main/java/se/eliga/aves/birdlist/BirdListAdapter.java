@@ -38,11 +38,11 @@ import se.eliga.aves.model.Family;
 /**
  * Created by Claes on 2013-07-20.
  */
-public class BirdListAdapter extends BaseAdapter implements SectionIndexer, SpinnerAdapter  {
+public class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 
-	private List<Bird> localBirdList = null;
-	private Activity context;
-	private DatabaseHandler databaseHandler;
+
+	protected Activity context;
+	protected DatabaseHandler databaseHandler;
 	private Map<String, Bird> birds = new LinkedHashMap<String, Bird>();
 	private List<Taxon> taxonList = new ArrayList<Taxon>(); // For optimization,
 															// not so pretty
@@ -103,12 +103,13 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer, Spin
 
 	@Override
 	public Taxon getItem(int position) {
-		try {
-			return taxonList.get(position);
-		} catch (Exception e) {
-			return null;
-		}
+		return taxonList.get(position);
 	}
+
+	public int getPosition(Taxon taxon) {
+		return taxonList.indexOf(taxon);
+	}
+
 
 	@Override
 	public int getViewTypeCount() {
@@ -179,7 +180,7 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer, Spin
 	}
 
 	public void refresh() {
-		localBirdList = databaseHandler.getAllSpecies(filterString, filterFamily);
+		List<Bird> localBirdList = databaseHandler.getAllSpecies(filterString, filterFamily);
 
 		switch (sortOption) {
 		case SWEDISH:
@@ -504,88 +505,5 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer, Spin
 		this.filterFamily = filterFamily;
 	}
 
-	@Override
-	public View getDropDownView(int position, View convertView, ViewGroup parent) {
 
-		Taxon taxon = getItem(position);
-		if (taxon instanceof Bird) {
-			Bird bird = (Bird) taxon;
-			if (convertView == null
-					/*|| convertView.getId() != R.layout.bird_row_layout*/) {
-				LinearLayout linearLayout = new LinearLayout(context);
-				linearLayout.setOrientation(LinearLayout.VERTICAL);
-				linearLayout.setGravity(Gravity.LEFT);
-				linearLayout.setPadding(9, 1, 9, 1);
-				RelativeLayout.LayoutParams relativeParams = new RelativeLayout.LayoutParams(
-						ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-				relativeParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-				TextView speciesView = new TextView(context);
-				speciesView.setId(1);
-				speciesView.setText(bird.getSwedishSpecies());
-				speciesView.setTextSize(20);
-				speciesView.setTextColor(context.getResources().getColor(
-						android.R.color.primary_text_dark));
-				speciesView.setGravity(Gravity.LEFT);
-				TextView familyView = new TextView(context);
-				familyView.setId(2);
-				familyView.setText(bird.getSwedishOrder() + " - " + bird.getSwedishFamily());
-				familyView.setTextColor(context.getResources().getColor(
-						android.R.color.secondary_text_dark));
-				linearLayout.addView(familyView);
-				linearLayout.addView(speciesView);
-
-				convertView = linearLayout;
-			} else {
-				LinearLayout linearLayout = new LinearLayout(context);
-				linearLayout.setOrientation(LinearLayout.VERTICAL);
-				linearLayout.setGravity(Gravity.LEFT);
-				linearLayout.setPadding(9, 1, 9, 1);
-				RelativeLayout.LayoutParams relativeParams = new RelativeLayout.LayoutParams(
-						ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-				relativeParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-				TextView speciesView = new TextView(context);
-				speciesView.setId(1);
-				speciesView.setText(bird.getSwedishSpecies());
-				speciesView.setTextSize(20);
-				speciesView.setTextColor(context.getResources().getColor(
-						android.R.color.primary_text_dark));
-				speciesView.setGravity(Gravity.LEFT);
-				TextView familyView = new TextView(context);
-				familyView.setId(2);
-				familyView.setText(bird.getSwedishOrder() + " - " + bird.getSwedishFamily());
-				familyView.setTextColor(context.getResources().getColor(
-						android.R.color.secondary_text_dark));
-				linearLayout.addView(familyView);
-				linearLayout.addView(speciesView);
-
-				convertView = linearLayout;
-			}
-		}
-		return convertView;
-	}
-
-	@Override
-	public int getItemViewType(int i) {
-		return 0;
-	}
-
-	@Override
-	public void registerDataSetObserver(DataSetObserver dataSetObserver) {
-
-	}
-
-	@Override
-	public void unregisterDataSetObserver(DataSetObserver dataSetObserver) {
-
-	}
-
-	@Override
-	public boolean hasStableIds() {
-		return false;
-	}
-
-	@Override
-	public boolean isEmpty() {
-		return false;
-	}
 }
