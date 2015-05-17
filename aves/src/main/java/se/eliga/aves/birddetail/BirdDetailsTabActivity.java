@@ -14,12 +14,16 @@ import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TabWidget;
 import android.widget.TextView;
 
+import se.eliga.aves.BirdApp;
 import se.eliga.aves.R;
+import se.eliga.aves.birdlist.BirdListAdapter;
 import se.eliga.aves.birdlist.BirdListFragment;
 import se.eliga.aves.maps.BirdSpeciesOccurrencesGBIFMapFragment;
+import se.eliga.aves.model.DatabaseHandler;
 import se.eliga.aves.photos.BirdSpeciesFlickrGalleryFragment;
 import se.eliga.aves.songs.BirdSpeciesXenoCantoPlayerFragment;
 
@@ -45,6 +49,7 @@ public class BirdDetailsTabActivity extends FragmentActivity {
 				BirdListFragment.SWEDISH_ORDER);
 
 		{
+			/*
 			LinearLayout linearLayout = new LinearLayout(this);
 			linearLayout.setOrientation(LinearLayout.VERTICAL);
 			linearLayout.setGravity(Gravity.LEFT);
@@ -66,6 +71,8 @@ public class BirdDetailsTabActivity extends FragmentActivity {
 					android.R.color.secondary_text_dark));
 			linearLayout.addView(familyView);
 			linearLayout.addView(speciesView);
+			getActionBar().setCustomView(linearLayout);
+			*/
 
 			/*
 			ArrayList<String> spinnerArray = new ArrayList<String>();
@@ -78,8 +85,17 @@ public class BirdDetailsTabActivity extends FragmentActivity {
 			spinner.setAdapter(spinnerArrayAdapter);
 			spinner.addView(linearLayout);
 			*/
+			/*
+			BirdListAdapter birdListAdapter = createAdapter();
+			birdListAdapter.refresh();
+			birdListAdapter.notifyDataSetChanged();
+			birdListAdapter.setFilterFamily(swedishFamily);
 
-			getActionBar().setCustomView(linearLayout);
+			Spinner spinner = new Spinner(this);
+			spinner.setAdapter(birdListAdapter);
+			getActionBar().setCustomView(spinner);
+			*/
+
 			getActionBar().setDisplayOptions(ActionBar.DISPLAY_HOME_AS_UP
 					| ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM);
 		}
@@ -124,7 +140,12 @@ public class BirdDetailsTabActivity extends FragmentActivity {
 			horizontalScrollView.addView(tabWidget);
 			horizontalScrollView.setHorizontalScrollBarEnabled(false);
 		}
+	}
 
+	public BirdListAdapter createAdapter() {
+		DatabaseHandler databaseHandler = ((BirdApp) getApplication())
+				.getDbHandler();
+		return new BirdListAdapter(this, databaseHandler);
 	}
 
 }

@@ -70,6 +70,8 @@ public class BirdListFragment extends ListFragment {
         listView.setFastScrollEnabled(true);
 
         BirdListAdapter birdListAdapter = createAdapter();
+        birdListAdapter.refresh();
+        birdListAdapter.notifyDataSetChanged();
         if (savedInstanceState == null) {
             SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, Context.MODE_PRIVATE);
             birdListAdapter.setShowBreeding(settings.getBoolean(Constants.BIRD_LIST_SHOW_BREEDING, true));

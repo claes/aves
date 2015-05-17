@@ -82,16 +82,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public List<Bird> getAllSpecies(String filterString) {
+    public List<Bird> getAllSpecies(String filterString, String filterFamily) {
         List<Bird> birds = new ArrayList<Bird>();
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor;
-        if (filterString == null) {
-            cursor = db.rawQuery("select * from species order by " + PHYLOGENIC_SORT_COLUMN, null);
-        } else {
-            cursor = db.rawQuery("select * from species where " + SWEDISH_SPECIES_COLUMN +
-                    " like '%" + filterString + "%'order by " + PHYLOGENIC_SORT_COLUMN, null);
+
+        StringBuffer query = new StringBuffer("select * from species where 1=1");
+        if (filterString != null) {
+            query.append(" AND " + SWEDISH_SPECIES_COLUMN + " like '%" + filterString + "%' ");
         }
+        if (filterFamily != null) {
+            query.append(" AND " + SWEDISH_FAMILY_COLUMN + " = '" + filterFamily + "' ");
+        }
+        query.append(" order by " + PHYLOGENIC_SORT_COLUMN);
+        cursor = db.rawQuery(query.toString(), null);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {

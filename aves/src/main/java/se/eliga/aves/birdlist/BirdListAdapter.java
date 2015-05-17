@@ -14,13 +14,19 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.database.DataSetObserver;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SectionIndexer;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import se.eliga.aves.R;
@@ -32,7 +38,7 @@ import se.eliga.aves.model.Family;
 /**
  * Created by Claes on 2013-07-20.
  */
-class BirdListAdapter extends BaseAdapter implements SectionIndexer {
+public class BirdListAdapter extends BaseAdapter implements SectionIndexer, SpinnerAdapter  {
 
 	private List<Bird> localBirdList = null;
 	private Activity context;
@@ -51,6 +57,7 @@ class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 	private boolean showUnseen = false;
 	private boolean showNonSpontaneous = false;
 	private String filterString = null;
+	private String filterFamily = null;
 
 	private SortOption sortOption = SortOption.SWEDISH;
 
@@ -87,7 +94,6 @@ class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 	public BirdListAdapter(Activity context, DatabaseHandler databaseHandler) {
 		this.context = context;
 		this.databaseHandler = databaseHandler;
-		refresh();
 	}
 
 	@Override
@@ -97,7 +103,11 @@ class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 
 	@Override
 	public Taxon getItem(int position) {
-		return taxonList.get(position);
+		try {
+			return taxonList.get(position);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -138,12 +148,6 @@ class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 			holder.latinSpecies.setText(bird.getLatinSpecies());
 			holder.swedishSpecies.setText(bird.getSwedishSpecies());
 			holder.englishSpecies.setText(bird.getEnglishSpecies());
-			// context.imageLoader.displayImage("http://farm3.staticflickr.com/2096/2202224560_b4c2306e90_s.jpg",
-			// holder.image);
-
-			// imageView.
-			// new
-			// LoadPhotoOperation(imageView).execute(bird.getLatinSpecies());
 		} else if (taxon instanceof Family) {
 			Family family = (Family) taxon;
 			FamilyHolder holder = null;
@@ -175,9 +179,7 @@ class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 	}
 
 	public void refresh() {
-		//if (localBirdList == null) {
-			localBirdList = databaseHandler.getAllSpecies(filterString);
-		//}
+		localBirdList = databaseHandler.getAllSpecies(filterString, filterFamily);
 
 		switch (sortOption) {
 		case SWEDISH:
@@ -492,5 +494,98 @@ class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 
 	public void setFilterString(String filterString) {
 		this.filterString = filterString;
+	}
+
+	public String getFilterFamily() {
+		return filterFamily;
+	}
+
+	public void setFilterFamily(String filterFamily) {
+		this.filterFamily = filterFamily;
+	}
+
+	@Override
+	public View getDropDownView(int position, View convertView, ViewGroup parent) {
+
+		Taxon taxon = getItem(position);
+		if (taxon instanceof Bird) {
+			Bird bird = (Bird) taxon;
+			if (convertView == null
+					/*|| convertView.getId() != R.layout.bird_row_layout*/) {
+				LinearLayout linearLayout = new LinearLayout(context);
+				linearLayout.setOrientation(LinearLayout.VERTICAL);
+				linearLayout.setGravity(Gravity.LEFT);
+				linearLayout.setPadding(9, 1, 9, 1);
+				RelativeLayout.LayoutParams relativeParams = new RelativeLayout.LayoutParams(
+						ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
+				relativeParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+				TextView speciesView = new TextView(context);
+				speciesView.setId(1);
+				speciesView.setText(bird.getSwedishSpecies());
+				speciesView.setTextSize(20);
+				speciesView.setTextColor(context.getResources().getColor(
+						android.R.color.primary_text_dark));
+				speciesView.setGravity(Gravity.LEFT);
+				TextView familyView = new TextView(context);
+				familyView.setId(2);
+				familyView.setText(bird.getSwedishOrder() + " - " + bird.getSwedishFamily());
+				familyView.setTextColor(context.getResources().getColor(
+						android.R.color.secondary_text_dark));
+				linearLayout.addView(familyView);
+				linearLayout.addView(speciesView);
+
+				convertView = linearLayout;
+			} else {
+				LinearLayout linearLayout = new LinearLayout(context);
+				linearLayout.setOrientation(LinearLayout.VERTICAL);
+				linearLayout.setGravity(Gravity.LEFT);
+				linearLayout.setPadding(9, 1, 9, 1);
+				RelativeLayout.LayoutParams relativeParams = new RelativeLayout.LayoutParams(
+						ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
+				relativeParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+				TextView speciesView = new TextView(context);
+				speciesView.setId(1);
+				speciesView.setText(bird.getSwedishSpecies());
+				speciesView.setTextSize(20);
+				speciesView.setTextColor(context.getResources().getColor(
+						android.R.color.primary_text_dark));
+				speciesView.setGravity(Gravity.LEFT);
+				TextView familyView = new TextView(context);
+				familyView.setId(2);
+				familyView.setText(bird.getSwedishOrder() + " - " + bird.getSwedishFamily());
+				familyView.setTextColor(context.getResources().getColor(
+						android.R.color.secondary_text_dark));
+				linearLayout.addView(familyView);
+				linearLayout.addView(speciesView);
+
+				convertView = linearLayout;
+			}
+		}
+		return convertView;
+	}
+
+	@Override
+	public int getItemViewType(int i) {
+		return 0;
+	}
+
+	@Override
+	public void registerDataSetObserver(DataSetObserver dataSetObserver) {
+
+	}
+
+	@Override
+	public void unregisterDataSetObserver(DataSetObserver dataSetObserver) {
+
+	}
+
+	@Override
+	public boolean hasStableIds() {
+		return false;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return false;
 	}
 }
