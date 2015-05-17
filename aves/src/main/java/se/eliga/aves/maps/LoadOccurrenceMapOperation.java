@@ -9,13 +9,17 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
+import se.eliga.aves.model.Bird;
+
 public class LoadOccurrenceMapOperation extends
         AsyncTask<String, Void, String> {
 
     private WebView view;
+    private Bird bird;
 
-    public LoadOccurrenceMapOperation(WebView context) {
+    public LoadOccurrenceMapOperation(WebView context, Bird bird) {
         this.view = context;
+        this.bird = bird;
     }
 
     @Override
@@ -32,7 +36,7 @@ public class LoadOccurrenceMapOperation extends
     protected void onPostExecute(final String result) {
         if (result != null) {
             view.setWebChromeClient(new WebChromeClient());
-            view.addJavascriptInterface(new GBIFMapJSObject(result), "GBIFMapData");
+            view.addJavascriptInterface(new GBIFMapJSObject(bird, result), "GBIFMapData");
             view.loadUrl("file:///android_asset/maps/gbif-occurrences.html");
         }
     }
@@ -51,8 +55,13 @@ public class LoadOccurrenceMapOperation extends
     public class GBIFMapJSObject {
 
         private String taxonKey;
+        private int zoom = 4;
+        private double latitude  = 63;
+        private double longitude = 17.5;
+        private Bird bird;
 
-        public GBIFMapJSObject(String taxonKey) {
+        public GBIFMapJSObject(Bird bird, String taxonKey) {
+            this.bird = bird;
             this.taxonKey = taxonKey;
         }
 
@@ -64,5 +73,34 @@ public class LoadOccurrenceMapOperation extends
         public void setTaxonKey(String taxonKey) {
             this.taxonKey = taxonKey;
         }
+
+        public double getLatitude() {
+            return latitude ;
+        }
+
+        public void setLatitude(double latitude ) {
+            this.latitude = latitude ;
+        }
+
+        public double getLongitude() {
+            return longitude;
+        }
+
+        public void setLongitude(double longitude) {
+            this.longitude = longitude;
+        }
+
+        public int getZoom() {
+            return zoom;
+        }
+
+        public void setZoom(int zoom) {
+            this.zoom = zoom;
+        }
+
+        public String getSwedishSpecies() {
+            return bird.getSwedishSpecies();
+        }
+
     }
 }

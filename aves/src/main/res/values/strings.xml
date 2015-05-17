@@ -57,5 +57,8 @@
     <string name="search_title">Sök</string>
     <string name="search_hint">Artnamn</string>
     <string name="crash_toast_text">Fågelappen kraschade! Vill du mejla kraschrapport?</string>
+    <string name="gbif_occurrence_default">Hela Sverige</string>
+    <string name="gbif_occurrence_current">Aktuell position</string>
+    <string name="gbif_occurrence_options">Position</string>
 
 </resources>

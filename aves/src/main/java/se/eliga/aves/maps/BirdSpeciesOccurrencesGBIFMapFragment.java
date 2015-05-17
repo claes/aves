@@ -24,8 +24,8 @@ import se.eliga.aves.model.Bird;
  */
 public class BirdSpeciesOccurrencesGBIFMapFragment  extends AbstractBirdSpeciesFragment {
 
-    private MenuItem menuItemSwedish;
-    private MenuItem menuItemEnglish;
+    private MenuItem menuItemDefaultPosition;
+    private MenuItem menuItemCurrentPosition;
 
     private WebView webView;
 
@@ -48,23 +48,25 @@ public class BirdSpeciesOccurrencesGBIFMapFragment  extends AbstractBirdSpeciesF
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.wikipedia_menu, menu);
+        // inflater.inflate(R.menu.gbif_occurence_map_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        menuItemSwedish = menu.findItem(R.id.wikipedia_swedish);
-        menuItemEnglish = menu.findItem(R.id.wikipedia_english);
-        menuItemSwedish.setChecked(true);
+        /* To be continued
+        menuItemDefaultPosition = menu.findItem(R.id.gbif_occurrence_default);
+        menuItemCurrentPosition = menu.findItem(R.id.gbif_occurrence_current);
+        menuItemDefaultPosition.setChecked(true);
+        */
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.isCheckable()) {
-            menuItemEnglish.setChecked(false);
-            menuItemSwedish.setChecked(false);
+            menuItemCurrentPosition.setChecked(false);
+            menuItemDefaultPosition.setChecked(false);
             item.setChecked(true);
         }
         return true;
@@ -72,6 +74,6 @@ public class BirdSpeciesOccurrencesGBIFMapFragment  extends AbstractBirdSpeciesF
 
     @Override
     public void loadBird(Bird bird) {
-        new LoadOccurrenceMapOperation(webView).execute(bird.getLatinSpecies());
+        new LoadOccurrenceMapOperation(webView, bird).execute(bird.getLatinSpecies());
     }
 }

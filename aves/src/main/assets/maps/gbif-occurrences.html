@@ -26,20 +26,36 @@
 <body>
 <div id="map"></div>
 <script>
-		var map = L.map('map').setView([63, 17.5], 4);
+
+		 function escapeHTML(str) {
+			var div = document.createElement("div");
+			var text = document.createTextNode(str);
+			div.appendChild(text);
+			return div.innerHTML;
+		 }
+
 		if (typeof GBIFMapData !== 'undefined') {
-			var taxonKey = GBIFMapData.getTaxonKey()
+			var taxonKey = GBIFMapData.getTaxonKey();
+			var zoom = GBIFMapData.getZoom();
+			var lat = GBIFMapData.getLatitude();
+			var long = GBIFMapData.getLongitude();
+			var swedishSpecies = GBIFMapData.getSwedishSpecies();
 		} else {
 			var taxonKey = "2495093";
+			var zoom = 4;
+			var lat = 63;
+			var long = 17.5;
+			var swedishSpecies = "";
 		}
+		var map = L.map('map').setView([lat, long], zoom);
 		 L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-			attribution: 'Bakgrundskarata <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Kartdata <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.',
+			attribution: 'Bakgrundskarta <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Kartdata <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL',
 			subdomains: 'abcd',
 			maxZoom: 19
 		}).addTo(map);
 
 		L.tileLayer('http://api.gbif.org/v1/map/density/tile?x={x}&y={y}&z={z}&type=TAXON&key='+taxonKey+'&layer=OBS_2000_2010&layer=OBS_2010_2020&resolution=4&colors=%2C3%2C%239ecae166%7C3%2C25%2C%234292c666%7C25%2C%2C%2308459499', {
-			attribution: 'F&aring;gelobservationer <a href="http://www.gbif.org/dataset/38b4c89f-584c-41bb-bd8f-cd1def33e92f">Artdata</a> via <a href="http://www.gbif.org/">gbif.org</a>',
+			attribution: 'Observationer av '+ escapeHTML(swedishSpecies)+': <a href="http://www.gbif.org/dataset/38b4c89f-584c-41bb-bd8f-cd1def33e92f">Artdata</a> via <a href="http://www.gbif.org/">gbif.org</a>',
 			maxZoom: 18
 		}).addTo(map);
 	</script>
