@@ -142,7 +142,9 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements 
 
     @Override
     public void onStop() {
-        mediaController.hide();
+        if (mediaController != null) {
+            mediaController.hide();
+        }
         mediaController = null;
         super.onStop();
         if (mediaPlayer.isPlaying()) {

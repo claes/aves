@@ -8,6 +8,7 @@
         android:id="@+id/audio_options"
         android:orderInCategory="100"
         android:showAsAction="always"
+        android:icon="@drawable/ic_language_white_36dp"
         android:title="@string/wikipedia_options">
         <menu>
             <group

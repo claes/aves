@@ -9,7 +9,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+
+import se.eliga.aves.model.Bird;
 
 public class AboutFragment extends Fragment {
 
@@ -33,6 +37,40 @@ public class AboutFragment extends Fragment {
         webView.loadUrl("file:///android_asset/about.html");
         webView.setBackgroundColor(0x00FFFFFF);
         webView.setVisibility(View.VISIBLE);
+        getVersion();
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+
+        webView.addJavascriptInterface(new AboutJSObject(getVersion()), "AboutData");
     }
+
+    private String getVersion() {
+        try {
+            String versionName =
+            getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
+            return versionName;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+
+    /**
+     * The object that gets injected to the html page for Javascript access
+     */
+    public class AboutJSObject {
+
+        private String version;
+
+        public AboutJSObject(String version) {
+            this.version = version;
+        }
+
+        @JavascriptInterface
+        public String getVersion() {
+            return version;
+        }
+    }
+
 
 }

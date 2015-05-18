@@ -74,6 +74,7 @@ public class LoadOccurrenceMapOperation extends
             this.taxonKey = taxonKey;
         }
 
+        @JavascriptInterface
         public double getLatitude() {
             return latitude ;
         }
@@ -82,6 +83,7 @@ public class LoadOccurrenceMapOperation extends
             this.latitude = latitude ;
         }
 
+        @JavascriptInterface
         public double getLongitude() {
             return longitude;
         }
@@ -90,6 +92,7 @@ public class LoadOccurrenceMapOperation extends
             this.longitude = longitude;
         }
 
+        @JavascriptInterface
         public int getZoom() {
             return zoom;
         }
@@ -98,6 +101,7 @@ public class LoadOccurrenceMapOperation extends
             this.zoom = zoom;
         }
 
+        @JavascriptInterface
         public String getSwedishSpecies() {
             return bird.getSwedishSpecies();
         }
