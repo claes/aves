@@ -6,6 +6,7 @@ package se.eliga.aves.songs;
 
 import java.io.IOException;
 
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import se.eliga.aves.BirdApp;
+import se.eliga.aves.Constants;
 import se.eliga.aves.R;
 import se.eliga.aves.birddetail.BirdSpeciesFragment;
 import se.eliga.aves.model.Bird;
@@ -116,6 +118,7 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements 
         return view;
     }
 
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.audio_menu, menu);
@@ -125,6 +128,7 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
+
         audioRepeat = menu.findItem(R.id.audio_repeat);
         audioAutoNext = menu.findItem(R.id.audio_autonext);
         audioAutoNext.setChecked(true);
@@ -147,11 +151,14 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements 
         }
         mediaController = null;
         super.onStop();
-        if (mediaPlayer.isPlaying()) {
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
         }
-        mediaPlayer.release();
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+        }
         mediaPlayer = null;
+
     }
 
     @Override
