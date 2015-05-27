@@ -12,6 +12,8 @@ android {
         applicationId "se.eliga.aves"
         minSdkVersion 14
         targetSdkVersion 16
+        versionCode buildVersionCode()
+        versionName buildVersionName()
     }
 
     buildTypes {

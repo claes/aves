@@ -1,0 +1,53 @@
+import java.text.SimpleDateFormat
+
+/*
+ * Copyright (c) Claes Holmerson 2013, 2015. The program is licensed under GNU GPL v3. See LICENSE.txt for details.
+ */
+
+// android:versionCode — An integer value that represents the version of the application code, relative to other versions.
+// android:versionName — A string value that represents the release version of the application code, as it should be shown to users.
+
+ext {
+    /**
+     * Builds an Android version code from the version of the project.
+     * This is designed to handle the -SNAPSHOT and -RC format.
+     *
+     * I.e. during development the version ends with -SNAPSHOT. As the code stabilizes and release nears
+     * one or many Release Candidates are tagged. These all end with "-RC1", "-RC2" etc.
+     * And the final release is without any suffix.
+     * @return
+     */
+    buildVersionCode = {
+        //The rules is as follows:
+        //-SNAPSHOT counts as 0
+        //-RC* counts as the RC number, i.e. 1 to 98
+        //final release counts as 99.
+        //Thus you can only have 98 Release Candidates, which ought to be enough for everyone
+
+        def candidate = "99"
+        def (major, minor, patch) = version.toLowerCase().replaceAll('-', '').tokenize('.')
+        if (patch.endsWith("snapshot")) {
+            candidate = "0"
+            patch = patch.replaceAll("[^0-9]","")
+        } else {
+            def rc
+            (patch, rc) = patch.tokenize("rc")
+            if (rc) {
+                candidate = rc
+            }
+        }
+
+        (major, minor, patch, candidate) = [major, minor, patch, candidate].collect{it.toInteger()}
+
+        (major * 1000000) + (minor * 10000) + (patch * 100) + candidate;
+    }
+
+    buildTime = {
+        def df = new SimpleDateFormat("yyyy-MM-dd HH:mm")
+        df.format(new Date())
+    }
+
+    buildVersionName = {
+        version + " built " + buildTime()
+    }
+}
