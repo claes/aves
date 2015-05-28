@@ -5,11 +5,6 @@
 <html xmlns="http://www.w3.org/1999/html">
 <body style="color:white; background-color:transparent;" link="#33b5e5" vlink="#33b5e5">
 <h2>Om Fågelappen Online </h2>
-<script>
-		if (typeof AboutData !== 'undefined') {
-            document.write("<p>Version: " + AboutData.getVersion()+ "</p>");
-		}
-</script>
 
 <p>
     Copyright Claes Holmerson 2013, 2015.
@@ -73,5 +68,13 @@
         </p>
     </li>
 </ul>
+<hr/>
+<script>
+		if (typeof AboutData !== 'undefined') {
+            document.write("<p>Version: " + AboutData.getVersion()+ "<br/>");
+            document.write(AboutData.getBuildType()+ " build " + AboutData.getBuildTime()+ " </p>");
+		}
+</script>
+
 </body>
 </html>

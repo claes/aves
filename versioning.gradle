@@ -19,7 +19,7 @@ ext {
      */
     buildVersionCode = {
         //The rules is as follows:
-        //-SNAPSHOT counts as 0
+        //-SNAPSHOT counts        as 0
         //-RC* counts as the RC number, i.e. 1 to 98
         //final release counts as 99.
         //Thus you can only have 98 Release Candidates, which ought to be enough for everyone
@@ -48,6 +48,6 @@ ext {
     }
 
     buildVersionName = {
-        version + " built " + buildTime()
+        version
     }
 }

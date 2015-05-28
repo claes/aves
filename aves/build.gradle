@@ -5,21 +5,33 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {}
+        apply from: 'signing.gradle', to: config
+    }
     compileSdkVersion 17
     buildToolsVersion "22.0.1"
-
     defaultConfig {
         applicationId "se.eliga.aves"
         minSdkVersion 14
         targetSdkVersion 16
         versionCode buildVersionCode()
         versionName buildVersionName()
-    }
+        buildConfigField "java.lang.String", "BUILDTIME", "\"" + buildTime() + "\""
 
+    }
     buildTypes {
+        debug {
+            buildConfigField "boolean", "REPORT_CRASHES", "true"
+            buildConfigField "java.lang.String", "BUILDTYPE", "\"debug\""
+            applicationIdSuffix ".debug"
+        }
         release {
+            buildConfigField "boolean", "REPORT_CRASHES", "false"
+            buildConfigField "java.lang.String", "BUILDTYPE", "\"release\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig signingConfigs.config
         }
     }
 }

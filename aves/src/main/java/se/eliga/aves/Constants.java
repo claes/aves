@@ -17,4 +17,6 @@ public class Constants {
 	public static final String BIRD_LIST_SHOW_NON_SPONTANEOUS = "birdListShowNonSpontaneous";
 	public static final String BIRD_LIST_SHOW_OPTION = "birdListSortOption";
 
+	public static final String BIRD_AUDIO_REPEAT = "birdAudioRepeat";
+	public static final String BIRD_AUDIO_AUTONEXT = "birdAudioAutoNext";
 }

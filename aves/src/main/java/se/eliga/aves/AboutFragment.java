@@ -41,7 +41,7 @@ public class AboutFragment extends Fragment {
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
-        webView.addJavascriptInterface(new AboutJSObject(getVersion()), "AboutData");
+        webView.addJavascriptInterface(new AboutJSObject(getVersion(), BuildConfig.BUILDTIME, BuildConfig.BUILDTYPE), "AboutData");
     }
 
     private String getVersion() {
@@ -61,14 +61,28 @@ public class AboutFragment extends Fragment {
     public class AboutJSObject {
 
         private String version;
+        private String buildTime;
+        private String buildType;
 
-        public AboutJSObject(String version) {
+        public AboutJSObject(String version, String buildTime, String buildType) {
             this.version = version;
+            this.buildTime = buildTime;
+            this.buildType = buildType;
         }
 
         @JavascriptInterface
         public String getVersion() {
             return version;
+        }
+
+        @JavascriptInterface
+        public String getBuildTime() {
+            return buildTime;
+        }
+
+        @JavascriptInterface
+        public String getBuildType() {
+            return buildType;
         }
     }
 

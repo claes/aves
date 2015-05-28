@@ -157,8 +157,6 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements 
         if (mediaPlayer != null) {
             mediaPlayer.release();
         }
-        mediaPlayer = null;
-
     }
 
     @Override
@@ -227,7 +225,7 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements 
         progressBar = (ProgressBar) getActivity()
                 .findViewById(R.id.downloadProgress);
         currentPosition = position;
-        if (mediaPlayer.isPlaying()) {
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
         }
         initiatePlay(audio);

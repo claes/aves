@@ -35,7 +35,9 @@ public class BirdApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        ACRA.init(this);
+        if (BuildConfig.REPORT_CRASHES) {
+            ACRA.init(this);
+        }
         enableHttpResponseCache();
     }
 
