@@ -59,6 +59,10 @@ public class LoadOccurrenceMapOperation extends
         private double latitude  = 63;
         private double longitude = 17.5;
         private Bird bird;
+        private boolean showNationalParks = true;
+        private boolean showNatureReserves = true;
+        private boolean showAnimalReserves = true;
+
 
         public GBIFMapJSObject(Bird bird, String taxonKey) {
             this.bird = bird;
@@ -106,5 +110,31 @@ public class LoadOccurrenceMapOperation extends
             return bird.getSwedishSpecies();
         }
 
+        @JavascriptInterface
+        public boolean isShowAnimalReserves() {
+            return showAnimalReserves;
+        }
+
+        public void setShowAnimalReserves(boolean showAnimalReserves) {
+            this.showAnimalReserves = showAnimalReserves;
+        }
+
+        @JavascriptInterface
+        public boolean isShowNationalParks() {
+            return showNationalParks;
+        }
+
+        public void setShowNationalParks(boolean showNationalParks) {
+            this.showNationalParks = showNationalParks;
+        }
+
+        @JavascriptInterface
+        public boolean isShowNatureReserves() {
+            return showNatureReserves;
+        }
+
+        public void setShowNatureReserves(boolean showNatureReserves) {
+            this.showNatureReserves = showNatureReserves;
+        }
     }
 }
