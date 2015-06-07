@@ -151,12 +151,17 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements 
         }
         mediaController = null;
         super.onStop();
-        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-            mediaPlayer.stop();
+        try {
+            if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "Could not release mediaplayer", e);
         }
+
         if (mediaPlayer != null) {
-            mediaPlayer.release();
-        }
+                mediaPlayer.release();
+            }
     }
 
     @Override
