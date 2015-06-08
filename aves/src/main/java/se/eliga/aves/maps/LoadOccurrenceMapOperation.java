@@ -62,7 +62,7 @@ public class LoadOccurrenceMapOperation extends
         private boolean showNationalParks = true;
         private boolean showNatureReserves = true;
         private boolean showAnimalReserves = true;
-
+        private boolean showProhibitedEntry = true;
 
         public GBIFMapJSObject(Bird bird, String taxonKey) {
             this.bird = bird;
@@ -135,6 +135,15 @@ public class LoadOccurrenceMapOperation extends
 
         public void setShowNatureReserves(boolean showNatureReserves) {
             this.showNatureReserves = showNatureReserves;
+        }
+
+        @JavascriptInterface
+        public boolean isShowProhibitedEntry() {
+            return showProhibitedEntry;
+        }
+
+        public void setShowProhibitedEntry(boolean showProhibitedEntry) {
+            this.showProhibitedEntry = showProhibitedEntry;
         }
     }
 }
