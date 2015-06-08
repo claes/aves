@@ -4,11 +4,13 @@
 
 package se.eliga.aves.maps;
 
+import android.location.Location;
 import android.os.AsyncTask;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
+import se.eliga.aves.BirdApp;
 import se.eliga.aves.model.Bird;
 
 public class LoadOccurrenceMapOperation extends
@@ -36,7 +38,8 @@ public class LoadOccurrenceMapOperation extends
     protected void onPostExecute(final String result) {
         if (result != null) {
             view.setWebChromeClient(new WebChromeClient());
-            view.addJavascriptInterface(new GBIFMapJSObject(bird, result), "GBIFMapData");
+            view.addJavascriptInterface(new GBIFMapJSObject(bird, result,
+                    ((BirdApp) view.getContext().getApplicationContext()).getLocation()), "GBIFMapData");
             view.loadUrl("file:///android_asset/maps/gbif-occurrences.html");
         }
     }
@@ -63,10 +66,16 @@ public class LoadOccurrenceMapOperation extends
         private boolean showNatureReserves = true;
         private boolean showAnimalReserves = true;
         private boolean showProhibitedEntry = true;
+        private Location location;
 
-        public GBIFMapJSObject(Bird bird, String taxonKey) {
+        public GBIFMapJSObject(Bird bird, String taxonKey, Location location) {
             this.bird = bird;
             this.taxonKey = taxonKey;
+            this.location = location;
+            if (location != null) {
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+            }
         }
 
         @JavascriptInterface
@@ -98,7 +107,11 @@ public class LoadOccurrenceMapOperation extends
 
         @JavascriptInterface
         public int getZoom() {
-            return zoom;
+            if (location == null) {
+                return zoom;
+            } else {
+                return 10;
+            }
         }
 
         public void setZoom(int zoom) {

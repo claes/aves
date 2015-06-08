@@ -5,6 +5,12 @@
 package se.eliga.aves;
 
 import android.app.Application;
+import android.content.Context;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -32,6 +38,8 @@ public class BirdApp extends Application {
 
     private DatabaseHandler dbHandler;
 
+    private Location location;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -39,6 +47,32 @@ public class BirdApp extends Application {
             ACRA.init(this);
         }
         enableHttpResponseCache();
+        enableLocationAwareness();
+    }
+
+    private void enableLocationAwareness() {
+        // Acquire a reference to the system Location Manager
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        // Define a listener that responds to location updates
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                BirdApp.this.location = location;
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+            public void onProviderEnabled(String provider) {}
+
+            public void onProviderDisabled(String provider) {}
+        };
+
+        Criteria criteria = new Criteria();
+        String provider = locationManager.getBestProvider(criteria, false);
+        location = locationManager.getLastKnownLocation(provider);
+
+        // Register the listener with the Location Manager to receive location updates
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
     }
 
     private void enableHttpResponseCache() {
@@ -68,7 +102,10 @@ public class BirdApp extends Application {
 	public DatabaseHandler getDbHandler() {
 		return dbHandler;
 	}
-    
+
+    public Location getLocation() {
+        return location;
+    }
     
 
 }
