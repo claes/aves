@@ -4,28 +4,14 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/position_options"
-        android:orderInCategory="100"
-        android:showAsAction="always"
-        android:title="@string/gbif_occurrence_options">
-        <menu>
-            <group
-                android:id="@+id/position_group"
-                android:checkableBehavior="single" >
-                <item
-                    android:id="@+id/gbif_occurrence_default"
-                    android:checkable="true"
-                    android:orderInCategory="100"
-                    android:showAsAction="always"
-                    android:title="@string/gbif_occurrence_default" />
-                <item
-                    android:id="@+id/gbif_occurrence_current"
-                    android:checkable="true"
-                    android:orderInCategory="100"
-                    android:showAsAction="always"
-                    android:title="@string/gbif_occurrence_current" />
-            </group>
-        </menu>
-    </item>
+            <item
+                android:id="@+id/gbif_occurrence_default"
+                android:orderInCategory="100"
+                android:showAsAction="never"
+                android:title="@string/gbif_occurrence_default" />
+            <item
+                android:id="@+id/gbif_occurrence_current"
+                android:orderInCategory="100"
+                android:showAsAction="never"
+                android:title="@string/gbif_occurrence_current" />
 </menu>

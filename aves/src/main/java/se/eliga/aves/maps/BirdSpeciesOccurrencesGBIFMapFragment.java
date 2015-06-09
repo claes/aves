@@ -48,32 +48,40 @@ public class BirdSpeciesOccurrencesGBIFMapFragment  extends AbstractBirdSpeciesF
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // inflater.inflate(R.menu.gbif_occurence_map_menu, menu);
+        inflater.inflate(R.menu.gbif_occurence_map_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        /* To be continued
         menuItemDefaultPosition = menu.findItem(R.id.gbif_occurrence_default);
         menuItemCurrentPosition = menu.findItem(R.id.gbif_occurrence_current);
-        menuItemDefaultPosition.setChecked(true);
-        */
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.isCheckable()) {
-            menuItemCurrentPosition.setChecked(false);
-            menuItemDefaultPosition.setChecked(false);
-            item.setChecked(true);
+        switch (item.getItemId()) {
+            case R.id.gbif_occurrence_default:
+                loadBird(getCurrentBird());
+                return true;
+            case R.id.gbif_occurrence_current:
+                goToCurrentPosition();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return true;
     }
+
+
 
     @Override
     public void loadBird(Bird bird) {
         new LoadOccurrenceMapOperation(webView, bird).execute(bird.getLatinSpecies());
     }
+
+    public void goToCurrentPosition() {
+        new GoToCurrentPositionOperation(webView).execute();
+    }
+
 }

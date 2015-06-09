@@ -4,13 +4,6 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/audio_options"
-        android:orderInCategory="100"
-        android:showAsAction="always"
-        android:icon="@drawable/ic_menu_white_36dp"
-        android:title="@string/audio_options">
-        <menu>
             <group
                 android:id="@+id/audio_group"
                 android:checkableBehavior="single" >
@@ -18,15 +11,13 @@
                 android:id="@+id/audio_repeat"
                 android:checkable="true"
                 android:orderInCategory="100"
-                android:showAsAction="always"
+                android:showAsAction="never"
                 android:title="@string/audio_repeat" />
             <item
                 android:id="@+id/audio_autonext"
                 android:checkable="true"
                 android:orderInCategory="100"
-                android:showAsAction="always"
+                android:showAsAction="never"
                 android:title="@string/audio_autonext" />
             </group>
-        </menu>
-    </item>
 </menu>

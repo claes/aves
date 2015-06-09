@@ -47,6 +47,7 @@
         var mediumOccurrenceColor = '4292c6';
         var smallOccurrenceColor = '9ecae1';
 
+
 		 function escapeHTML(str) {
 			var div = document.createElement("div");
 			var text = document.createTextNode(str);
@@ -170,6 +171,11 @@ legend.onAdd = function (map) {
 };
 legend.addTo(map);
 */
+
+
+        function setLatLongZoom(lat, long, zoom) {
+            map.setView(new L.LatLng(lat, long), zoom);
+        }
 
 	</script>
 

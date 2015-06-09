@@ -49,8 +49,6 @@
 <string name="drawer_open">Open navigation drawer</string>
 <string name="drawer_close">Close navigation drawer</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="wikipedia_options">Språk</string>
     <string name="wikipedia_swedish">Svenska</string>
     <string name="wikipedia_english">Engelska</string>
@@ -58,7 +56,7 @@
     <string name="search_hint">Artnamn</string>
     <string name="crash_toast_text">Fågelappen kraschade! Vill du mejla kraschrapport?</string>
     <string name="gbif_occurrence_default">Hela Sverige</string>
-    <string name="gbif_occurrence_current">Aktuell position</string>
+    <string name="gbif_occurrence_current">Aktuell region</string>
     <string name="gbif_occurrence_options">Position</string>
 
 </resources>

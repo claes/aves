@@ -72,7 +72,7 @@ public class BirdApp extends Application {
         location = locationManager.getLastKnownLocation(provider);
 
         // Register the listener with the Location Manager to receive location updates
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 600000, 1000, locationListener);
     }
 
     private void enableHttpResponseCache() {

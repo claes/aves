@@ -38,8 +38,7 @@ public class LoadOccurrenceMapOperation extends
     protected void onPostExecute(final String result) {
         if (result != null) {
             view.setWebChromeClient(new WebChromeClient());
-            view.addJavascriptInterface(new GBIFMapJSObject(bird, result,
-                    ((BirdApp) view.getContext().getApplicationContext()).getLocation()), "GBIFMapData");
+            view.addJavascriptInterface(new GBIFMapJSObject(bird, result, 63, 17.5, 4), "GBIFMapData");
             view.loadUrl("file:///android_asset/maps/gbif-occurrences.html");
         }
     }
@@ -58,24 +57,21 @@ public class LoadOccurrenceMapOperation extends
     public class GBIFMapJSObject {
 
         private String taxonKey;
-        private int zoom = 4;
-        private double latitude  = 63;
-        private double longitude = 17.5;
+        private int zoom;
+        private double latitude;
+        private double longitude;
         private Bird bird;
         private boolean showNationalParks = true;
         private boolean showNatureReserves = true;
         private boolean showAnimalReserves = true;
         private boolean showProhibitedEntry = true;
-        private Location location;
 
-        public GBIFMapJSObject(Bird bird, String taxonKey, Location location) {
+        public GBIFMapJSObject(Bird bird, String taxonKey, double latitude, double longitude, int zoom) {
             this.bird = bird;
             this.taxonKey = taxonKey;
-            this.location = location;
-            if (location != null) {
-                latitude = location.getLatitude();
-                longitude = location.getLongitude();
-            }
+            this.latitude = latitude;
+            this.longitude = longitude;
+            this.zoom = zoom;
         }
 
         @JavascriptInterface
@@ -107,11 +103,7 @@ public class LoadOccurrenceMapOperation extends
 
         @JavascriptInterface
         public int getZoom() {
-            if (location == null) {
-                return zoom;
-            } else {
-                return 10;
-            }
+            return zoom;
         }
 
         public void setZoom(int zoom) {
