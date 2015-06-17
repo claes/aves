@@ -92,9 +92,12 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements 
                                     mediaController.show(0);
                                 }
                                 if (mediaPlayer != null) {
-                                    mediaPlayer.start();
+                                    try {
+                                        mediaPlayer.start();
+                                    } catch (Exception e) {
+                                        Log.d(TAG, "Could not start mediaplayer", e);
+                                    }
                                 }
-
                             }
                         });
                     }
@@ -156,12 +159,16 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements 
                 mediaPlayer.stop();
             }
         } catch (Exception e) {
-            Log.d(TAG, "Could not release mediaplayer", e);
+            Log.d(TAG, "Could not stop mediaplayer", e);
         }
 
-        if (mediaPlayer != null) {
+        try {
+            if (mediaPlayer != null) {
                 mediaPlayer.release();
             }
+        } catch (Exception e) {
+            Log.d(TAG, "Could not release mediaplayer", e);
+        }
     }
 
     @Override
@@ -203,13 +210,22 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements 
 
     @Override
     public boolean isPlaying() {
-        return mediaPlayer.isPlaying();
+        try {
+            return mediaPlayer.isPlaying();
+        } catch (Exception e) {
+            Log.d(TAG, "Could not query mediaplayer", e);
+            return false;
+        }
     }
 
     @Override
     public void pause() {
-        if (mediaPlayer.isPlaying())
-            mediaPlayer.pause();
+        try {
+            if (mediaPlayer.isPlaying())
+                mediaPlayer.pause();
+        } catch (Exception e) {
+            Log.d(TAG, "Could not pause mediaplayer", e);
+        }
     }
 
     @Override
@@ -219,7 +235,11 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements 
 
     @Override
     public void start() {
-        mediaPlayer.start();
+        try {
+            mediaPlayer.start();
+        } catch (Exception e) {
+            Log.d(TAG, "Could not start mediaplayer", e);
+        }
     }
 
     @Override
@@ -230,8 +250,12 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements 
         progressBar = (ProgressBar) getActivity()
                 .findViewById(R.id.downloadProgress);
         currentPosition = position;
-        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-            mediaPlayer.stop();
+        try {
+            if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "Could not stop mediaplayer", e);
         }
         initiatePlay(audio);
     }
