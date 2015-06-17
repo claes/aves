@@ -10,13 +10,13 @@
                 android:id="@+id/wikipedia_swedish"
                 android:checkable="true"
                 android:orderInCategory="100"
-                android:showAsAction="always"
+                android:showAsAction="never"
                 android:title="@string/wikipedia_swedish" />
             <item
                 android:id="@+id/wikipedia_english"
                 android:checkable="true"
                 android:orderInCategory="100"
-                android:showAsAction="always"
+                android:showAsAction="never"
                 android:title="@string/wikipedia_english" />
         </group>
 </menu>
