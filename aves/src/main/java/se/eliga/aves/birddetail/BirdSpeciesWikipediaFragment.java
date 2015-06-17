@@ -4,6 +4,8 @@
 
 package se.eliga.aves.birddetail;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import se.eliga.aves.R;
 import se.eliga.aves.model.Bird;
@@ -34,6 +37,17 @@ public class BirdSpeciesWikipediaFragment extends AbstractBirdSpeciesFragment {
         View view = inflater.inflate(R.layout.wikipedia_layout, container, false);
         setHasOptionsMenu(true);
         webView = (WebView) view.findViewById(R.id.webview);
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (Uri.parse(url).getHost().contains("wikipedia.org")) {
+                    return false;
+                }
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(intent);
+                return true;
+            }
+        });
         loadBird(getCurrentBird());
         return view;
     }
