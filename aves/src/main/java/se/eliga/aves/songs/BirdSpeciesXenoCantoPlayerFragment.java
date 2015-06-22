@@ -270,7 +270,7 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements 
             progressBar.setVisibility(ProgressBar.VISIBLE);
             updateForCurrentAudio(audio);
             mediaPlayer.prepareAsync();
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Log.e(TAG, "Could not open " + audio.getAudioURL()
                     + " for playback.", ex);
         }
