@@ -95,6 +95,12 @@
                     android:orderInCategory="100"
                     android:showAsAction="always"
                     android:title="@string/unseen"/>
+                <item
+                    android:id="@+id/unclassified"
+                    android:checkable="true"
+                    android:orderInCategory="100"
+                    android:showAsAction="always"
+                    android:title="@string/unclassified"/>
             </group>
         </menu>
     </item>

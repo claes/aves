@@ -35,7 +35,9 @@
 </string>
     <string name="rare">Raritet
 </string>
-    <string name="unseen">Aldrig observerad
+    <string name="unseen">Ej observerad i Sverige
+</string>
+    <string name="unclassified">Ej Västpalearktis
 </string>
     <string name="non_spontaneous">Icke-spontan
 </string>
@@ -58,5 +60,8 @@
     <string name="gbif_occurrence_default">Hela Sverige</string>
     <string name="gbif_occurrence_current">Aktuell region</string>
     <string name="gbif_occurrence_options">Position</string>
+    <string name="gbif_occurrence_western_palearctis">Västra Palearktis</string>
+    <string name="gbif_show_occurrences">Observationer</string>
+    <string name="gbif_show_distribution">Utbredning</string>
 
 </resources>

@@ -26,6 +26,10 @@ public class BirdSpeciesOccurrencesGBIFMapFragment  extends AbstractBirdSpeciesF
 
     private MenuItem menuItemDefaultPosition;
     private MenuItem menuItemCurrentPosition;
+    private MenuItem menuItemWesternPalearctisPosition;
+    private MenuItem menuItemShowOccurrences;
+    private MenuItem menuItemDistribution;
+
 
     private WebView webView;
 
@@ -57,6 +61,9 @@ public class BirdSpeciesOccurrencesGBIFMapFragment  extends AbstractBirdSpeciesF
         super.onPrepareOptionsMenu(menu);
         menuItemDefaultPosition = menu.findItem(R.id.gbif_occurrence_default);
         menuItemCurrentPosition = menu.findItem(R.id.gbif_occurrence_current);
+        menuItemWesternPalearctisPosition = menu.findItem(R.id.gbif_occurrence_western_palearctis);
+        menuItemShowOccurrences = menu.findItem(R.id.gbif_show_occurrences);
+        menuItemDistribution = menu.findItem(R.id.gbif_show_distribution);
     }
 
     @Override
@@ -68,12 +75,13 @@ public class BirdSpeciesOccurrencesGBIFMapFragment  extends AbstractBirdSpeciesF
             case R.id.gbif_occurrence_current:
                 goToCurrentPosition();
                 return true;
+            case R.id.gbif_occurrence_western_palearctis:
+                goToWesternPalearctis();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
 
     @Override
     public void loadBird(Bird bird) {
@@ -82,6 +90,10 @@ public class BirdSpeciesOccurrencesGBIFMapFragment  extends AbstractBirdSpeciesF
 
     public void goToCurrentPosition() {
         new GoToCurrentPositionOperation(webView).execute();
+    }
+
+    public void goToWesternPalearctis() {
+        new GoToDefinedPositionOperation(webView, 42, 13, 2).execute();
     }
 
 }

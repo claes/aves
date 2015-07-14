@@ -22,19 +22,34 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Database Name
     private static final String DATABASE_NAME = "birdsDb12";
-    public static final String PHYLOGENIC_SORT_COLUMN = "_id";
+
+    public static final String FAMILY_SORTORDER_KEY_COLUMN = "familySortOrder_id";
     public static final String LATIN_ORDER_COLUMN = "latinOrder";
-    public static final String LATIN_FAMILY_COLUMN = "latinFamily";
-    public static final String LATIN_SPECIES_COLUMN = "latinSpecies";
+    public static final String ENGLISH_ORDER_COLUMN = "englishOrder";
     public static final String SWEDISH_ORDER_COLUMN = "swedishOrder";
+    public static final String LATIN_FAMILY_COLUMN = "latinFamily";
+    public static final String ENGLISH_FAMILY_COLUMN = "englishFamily";
     public static final String SWEDISH_FAMILY_COLUMN = "swedishFamily";
+
+    public static final String SPECIES_SORTORDER_KEY_COLUMN = "speciesSortOrder_id";
+    public static final String FAMILY_SORTORDER_FK_COLUMN = "familySortOrder_fk";
+    public static final String LATIN_SPECIES_COLUMN = "latinSpecies";
     public static final String SWEDISH_SPECIES_COLUMN = "swedishSpecies";
     public static final String ENGLISH_SPECIES_COLUMN = "englishSpecies";
-    public static final String STATUS_COLUMN = "status";
+    public static final String DYNTAXA_TAXONID_COLUMN = "dyntaxaTaxonId";
+    public static final String SOF_STATUS_COLUMN = "sofStatus";
+    public static final String SWEDISH_REDLIST_CATEGORY_COLUMN = "swedishRedlistCategory";
+
+    public static final String IOC_LATIN_SPECIES_COLUMN = "iocLatinSpecies";
+    public static final String BIRDLIFE_LATIN_SPECIES_COLUMN = "birdlifeLatinSpecies";
+    public static final String BIRDLIFE_RECOGNIZED_SPECIES_COLUMN = "birdlifeRecognizedSpecies";
+    public static final String GLOBAL_REDLIST_CATEGORY_COLUMN = "globalRedlistCategory";
+    public static final String SIS_RECID_COLUMN = "sisRecId";
+    public static final String SPC_RECID_COLUMN = "spcRecId";
 
     private final Context context;
 
@@ -48,25 +63,63 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         try {
-            db.execSQL("create table species(" +
-            		PHYLOGENIC_SORT_COLUMN + " text, " +
-            		LATIN_ORDER_COLUMN + " text, " +
-            		LATIN_FAMILY_COLUMN + " text, " +
-            		LATIN_SPECIES_COLUMN + " text, " +
-            		SWEDISH_ORDER_COLUMN + " text, " +
-            		SWEDISH_FAMILY_COLUMN + " text, " +
-            		SWEDISH_SPECIES_COLUMN + " text, " +
-            		ENGLISH_SPECIES_COLUMN + " text, " +
-            		STATUS_COLUMN + " text)");
+            db.execSQL("create table ordersAndFamilies(" +
+                    FAMILY_SORTORDER_KEY_COLUMN + " text, " +
+                    LATIN_ORDER_COLUMN + " text, " +
+                    ENGLISH_ORDER_COLUMN + " text, " +
+                    SWEDISH_ORDER_COLUMN + " text, " +
+                    LATIN_FAMILY_COLUMN + " text, " +
+                    ENGLISH_FAMILY_COLUMN + " text, " +
+                    SWEDISH_FAMILY_COLUMN + " text)");
 
-            InputStream is = context.getAssets().open("birdspecies.txt");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String columns[] = line.split(";");
-                db.execSQL("insert into species values (?,?,?,?,?,?,?,?,?)", columns);
+            db.execSQL("create table speciesData(" +
+                    SPECIES_SORTORDER_KEY_COLUMN + " text, " +
+                    FAMILY_SORTORDER_FK_COLUMN + " text, " +
+                    LATIN_SPECIES_COLUMN + " text, " +
+                    ENGLISH_SPECIES_COLUMN + " text, " +
+                    SWEDISH_SPECIES_COLUMN + " text, " +
+                    DYNTAXA_TAXONID_COLUMN + " text, " +
+                    SOF_STATUS_COLUMN + " text, " +
+                    SWEDISH_REDLIST_CATEGORY_COLUMN + " text)");
+
+            db.execSQL("create table birdlifeData(" +
+                    IOC_LATIN_SPECIES_COLUMN + " text, " +
+                    BIRDLIFE_LATIN_SPECIES_COLUMN + " text, " +
+                    BIRDLIFE_RECOGNIZED_SPECIES_COLUMN + " text, " +
+                    GLOBAL_REDLIST_CATEGORY_COLUMN + " text, " +
+                    SIS_RECID_COLUMN + " text, " +
+                    SPC_RECID_COLUMN + " text)");
+
+            {
+                InputStream is = context.getAssets().open("data/ordersAndFamilies.txt");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String columns[] = line.split(";");
+                    db.execSQL("insert into ordersAndFamilies values(?,?,?,?,?,?,?)", columns);
+                }
+                reader.close();
             }
-            reader.close();
+            {
+                InputStream is = context.getAssets().open("data/iocAndSofData.txt");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String columns[] = line.split(";");
+                    db.execSQL("insert into speciesData values(?,?,?,?,?,?,?,?)", columns);
+                }
+                reader.close();
+            }
+            {
+                InputStream is = context.getAssets().open("data/birdLifeData.txt");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String columns[] = line.split(";");
+                    db.execSQL("insert into birdlifeData values(?,?,?,?,?,?)", columns);
+                }
+                reader.close();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -76,7 +129,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
-        db.execSQL("drop table if exists species");
+        db.execSQL("drop table if exists ordersAndFamilies");
+        db.execSQL("drop table if exists speciesData");
+        db.execSQL("drop table if exists birdlifeData");
 
         // Create tables again
         onCreate(db);
@@ -87,30 +142,35 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor;
 
-        StringBuffer query = new StringBuffer("select * from species where 1=1");
+        StringBuffer query = new StringBuffer("select * from ordersAndFamilies inner join speciesData" +
+                " on ordersAndFamilies." + FAMILY_SORTORDER_KEY_COLUMN + " = speciesData." + FAMILY_SORTORDER_FK_COLUMN +
+                " where 1=1");
         if (filterString != null) {
             query.append(" AND " + SWEDISH_SPECIES_COLUMN + " like '%" + filterString + "%' ");
         }
         if (filterFamily != null) {
             query.append(" AND " + SWEDISH_FAMILY_COLUMN + " = '" + filterFamily + "' ");
         }
-        query.append(" order by " + PHYLOGENIC_SORT_COLUMN);
-        cursor = db.rawQuery(query.toString(), null);
+        query.append(" order by speciesData." + SPECIES_SORTORDER_KEY_COLUMN);
+        String queryString = query.toString();
+        cursor = db.rawQuery(queryString, null);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
 
                 Bird bird = new Bird();
-                bird.setPhylogeneticSortId(cursor.getInt(cursor.getColumnIndex(PHYLOGENIC_SORT_COLUMN)));
+                bird.setPhylogeneticSortId(cursor.getInt(cursor.getColumnIndex(SPECIES_SORTORDER_KEY_COLUMN)));
                 bird.setLatinOrder(cursor.getString(cursor.getColumnIndex(LATIN_ORDER_COLUMN)));
                 bird.setLatinFamily(cursor.getString(cursor.getColumnIndex(LATIN_FAMILY_COLUMN)));
                 bird.setLatinSpecies(cursor.getString(cursor.getColumnIndex(LATIN_SPECIES_COLUMN)));
-                bird.setSwedishOrder(cursor.getString(cursor.getColumnIndex(SWEDISH_ORDER_COLUMN))); 
-                bird.setSwedishFamily(cursor.getString(cursor.getColumnIndex(SWEDISH_FAMILY_COLUMN))); 
-                bird.setSwedishSpecies(cursor.getString(cursor.getColumnIndex(SWEDISH_SPECIES_COLUMN))); 
+                bird.setSwedishOrder(cursor.getString(cursor.getColumnIndex(SWEDISH_ORDER_COLUMN)));
+                bird.setSwedishFamily(cursor.getString(cursor.getColumnIndex(SWEDISH_FAMILY_COLUMN)));
+                bird.setSwedishSpecies(cursor.getString(cursor.getColumnIndex(SWEDISH_SPECIES_COLUMN)));
                 bird.setEnglishSpecies(cursor.getString(cursor.getColumnIndex(ENGLISH_SPECIES_COLUMN)));
-                bird.setStatus(Bird.Status.fromString(cursor.getString(cursor.getColumnIndex(STATUS_COLUMN))));                
+                bird.setDyntaxaTaxonId(cursor.getString(cursor.getColumnIndex(DYNTAXA_TAXONID_COLUMN)));
+                bird.setSofStatus(Bird.SofStatus.fromString(cursor.getString(cursor.getColumnIndex(SOF_STATUS_COLUMN))));
+                bird.setSwedishRedlistCategory(Bird.RedlistCategory.fromString(cursor.getString(cursor.getColumnIndex(SWEDISH_REDLIST_CATEGORY_COLUMN))));
                 if (bird.getSwedishSpecies() != null) {
                     birds.add(bird);
                 }
@@ -119,7 +179,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return birds;
     }
 
-    
+
 
 //  private static String DB_PATH = "/data/data/" + "se.eliga.aves" + "/databases/";
 //  private SQLiteDatabase database;
@@ -221,5 +281,5 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 //  public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 //
 //  }
-    
+
 }

@@ -4,14 +4,29 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-            <item
+    <item
                 android:id="@+id/gbif_occurrence_default"
                 android:orderInCategory="100"
                 android:showAsAction="never"
                 android:title="@string/gbif_occurrence_default" />
-            <item
-                android:id="@+id/gbif_occurrence_current"
-                android:orderInCategory="100"
-                android:showAsAction="never"
-                android:title="@string/gbif_occurrence_current" />
+    <item
+        android:id="@+id/gbif_occurrence_current"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/gbif_occurrence_current" />
+    <item
+        android:id="@+id/gbif_occurrence_western_palearctis"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/gbif_occurrence_western_palearctis" />
+    <item
+        android:id="@+id/gbif_show_occurrences"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/gbif_show_occurrences" />
+    <item
+        android:id="@+id/gbif_show_distribution"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/gbif_show_distribution" />
 </menu>

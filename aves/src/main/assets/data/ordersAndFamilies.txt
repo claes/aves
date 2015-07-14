@@ -1,0 +1,240 @@
+1;Tinamiformes;Tinamous;Tinamofåglar;Tinamidae;Tinamous;Tinamoer
+49;Struthioniformes;Ostriches;Strutsfåglar;Struthionidae;Ostriches;Strutsar
+52;Rheiformes;Rheas;Nandufåglar;Rheidae;Rheas;Nanduer
+55;Casuariiformes;Cassowaries, Emus;Kasuarfåglar;Casuariidae;Cassowaries;Kasuarer
+59;Casuariiformes;Cassowaries, Emus;Kasuarfåglar;Dromaiidae;Emu;Emuer
+61;Apterygiformes;Kiwis;Kiwifåglar;Apterygidae;Kiwis;Kivier
+67;Anseriformes;Waterfowl and Screamers;Andfåglar;Anhimidae;Screamers;Värnfåglar
+71;Anseriformes;Waterfowl and Screamers;Andfåglar;Anseranatidae;Magpie Goose;Skatgäss
+73;Anseriformes;Waterfowl and Screamers;Andfåglar;Anatidae;Ducks, Geese and Swans;Änder
+247;Galliformes;Pheasants, Guineafowl,Cracids;Hönsfåglar;Megapodiidae;Megapodes;Storfotshöns
+269;Galliformes;Pheasants, Guineafowl,Cracids;Hönsfåglar;Cracidae;Chachalacas, Curassows and Guans;Trädhöns
+325;Galliformes;Pheasants, Guineafowl,Cracids;Hönsfåglar;Numididae;Guineafowl;Pärlhöns
+332;Galliformes;Pheasants, Guineafowl,Cracids;Hönsfåglar;Odontophoridae;New World Quail;Tofsvaktlar
+367;Galliformes;Pheasants, Guineafowl,Cracids;Hönsfåglar;Phasianidae;Pheasants and allies;Fasanfåglar
+550;Gaviiformes;Loons;Lomfåglar;Gaviidae;Loons;Lommar
+556;Sphenisciformes;Penguins;Pingvinfåglar;Spheniscidae;Penguins;Pingviner
+575;Procellariiformes;Albatrosses, Shearwaters, Storm-Petrels;Stormfåglar;Oceanitidae;Austral Storm Petrels;Sydstormsvalor
+585;Procellariiformes;Albatrosses, Shearwaters, Storm-Petrels;Stormfåglar;Diomedeidae;Albatrosses;Albatrosser
+607;Procellariiformes;Albatrosses, Shearwaters, Storm-Petrels;Stormfåglar;Hydrobatidae;Northern Storm Petrels;Nordstormsvalor
+624;Procellariiformes;Albatrosses, Shearwaters, Storm-Petrels;Stormfåglar;Procellariidae;Petrels, Shearwaters;Liror
+717;Procellariiformes;Albatrosses, Shearwaters, Storm-Petrels;Stormfåglar;Pelecanoididae;Diving Petrels;Dykpetreller
+722;Podicipediformes;Grebes;Doppingfåglar;Podicipedidae;Grebes;Doppingar
+746;Phoenicopteriformes;Flamingos;Flamingofåglar;Phoenicopteridae;Flamingos;Flamingor
+753;Phaethontiformes;Tropicbirds;Tropikfåglar;Phaethontidae;Tropicbirds;Tropikfåglar
+757;Ciconiiformes;Storks;Storkfåglar;Ciconiidae;Storks;Storkar
+777;Pelecaniformes;Pelicans, Cormorants, Gannets;Pelikanfåglar;Threskiornithidae;Ibises, Spoonbills;Ibisar
+814;Pelecaniformes;Pelicans, Cormorants, Gannets;Pelikanfåglar;Ardeidae;Herons, Bitterns;Hägrar
+887;Pelecaniformes;Pelicans, Cormorants, Gannets;Pelikanfåglar;Scopidae;Hamerkop;Skuggstorkar
+889;Pelecaniformes;Pelicans, Cormorants, Gannets;Pelikanfåglar;Balaenicipitidae;Shoebill;Träskonäbbar
+891;Pelecaniformes;Pelicans, Cormorants, Gannets;Pelikanfåglar;Pelecanidae;Pelicans;Pelikaner
+900;Suliformes;Frigatebirds, Boobies and Gannets, Cormorants and Darters;Sulfåglar;Fregatidae;Frigatebirds;Fregattfåglar
+906;Suliformes;Frigatebirds, Boobies and Gannets, Cormorants and Darters;Sulfåglar;Sulidae;Gannets, Boobies;Sulor
+917;Suliformes;Frigatebirds, Boobies and Gannets, Cormorants and Darters;Sulfåglar;Phalacrocoracidae;Cormorants, Shags;Skarvar
+959;Suliformes;Frigatebirds, Boobies and Gannets, Cormorants and Darters;Sulfåglar;Anhingidae;Anhingas, Darters;Ormhalsfåglar
+964;Accipitriformes;Hawks, Eagles, Vultures, and Allies;Hökfåglar;Cathartidae;New World Vultures;Nya världens gamar
+972;Accipitriformes;Hawks, Eagles, Vultures, and Allies;Hökfåglar;Sagittariidae;Secretarybird;Sekreterarfåglar
+974;Accipitriformes;Hawks, Eagles, Vultures, and Allies;Hökfåglar;Pandionidae;Ospreys;Fiskgjusar
+977;Accipitriformes;Hawks, Eagles, Vultures, and Allies;Hökfåglar;Accipitridae;Kites, Hawks and Eagles;Hökartade rovfåglar
+1233;Otidiformes;Bustards;Trappfåglar;Otididae;Bustards;Trappar
+1260;Mesitornithiformes;Mesites;Mesitfåglar;Mesitornithidae;Mesites;Mesiter
+1264;Cariamiformes;Seriemas;Seriemafåglar;Cariamidae;Seriemas;Seriemor
+1267;Eurypygiformes;Kagu, Sunbittern;Solrallfåglar;Rhynochetidae;Kagu;Kaguer
+1269;Eurypygiformes;Kagu, Sunbittern;Solrallfåglar;Eurypygidae;Sunbittern;Solrallar
+1271;Gruiformes;Rails, Cranes, Bustards;Tran- och rallfåglar;Sarothruridae;Flufftails;Dunrallar
+1281;Gruiformes;Rails, Cranes, Bustards;Tran- och rallfåglar;Heliornithidae;Finfoots;Simrallar
+1285;Gruiformes;Rails, Cranes, Bustards;Tran- och rallfåglar;Rallidae;Rails, Crakes and Coots;Rallar
+1440;Gruiformes;Rails, Cranes, Bustards;Tran- och rallfåglar;Psophiidae;Trumpeters;Trumpetare
+1444;Gruiformes;Rails, Cranes, Bustards;Tran- och rallfåglar;Gruidae;Cranes;Tranor
+1460;Gruiformes;Rails, Cranes, Bustards;Tran- och rallfåglar;Aramidae;Limpkin;Ralltranor
+1462;Charadriiformes;Gulls, Terns, Alcids, Sandpipers;Vadarfåglar;Turnicidae;Buttonquail;Springhöns
+1480;Charadriiformes;Gulls, Terns, Alcids, Sandpipers;Vadarfåglar;Burhinidae;Stone-curlews, Thick-knees;Tjockfotar
+1491;Charadriiformes;Gulls, Terns, Alcids, Sandpipers;Vadarfåglar;Chionidae;Sheathbills;Slidnäbbar
+1494;Charadriiformes;Gulls, Terns, Alcids, Sandpipers;Vadarfåglar;Pluvianellidae;Magellanic Plover;Magellanpipare
+1496;Charadriiformes;Gulls, Terns, Alcids, Sandpipers;Vadarfåglar;Haematopodidae;Oystercatchers;Strandskator
+1509;Charadriiformes;Gulls, Terns, Alcids, Sandpipers;Vadarfåglar;Dromadidae;Crab-plover;Hägerpipare
+1511;Charadriiformes;Gulls, Terns, Alcids, Sandpipers;Vadarfåglar;Ibidorhynchidae;Ibisbill;Ibisnäbbar
+1513;Charadriiformes;Gulls, Terns, Alcids, Sandpipers;Vadarfåglar;Recurvirostridae;Stilts, Avocets;Skärfläckor
+1524;Charadriiformes;Gulls, Terns, Alcids, Sandpipers;Vadarfåglar;Charadriidae;Plovers;Pipare
+1592;Charadriiformes;Gulls, Terns, Alcids, Sandpipers;Vadarfåglar;Pluvianidae;Egyptian Plover;Krokodilväktare
+1594;Charadriiformes;Gulls, Terns, Alcids, Sandpipers;Vadarfåglar;Rostratulidae;Painted-snipes;Rallbeckasiner
+1598;Charadriiformes;Gulls, Terns, Alcids, Sandpipers;Vadarfåglar;Jacanidae;Jacanas;Jaçanor
+1607;Charadriiformes;Gulls, Terns, Alcids, Sandpipers;Vadarfåglar;Pedionomidae;Plains-wanderer;Stäpplöpare
+1609;Charadriiformes;Gulls, Terns, Alcids, Sandpipers;Vadarfåglar;Thinocoridae;Seedsnipes;Frösnäppor
+1614;Charadriiformes;Gulls, Terns, Alcids, Sandpipers;Vadarfåglar;Scolopacidae;Sandpipers, Snipes;Snäppor
+1711;Charadriiformes;Gulls, Terns, Alcids, Sandpipers;Vadarfåglar;Glareolidae;Coursers, Pratincoles;Vadarsvalor
+1729;Charadriiformes;Gulls, Terns, Alcids, Sandpipers;Vadarfåglar;Laridae;Gulls, Terns and Skimmers;Måsfåglar
+1832;Charadriiformes;Gulls, Terns, Alcids, Sandpipers;Vadarfåglar;Stercorariidae;Skuas;Labbar
+1840;Charadriiformes;Gulls, Terns, Alcids, Sandpipers;Vadarfåglar;Alcidae;Auks;Alkor
+1866;Pterocliformes;Sandgrouse;Flyghönsfåglar;Pteroclidae;Sandgrouse;Flyghöns
+1883;Columbiformes;Pigeons, Doves, Solitaires;Duvfåglar;Columbidae;Pigeons, Doves;Duvor
+2218;Opisthocomiformes;Hoatzin;Hoatzinfåglar;Opisthocomidae;Hoatzin;Hoatziner
+2220;Musophagiformes;Turacos;Turakofåglar;Musophagidae;Turacos;Turakoer
+2244;Cuculiformes;Cuckoos, Anis, Coucals;Gökfåglar;Cuculidae;Cuckoos;Gökar
+2394;Strigiformes;Owls;Ugglefåglar;Tytonidae;Barn Owls;Tornuggglor
+2414;Strigiformes;Owls;Ugglefåglar;Strigidae;Owls;Ugglor
+2636;Caprimulgiformes;Nightjars, Pootoos, Frogmouths;Skärrfåglar;Podargidae;Frogmouths;Grodmunnar
+2653;Caprimulgiformes;Nightjars, Pootoos, Frogmouths;Skärrfåglar;Steatornithidae;Oilbird;Oljefåglar
+2655;Caprimulgiformes;Nightjars, Pootoos, Frogmouths;Skärrfåglar;Nyctibiidae;Potoos;Potoer
+2663;Caprimulgiformes;Nightjars, Pootoos, Frogmouths;Skärrfåglar;Caprimulgidae;Nightjars;Nattskärror
+2762;Apodiformes;Swifts and Hummingbirds;Seglar- och kolibrifåglar;Aegothelidae;Owlet-nightjars;Uggleskärror
+2773;Apodiformes;Swifts and Hummingbirds;Seglar- och kolibrifåglar;Hemiprocnidae;Treeswifts;Trädseglare
+2778;Apodiformes;Swifts and Hummingbirds;Seglar- och kolibrifåglar;Apodidae;Swifts;Seglare
+2885;Apodiformes;Swifts and Hummingbirds;Seglar- och kolibrifåglar;Trochilidae;Hummingbirds;Kolibrier
+3233;Coliiformes;Mousebirds;Musfåglar;Coliidae;Mousebirds;Musfåglar
+3240;Trogoniformes;Trogons;Trogonfåglar;Trogonidae;Trogons;Trogoner
+3284;Leptosomiformes;Cuckoo Roller;Kurolfåglar;Leptosomidae;Cuckoo Roller;Kuroler
+3286;Coraciiformes;Kingfishers, Bee-Eaters, Rollers;Praktfåglar;Coraciidae;Rollers;Blåkråkor
+3299;Coraciiformes;Kingfishers, Bee-Eaters, Rollers;Praktfåglar;Brachypteraciidae;Ground Rollers;Markblåkråkor
+3305;Coraciiformes;Kingfishers, Bee-Eaters, Rollers;Praktfåglar;Alcedinidae;Kingfishers;Kungsfiskare
+3399;Coraciiformes;Kingfishers, Bee-Eaters, Rollers;Praktfåglar;Todidae;Todies;Todier
+3405;Coraciiformes;Kingfishers, Bee-Eaters, Rollers;Praktfåglar;Momotidae;Motmots;Motmoter
+3420;Coraciiformes;Kingfishers, Bee-Eaters, Rollers;Praktfåglar;Meropidae;Bee-eaters;Biätare
+3448;Bucerotiformes;Hoopoes, Hornbills and Allies;Härfåglar och näshornsfåglar;Upupidae;Hoopoes;Härfåglar
+3453;Bucerotiformes;Hoopoes, Hornbills and Allies;Härfåglar och näshornsfåglar;Phoeniculidae;Wood Hoopoes;Skratthärfåglar
+3463;Bucerotiformes;Hoopoes, Hornbills and Allies;Härfåglar och näshornsfåglar;Bucorvidae;Ground Hornbills;Hornkorpar
+3466;Bucerotiformes;Hoopoes, Hornbills and Allies;Härfåglar och näshornsfåglar;Bucerotidae;Hornbills;Näshornsfåglar
+3526;Piciformes;Woodpeckers, Toucans, Honeyguides;Hackspettartade fåglar;Galbulidae;Jacamars;Jakamarer
+3545;Piciformes;Woodpeckers, Toucans, Honeyguides;Hackspettartade fåglar;Bucconidae;Puffbirds;Trögfåglar
+3583;Piciformes;Woodpeckers, Toucans, Honeyguides;Hackspettartade fåglar;Capitonidae;New World Barbets;Amerikanska barbetter
+3599;Piciformes;Woodpeckers, Toucans, Honeyguides;Hackspettartade fåglar;Semnornithidae;Toucan Barbets;Tukanbarbetter
+3602;Piciformes;Woodpeckers, Toucans, Honeyguides;Hackspettartade fåglar;Ramphastidae;Toucans;Tukaner
+3649;Piciformes;Woodpeckers, Toucans, Honeyguides;Hackspettartade fåglar;Megalaimidae;Asian Barbets;Asiatiska barbetter
+3682;Piciformes;Woodpeckers, Toucans, Honeyguides;Hackspettartade fåglar;Lybiidae;African Barbets;Afrikanska barbetter
+3725;Piciformes;Woodpeckers, Toucans, Honeyguides;Hackspettartade fåglar;Indicatoridae;Honeyguides;Honungsvisare
+3743;Piciformes;Woodpeckers, Toucans, Honeyguides;Hackspettartade fåglar;Picidae;Woodpeckers;Hackspettar
+3978;Falconiformes;Falcons;Falkfåglar;Falconidae;Caracaras, Falcons;Falkar
+4046;Psittaciformes;Parrots, Cockatoos, Lories;Papegojfåglar;Strigopidae;New Zealand Parrots;Maoripapegojor
+4051;Psittaciformes;Parrots, Cockatoos, Lories;Papegojfåglar;Cacatuidae;Cockatoos;Kakaduor
+4073;Psittaciformes;Parrots, Cockatoos, Lories;Papegojfåglar;Psittacidae;Parrots;Papegojor
+4443;Passeriformes;Perching Birds;Tättingar;Acanthisittidae;New Zealand Wrens;Klippsmygar
+4448;Passeriformes;Perching Birds;Tättingar;Eurylaimidae;Broadbills;Brednäbbar
+4469;Passeriformes;Perching Birds;Tättingar;Pittidae;Pittas;Juveltrastar
+4503;Passeriformes;Perching Birds;Tättingar;Furnariidae;Ovenbirds;Ugnfåglar
+4816;Passeriformes;Perching Birds;Tättingar;Thamnophilidae;Antbirds;Myrfåglar
+5052;Passeriformes;Perching Birds;Tättingar;Formicariidae;Antthrushes;Myrtrastar
+5065;Passeriformes;Perching Birds;Tättingar;Grallariidae;Antpittas;Myrpittor
+5119;Passeriformes;Perching Birds;Tättingar;Conopophagidae;Gnateaters;Knottfåglar
+5131;Passeriformes;Perching Birds;Tättingar;Rhinocryptidae;Tapaculos;Tapakuler
+5190;Passeriformes;Perching Birds;Tättingar;Melanopareiidae;Crescentchests;Månbröst
+5195;Passeriformes;Perching Birds;Tättingar;Tyrannidae;Tyrant Flycatchers;Tyranner
+5628;Passeriformes;Perching Birds;Tättingar;Cotingidae;Cotingas;Kotingor
+5695;Passeriformes;Perching Birds;Tättingar;Pipridae;Manakins;Manakiner
+5748;Passeriformes;Perching Birds;Tättingar;Tityridae;Tityras, Becards;Tityror
+5794;Passeriformes;Perching Birds;Tättingar;Menuridae;Lyrebirds;Lyrfåglar
+5797;Passeriformes;Perching Birds;Tättingar;Atrichornithidae;Scrubbirds;Snårfåglar
+5800;Passeriformes;Perching Birds;Tättingar;Ptilonorhynchidae;Bowerbirds;Lövsalsfåglar
+5821;Passeriformes;Perching Birds;Tättingar;Climacteridae;Australasian Treecreepers;Eukalyptuskrypare
+5829;Passeriformes;Perching Birds;Tättingar;Maluridae;Australasian Wrens;Blåsmygar
+5859;Passeriformes;Perching Birds;Tättingar;Meliphagidae;Honeyeaters;Honungsfåglar
+6047;Passeriformes;Perching Birds;Tättingar;Dasyornithidae;Bristlebirds;Borstsmygar
+6051;Passeriformes;Perching Birds;Tättingar;Pardalotidae;Pardalotes;Pardaloter
+6056;Passeriformes;Perching Birds;Tättingar;Acanthizidae;Australasian Warblers;Taggnäbbar
+6122;Passeriformes;Perching Birds;Tättingar;Pomatostomidae;Australasian Babblers;Bågnäbbar
+6128;Passeriformes;Perching Birds;Tättingar;Orthonychidae;Logrunners;Marksmygar
+6132;Passeriformes;Perching Birds;Tättingar;Cnemophilidae;Satinbirds;Satängfåglar
+6136;Passeriformes;Perching Birds;Tättingar;Melanocharitidae;Berrypeckers, Longbills;Bärpickare
+6147;Passeriformes;Perching Birds;Tättingar;Paramythiidae;Painted Berrypeckers;Mesbärpickare
+6150;Passeriformes;Perching Birds;Tättingar;Callaeidae;New Zealand Wattlebirds;Vårtkråkor
+6156;Passeriformes;Perching Birds;Tättingar;Notiomystidae;Stitchbird;Hihier
+6158;Passeriformes;Perching Birds;Tättingar;Psophodidae;Whipbirds, Jewel-babblers and Quail-thrushes;Snärtfåglar
+6176;Passeriformes;Perching Birds;Tättingar;Platysteiridae;Wattle-eyes, Batises;Flikögon
+6210;Passeriformes;Perching Birds;Tättingar;Tephrodornithidae;Woodshrikes and allies;Skogstörnskator
+6219;Passeriformes;Perching Birds;Tättingar;Prionopidae;Helmetshrikes;Hjälmtörnskator
+6228;Passeriformes;Perching Birds;Tättingar;Malaconotidae;Bushshrikes;Busktörnskator
+6279;Passeriformes;Perching Birds;Tättingar;Machaerirhynchidae;Boatbills;Båtnäbbar
+6282;Passeriformes;Perching Birds;Tättingar;Vangidae;Vangas;Vangor
+6304;Passeriformes;Perching Birds;Tättingar;Pityriaseidae;Bristlehead;Borstskrikor
+6306;Passeriformes;Perching Birds;Tättingar;Artamidae;Woodswallows, butcherbirds and allies;Svalstarar
+6331;Passeriformes;Perching Birds;Tättingar;Rhagologidae;Mottled Whistler;Bärätare
+6333;Passeriformes;Perching Birds;Tättingar;Aegithinidae;Ioras;Ioror
+6338;Passeriformes;Perching Birds;Tättingar;Campephagidae;Cuckooshrikes;Gråfåglar
+6431;Passeriformes;Perching Birds;Tättingar;Mohouidae;Whiteheads;Mohuor
+6435;Passeriformes;Perching Birds;Tättingar;Neosittidae;Sittellas;Sitellor
+6439;Passeriformes;Perching Birds;Tättingar;Eulacestomidae;Ploughbill;Plognäbbar
+6441;Passeriformes;Perching Birds;Tättingar;Oreoicidae;Australo-Papuan Bellbirds;Klockfåglar
+6445;Passeriformes;Perching Birds;Tättingar;Pachycephalidae;Whistlers and allies;Visslare
+6502;Passeriformes;Perching Birds;Tättingar;Laniidae;Shrikes;Törnskator
+6536;Passeriformes;Perching Birds;Tättingar;Vireonidae;Vireos, Greenlets;Vireor
+6600;Passeriformes;Perching Birds;Tättingar;Oriolidae;Figbirds, Orioles;Gyllingar
+6639;Passeriformes;Perching Birds;Tättingar;Dicruridae;Drongos;Drongoer
+6665;Passeriformes;Perching Birds;Tättingar;Rhipiduridae;Fantails;Solfjäderstjärtar
+6716;Passeriformes;Perching Birds;Tättingar;Monarchidae;Monarchs;Monarker
+6816;Passeriformes;Perching Birds;Tättingar;Corvidae;Crows, Jays;Kråkfåglar
+6947;Passeriformes;Perching Birds;Tättingar;Corcoracidae;Australian Mudnesters;Murarkråkor
+6950;Passeriformes;Perching Birds;Tättingar;Melampittidae;Melampittas;Svartpittor
+6953;Passeriformes;Perching Birds;Tättingar;Ifritidae;Ifrita;Ifriter
+6955;Passeriformes;Perching Birds;Tättingar;Paradisaeidae;Birds-of-paradise;Paradisfåglar
+6997;Passeriformes;Perching Birds;Tättingar;Petroicidae;Australasian Robins;Sydhakar
+7044;Passeriformes;Perching Birds;Tättingar;Picathartidae;Rockfowl;Kråktrastar
+7047;Passeriformes;Perching Birds;Tättingar;Chaetopidae;Rockjumpers;Klipphoppare
+7050;Passeriformes;Perching Birds;Tättingar;Eupetidae;Rail-babbler;Ralltrastar
+7052;Passeriformes;Perching Birds;Tättingar;Bombycillidae;Waxwings;Sidensvansar
+7056;Passeriformes;Perching Birds;Tättingar;Ptiliogonatidae;Silky-flycatchers;Silkesflugsnappare
+7061;Passeriformes;Perching Birds;Tättingar;Hypocoliidae;Hypocolius;Hypokolier
+7063;Passeriformes;Perching Birds;Tättingar;Dulidae;Palmchat;Palmtrastar
+7065;Passeriformes;Perching Birds;Tättingar;Mohoidae;Oos;Ooer †
+7071;Passeriformes;Perching Birds;Tättingar;Hylocitreidae;Hylocitrea;Hylocitreor
+7073;Passeriformes;Perching Birds;Tättingar;Stenostiridae;Fairy Flycatchers;Feflugsnappare
+7083;Passeriformes;Perching Birds;Tättingar;Paridae;Tits, Chickadees;Mesar
+7148;Passeriformes;Perching Birds;Tättingar;Remizidae;Penduline Tits;Pungmesar
+7160;Passeriformes;Perching Birds;Tättingar;Nicatoridae;Nicators;Nikatorer
+7164;Passeriformes;Perching Birds;Tättingar;Panuridae;Bearded Reedling;Skäggmesar
+7166;Passeriformes;Perching Birds;Tättingar;Alaudidae;Larks;Lärkor
+7264;Passeriformes;Perching Birds;Tättingar;Pycnonotidae;Bulbuls;Bulbyler
+7416;Passeriformes;Perching Birds;Tättingar;Hirundinidae;Swallows, Martins;Svalor
+7505;Passeriformes;Perching Birds;Tättingar;Pnoepygidae;Wren-babblers;Kupvingar
+7511;Passeriformes;Perching Birds;Tättingar;Macrosphenidae;Crombecs, African Warblers;Långnäbbar
+7530;Passeriformes;Perching Birds;Tättingar;Cettiidae;Cettia Bush Warblers and allies;Cettisångare
+7563;Passeriformes;Perching Birds;Tättingar;Scotocercidae;Streaked Scrub Warbler ;Snårsångare
+7565;Passeriformes;Perching Birds;Tättingar;Erythrocercidae;Yellow Flycatchers;Spretstjärtar
+7569;Passeriformes;Perching Birds;Tättingar;Incertae Sedis 1;Family Uncertain;Incertae sedis 1
+7573;Passeriformes;Perching Birds;Tättingar;Aegithalidae;Bushtits;Stjärtmesar
+7587;Passeriformes;Perching Birds;Tättingar;Phylloscopidae;Leaf Warblers and allies;Lövsångare
+7665;Passeriformes;Perching Birds;Tättingar;Acrocephalidae;Reed Warblers and allies;Rörsångare
+7727;Passeriformes;Perching Birds;Tättingar;Locustellidae;Grassbirds and allies;Gräsfåglar
+7788;Passeriformes;Perching Birds;Tättingar;Donacobiidae;Black-capped Donacobius ;Donakobier
+7790;Passeriformes;Perching Birds;Tättingar;Bernieridae;Malagasy Warblers;Madagaskarsångare
+7802;Passeriformes;Perching Birds;Tättingar;Cisticolidae;Cisticolas and allies;Cistikolor
+7961;Passeriformes;Perching Birds;Tättingar;Timaliidae;Babblers;Timalior
+8017;Passeriformes;Perching Birds;Tättingar;Pellorneidae;Fulvettas, Ground Babblers;Marktimalior
+8088;Passeriformes;Perching Birds;Tättingar;Leiothrichidae;Laughingthrushes;Fnittertrastar
+8222;Passeriformes;Perching Birds;Tättingar;Sylviidae;Sylviid Babblers;Sylvider
+8292;Passeriformes;Perching Birds;Tättingar;Zosteropidae;White-eyes;Glasögonfåglar
+8421;Passeriformes;Perching Birds;Tättingar;Arcanatoridae;Dapple-throat and allies;Fläckhakar
+8425;Passeriformes;Perching Birds;Tättingar;Promeropidae;Sugarbirds;Sockerfåglar
+8428;Passeriformes;Perching Birds;Tättingar;Irenidae;Fairy-bluebirds;Blåfåglar
+8431;Passeriformes;Perching Birds;Tättingar;Regulidae;Goldcrests, Kinglets;Kungsfåglar
+8438;Passeriformes;Perching Birds;Tättingar;Elachuridae;Elachuras;Pärlsmygar
+8440;Passeriformes;Perching Birds;Tättingar;Hyliotidae;Hyliotas;Hyliotor
+8445;Passeriformes;Perching Birds;Tättingar;Troglodytidae;Wrens;Gärdsmygar
+8530;Passeriformes;Perching Birds;Tättingar;Polioptilidae;Gnatcatchers;Myggsnappare
+8549;Passeriformes;Perching Birds;Tättingar;Sittidae;Nuthatches;Nötväckor
+8578;Passeriformes;Perching Birds;Tättingar;Tichodromidae;Wallcreeper;Murkrypare
+8580;Passeriformes;Perching Birds;Tättingar;Certhiidae;Treecreepers;Trädkrypare
+8592;Passeriformes;Perching Birds;Tättingar;Mimidae;Mockingbirds, Thrashers;Härmtrastar
+8627;Passeriformes;Perching Birds;Tättingar;Sturnidae;Starlings, Rhabdornis;Starar
+8751;Passeriformes;Perching Birds;Tättingar;Buphagidae;Oxpeckers;Oxhackare
+8754;Passeriformes;Perching Birds;Tättingar;Turdidae;Thrushes;Trastar
+8922;Passeriformes;Perching Birds;Tättingar;Muscicapidae;Chats, Old World Flycatchers;Flugsnappare
+9244;Passeriformes;Perching Birds;Tättingar;Cinclidae;Dippers;Strömstarar
+9250;Passeriformes;Perching Birds;Tättingar;Chloropseidae;Leafbirds;Bladfåglar
+9262;Passeriformes;Perching Birds;Tättingar;Dicaeidae;Flowerpeckers;Blomsterpickare
+9311;Passeriformes;Perching Birds;Tättingar;Nectariniidae;Sunbirds;Solfåglar
+9455;Passeriformes;Perching Birds;Tättingar;Passeridae;Old World Sparrows, Snowfinches;Sparvfinkar
+9507;Passeriformes;Perching Birds;Tättingar;Ploceidae;Weavers, Widowbirds;Vävare
+9617;Passeriformes;Perching Birds;Tättingar;Estrildidae;Waxbills, Munias and allies;Astrilder
+9759;Passeriformes;Perching Birds;Tättingar;Viduidae;Indigobirds, Whydahs;Änkor
+9780;Passeriformes;Perching Birds;Tättingar;Peucedramidae;Olive Warbler;Granlöpare
+9782;Passeriformes;Perching Birds;Tättingar;Prunellidae;Accentors;Järnsparvar
+9796;Passeriformes;Perching Birds;Tättingar;Motacillidae;Wagtails, Pipits;Ärlor
+9862;Passeriformes;Perching Birds;Tättingar;Urocynchramidae;Przevalski's Finch;Rosenstjärtar
+9864;Passeriformes;Perching Birds;Tättingar;Fringillidae;Finches;Finkar 
+10084;Passeriformes;Perching Birds;Tättingar;Parulidae;New World Warblers;Skogssångare
+10204;Passeriformes;Perching Birds;Tättingar;Incertae Sedis 2;Incertae Sedis 2;Incertae sedis 2
+10211;Passeriformes;Perching Birds;Tättingar;Icteridae;Oropendolas, Orioles and Blackbirds;Trupialer
+10321;Passeriformes;Perching Birds;Tättingar;Coerebidae;Bananaquit;Banansmygar
+10323;Passeriformes;Perching Birds;Tättingar;Emberizidae;Buntings, New World Sparrows and allies;Fältsparvar
+10504;Passeriformes;Perching Birds;Tättingar;Thraupidae;Tanagers and allies;Tangaror
+10879;Passeriformes;Perching Birds;Tättingar;Calcariidae;Longspurs, Snow Buntings;Sporrsparvar
+10886;Passeriformes;Perching Birds;Tättingar;Cardinalidae;Cardinals, Grosbeaks and allies;Kardinaler

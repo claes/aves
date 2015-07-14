@@ -14,25 +14,21 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import android.app.ActionBar;
 import android.app.Activity;
-import android.database.DataSetObserver;
-import android.view.Gravity;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.SectionIndexer;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
+import se.eliga.aves.Constants;
 import se.eliga.aves.R;
+import se.eliga.aves.model.DatabaseHandler;
 import se.eliga.aves.model.Taxon;
 import se.eliga.aves.model.Bird;
-import se.eliga.aves.model.DatabaseHandler;
 import se.eliga.aves.model.Family;
 
 /**
@@ -55,6 +51,7 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 	private boolean showRegularVisitor = true;
 	private boolean showRare = true;
 	private boolean showUnseen = false;
+	private boolean showUnclassified = false;
 	private boolean showNonSpontaneous = false;
 	private String filterString = null;
 	private String filterFamily = null;
@@ -94,6 +91,18 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 	public BirdListAdapter(Activity context, DatabaseHandler databaseHandler) {
 		this.context = context;
 		this.databaseHandler = databaseHandler;
+	}
+
+	public void initialize(SharedPreferences settings) {
+		setShowBreeding(settings.getBoolean(Constants.BIRD_LIST_SHOW_BREEDING, true));
+		setShowBreedingUnclear(settings.getBoolean(Constants.BIRD_LIST_SHOW_BREEDING_UNCLEAR, true));
+		setShowMigrant(settings.getBoolean(Constants.BIRD_LIST_SHOW_MIGRANT, true));
+		setShowNonSpontaneous(settings.getBoolean(Constants.BIRD_LIST_SHOW_NON_SPONTANEOUS, false));
+		setShowRare(settings.getBoolean(Constants.BIRD_LIST_SHOW_RARE, true));
+		setShowUnseen(settings.getBoolean(Constants.BIRD_LIST_SHOW_UNSEEN, false));
+		setShowUnclassified(settings.getBoolean(Constants.BIRD_LIST_SHOW_UNCLASSIFIED, false));
+		String sortOption = settings.getString(Constants.BIRD_LIST_SHOW_OPTION, BirdListAdapter.SortOption.SWEDISH.getCode());
+		setSortOption(BirdListAdapter.SortOption.lookupByCode(sortOption));
 	}
 
 	@Override
@@ -206,18 +215,20 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 		familyList.clear();
 
 		for (Bird bird : localBirdList) {
-			if ((showBreeding && Bird.Status.BREEDING.equals(bird.getStatus()))
-					|| (showBreedingUnclear && Bird.Status.BREEDING_UNCLEAR
-							.equals(bird.getStatus()))
-					|| (showMigrant && Bird.Status.MIGRANT.equals(bird
-							.getStatus()))
-					|| (showRegularVisitor && Bird.Status.REGULAR_VISITOR
-							.equals(bird.getStatus()))
-					|| (showUnseen && Bird.Status.UNSEEN.equals(bird
-							.getStatus()))
-					|| (showNonSpontaneous && Bird.Status.NON_SPONTANEOUS
-							.equals(bird.getStatus()))
-					|| (showRare && Bird.Status.RARE.equals(bird.getStatus()))) {
+			if ((showBreeding && Bird.SofStatus.BREEDING.equals(bird.getSofStatus()))
+					|| (showBreedingUnclear && Bird.SofStatus.BREEDING_UNCLEAR
+							.equals(bird.getSofStatus()))
+					|| (showMigrant && Bird.SofStatus.MIGRANT.equals(bird
+					.getSofStatus()))
+					|| (showRegularVisitor && Bird.SofStatus.REGULAR_VISITOR
+							.equals(bird.getSofStatus()))
+					|| (showUnseen && Bird.SofStatus.UNSEEN.equals(bird
+					.getSofStatus()))
+					|| (showUnclassified && Bird.SofStatus.UNCLASSIFIED.equals(bird
+					.getSofStatus()))
+					|| (showNonSpontaneous && Bird.SofStatus.NON_SPONTANEOUS
+							.equals(bird.getSofStatus()))
+					|| (showRare && Bird.SofStatus.RARE.equals(bird.getSofStatus()))) {
 
 				birds.put(bird.getLatinSpecies(), bird);
 
@@ -289,6 +300,14 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 
 	public void setShowUnseen(boolean showUnseen) {
 		this.showUnseen = showUnseen;
+	}
+
+	public boolean isShowUnclassified() {
+		return showUnclassified;
+	}
+
+	public void setShowUnclassified(boolean showUnclassified) {
+		this.showUnclassified = showUnclassified;
 	}
 
 	public boolean isShowNonSpontaneous() {

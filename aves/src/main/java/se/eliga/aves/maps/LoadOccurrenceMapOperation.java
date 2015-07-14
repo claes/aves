@@ -14,7 +14,7 @@ import se.eliga.aves.BirdApp;
 import se.eliga.aves.model.Bird;
 
 public class LoadOccurrenceMapOperation extends
-        AsyncTask<String, Void, String> {
+        AsyncTask<String, Void, String[]> {
 
     private WebView view;
     private Bird bird;
@@ -25,9 +25,10 @@ public class LoadOccurrenceMapOperation extends
     }
 
     @Override
-    protected String doInBackground(String... params) {
+    protected String[] doInBackground(String... params) {
         try {
-            return GBIFLoader.getSwedishTaxonKey(params[0]);
+            String birdLifeSpcRecId = GBIFLoader.getBirdLifeSpcRecId(params[0]);
+            return new String[] {birdLifeSpcRecId};
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -35,10 +36,10 @@ public class LoadOccurrenceMapOperation extends
     }
 
     @Override
-    protected void onPostExecute(final String result) {
+    protected void onPostExecute(final String[] result) {
         if (result != null) {
             view.setWebChromeClient(new WebChromeClient());
-            view.addJavascriptInterface(new GBIFMapJSObject(bird, result, 63, 17.5, 4), "GBIFMapData");
+            view.addJavascriptInterface(new GBIFMapJSObject(bird, bird.getDyntaxaTaxonId(), result[0], 63, 17.5, 4, true, false), "GBIFMapData");
             view.loadUrl("file:///android_asset/maps/gbif-occurrences.html");
         }
     }
@@ -56,31 +57,49 @@ public class LoadOccurrenceMapOperation extends
      */
     public class GBIFMapJSObject {
 
-        private String taxonKey;
+        private String swedishTaxonKey;
+        private String birdLifeSpcRecId;
         private int zoom;
         private double latitude;
         private double longitude;
         private Bird bird;
+        private boolean showOccurrences = true;
+        private boolean showDistribution = false;
         private boolean showNationalParks = true;
         private boolean showNatureReserves = true;
         private boolean showAnimalReserves = true;
         private boolean showProhibitedEntry = true;
 
-        public GBIFMapJSObject(Bird bird, String taxonKey, double latitude, double longitude, int zoom) {
+        public GBIFMapJSObject(Bird bird, String taxonKey, String birdLifeSpcRecId,
+                               double latitude, double longitude, int zoom,
+                               boolean showOccurrences, boolean showDistribution) {
             this.bird = bird;
-            this.taxonKey = taxonKey;
+            this.swedishTaxonKey = taxonKey;
+            this.birdLifeSpcRecId = birdLifeSpcRecId;
             this.latitude = latitude;
             this.longitude = longitude;
             this.zoom = zoom;
+            this.showOccurrences = showOccurrences;
+            this.showDistribution = showDistribution;
+        }
+
+
+        @JavascriptInterface
+        public String getSwedishTaxonKey() {
+            return swedishTaxonKey;
+        }
+
+        public void setSwedishTaxonKey(String swedishTaxonKey) {
+            this.swedishTaxonKey = swedishTaxonKey;
         }
 
         @JavascriptInterface
-        public String getTaxonKey() {
-            return taxonKey;
+        public String getBirdLifeSpcRecId() {
+            return birdLifeSpcRecId;
         }
 
-        public void setTaxonKey(String taxonKey) {
-            this.taxonKey = taxonKey;
+        public void setBirdLifeSpcRecId(String birdLifeSpcRecId) {
+            this.birdLifeSpcRecId = birdLifeSpcRecId;
         }
 
         @JavascriptInterface
@@ -149,6 +168,24 @@ public class LoadOccurrenceMapOperation extends
 
         public void setShowProhibitedEntry(boolean showProhibitedEntry) {
             this.showProhibitedEntry = showProhibitedEntry;
+        }
+
+        @JavascriptInterface
+        public boolean isShowDistribution() {
+            return showDistribution;
+        }
+
+        public void setShowDistribution(boolean showDistribution) {
+            this.showDistribution = showDistribution;
+        }
+
+        @JavascriptInterface
+        public boolean isShowOccurrences() {
+            return showOccurrences;
+        }
+
+        public void setShowOccurrences(boolean showOccurrences) {
+            this.showOccurrences = showOccurrences;
         }
     }
 }

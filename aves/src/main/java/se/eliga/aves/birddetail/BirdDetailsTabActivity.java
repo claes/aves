@@ -5,6 +5,7 @@
 package se.eliga.aves.birddetail;
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
@@ -18,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TabWidget;
 
 import se.eliga.aves.BirdApp;
+import se.eliga.aves.Constants;
 import se.eliga.aves.R;
 import se.eliga.aves.birdlist.BirdListFragment;
 import se.eliga.aves.birdlist.BirdListSpinnerAdapter;
@@ -87,6 +89,7 @@ public class BirdDetailsTabActivity extends FragmentActivity {
 
 		BirdListSpinnerAdapter birdListSpinnerAdapter = createAdapter();
 		birdListSpinnerAdapter.setFilterFamily(swedishFamily);
+		birdListSpinnerAdapter.initialize(getSharedPreferences(Constants.BIRD_APP_SETTINGS, Context.MODE_PRIVATE));
 		birdListSpinnerAdapter.refresh();
 		birdListSpinnerAdapter.notifyDataSetChanged();
 
