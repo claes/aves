@@ -23,7 +23,7 @@ import se.eliga.aves.Constants;
 import se.eliga.aves.R;
 import se.eliga.aves.birdlist.BirdListFragment;
 import se.eliga.aves.birdlist.BirdListSpinnerAdapter;
-import se.eliga.aves.maps.BirdSpeciesOccurrencesGBIFMapFragment;
+import se.eliga.aves.maps.MapFragment;
 import se.eliga.aves.model.Bird;
 import se.eliga.aves.model.DatabaseHandler;
 import se.eliga.aves.photos.BirdSpeciesFlickrGalleryFragment;
@@ -73,7 +73,7 @@ public class BirdDetailsTabActivity extends FragmentActivity {
 		tabHost.addTab(
 				tabHost.newTabSpec("Karta").setIndicator("Karta",
 						getResources().getDrawable(android.R.drawable.star_on)),
-				BirdSpeciesOccurrencesGBIFMapFragment.class, bundle);
+				MapFragment.class, bundle);
 
 		TabWidget tabWidget = (TabWidget) findViewById(android.R.id.tabs);
 		LinearLayout linearLayout = (LinearLayout) tabWidget.getParent();

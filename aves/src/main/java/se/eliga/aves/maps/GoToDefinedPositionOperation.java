@@ -18,11 +18,11 @@ public class GoToDefinedPositionOperation extends
         AsyncTask<String, Void, String> {
 
     private WebView view;
-    private int latitude;
-    private int longitude;
+    private double latitude;
+    private double longitude;
     private int zoom;
 
-    public GoToDefinedPositionOperation(WebView context, int latitude, int longitude, int zoom) {
+    public GoToDefinedPositionOperation(WebView context, double latitude, double longitude, int zoom) {
         this.view = context;
         this.longitude = longitude;
         this.latitude = latitude;

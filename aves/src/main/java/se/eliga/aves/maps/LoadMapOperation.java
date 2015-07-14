@@ -4,14 +4,12 @@
 
 package se.eliga.aves.maps;
 
-import android.location.Location;
 import android.os.AsyncTask;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
 import se.eliga.aves.BirdApp;
-import se.eliga.aves.birdlist.BirdListAdapter;
 import se.eliga.aves.model.Bird;
 import se.eliga.aves.model.DatabaseHandler;
 
@@ -20,11 +18,17 @@ public class LoadMapOperation extends
 
     private WebView view;
     private Bird bird;
+    private double lat;
+    private double lng;
+    private int zoom;
     private MapType mapType;
 
-    public LoadMapOperation(WebView context, Bird bird, MapType mapType) {
+    public LoadMapOperation(WebView context, Bird bird, MapType mapType, double lat, double lng, int zoom) {
         this.view = context;
         this.bird = bird;
+        this.lat = lat;
+        this.lng = lng;
+        this.zoom = zoom;
         this.mapType = mapType;
     }
 
@@ -45,7 +49,7 @@ public class LoadMapOperation extends
     protected void onPostExecute(final String[] result) {
         if (result != null) {
             view.setWebChromeClient(new WebChromeClient());
-            view.addJavascriptInterface(new GBIFMapJSObject(bird, result[0], result[1], 63, 17.5, 4,
+            view.addJavascriptInterface(new GBIFMapJSObject(bird, result[0], result[1], lat, lng, zoom,
                     MapType.OCCURRENCE.equals(mapType),
                     MapType.DISTRIBUTION.equals(mapType)), "GBIFMapData");
             view.loadUrl("file:///android_asset/maps/gbif-occurrences.html");
@@ -197,8 +201,5 @@ public class LoadMapOperation extends
         }
     }
 
-    public static enum MapType {
-        OCCURRENCE,
-        DISTRIBUTION;
-    }
+
 }
