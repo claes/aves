@@ -59,24 +59,36 @@ public class BirdSpeciesOccurrencesGBIFMapFragment  extends AbstractBirdSpeciesF
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        menuItemDefaultPosition = menu.findItem(R.id.gbif_occurrence_default);
-        menuItemCurrentPosition = menu.findItem(R.id.gbif_occurrence_current);
-        menuItemWesternPalearctisPosition = menu.findItem(R.id.gbif_occurrence_western_palearctis);
+        menuItemDefaultPosition = menu.findItem(R.id.gbif_region_sweden);
+        menuItemCurrentPosition = menu.findItem(R.id.gbif_region_current_position);
+        menuItemWesternPalearctisPosition = menu.findItem(R.id.gbif_region_western_palearctis);
         menuItemShowOccurrences = menu.findItem(R.id.gbif_show_occurrences);
         menuItemDistribution = menu.findItem(R.id.gbif_show_distribution);
+        menuItemShowOccurrences.setChecked(true);
+        menuItemDistribution.setChecked(false);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.gbif_occurrence_default:
+            case R.id.gbif_region_sweden:
                 loadBird(getCurrentBird());
                 return true;
-            case R.id.gbif_occurrence_current:
+            case R.id.gbif_region_current_position:
                 goToCurrentPosition();
                 return true;
-            case R.id.gbif_occurrence_western_palearctis:
+            case R.id.gbif_region_western_palearctis:
                 goToWesternPalearctis();
+                return true;
+            case R.id.gbif_show_occurrences:
+                menuItemShowOccurrences.setChecked(true);
+                menuItemDistribution.setChecked(false);
+                loadBird(getCurrentBird());
+                return true;
+            case R.id.gbif_show_distribution:
+                menuItemShowOccurrences.setChecked(false);
+                menuItemDistribution.setChecked(true);
+                loadBird(getCurrentBird());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -85,7 +97,8 @@ public class BirdSpeciesOccurrencesGBIFMapFragment  extends AbstractBirdSpeciesF
 
     @Override
     public void loadBird(Bird bird) {
-        new LoadOccurrenceMapOperation(webView, bird).execute(bird.getLatinSpecies());
+        new LoadMapOperation(webView, bird, (menuItemShowOccurrences == null || menuItemShowOccurrences.isChecked()) ?
+                LoadMapOperation.MapType.OCCURRENCE : LoadMapOperation.MapType.DISTRIBUTION).execute(bird.getLatinSpecies());
     }
 
     public void goToCurrentPosition() {

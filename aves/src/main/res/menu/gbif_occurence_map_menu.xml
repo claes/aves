@@ -5,17 +5,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-                android:id="@+id/gbif_occurrence_default"
+                android:id="@+id/gbif_region_sweden"
                 android:orderInCategory="100"
                 android:showAsAction="never"
                 android:title="@string/gbif_occurrence_default" />
     <item
-        android:id="@+id/gbif_occurrence_current"
+        android:id="@+id/gbif_region_current_position"
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/gbif_occurrence_current" />
     <item
-        android:id="@+id/gbif_occurrence_western_palearctis"
+        android:id="@+id/gbif_region_western_palearctis"
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/gbif_occurrence_western_palearctis" />

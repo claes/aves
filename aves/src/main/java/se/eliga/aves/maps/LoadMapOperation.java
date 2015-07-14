@@ -11,24 +11,30 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
 import se.eliga.aves.BirdApp;
+import se.eliga.aves.birdlist.BirdListAdapter;
 import se.eliga.aves.model.Bird;
+import se.eliga.aves.model.DatabaseHandler;
 
-public class LoadOccurrenceMapOperation extends
+public class LoadMapOperation extends
         AsyncTask<String, Void, String[]> {
 
     private WebView view;
     private Bird bird;
+    private MapType mapType;
 
-    public LoadOccurrenceMapOperation(WebView context, Bird bird) {
+    public LoadMapOperation(WebView context, Bird bird, MapType mapType) {
         this.view = context;
         this.bird = bird;
+        this.mapType = mapType;
     }
 
     @Override
     protected String[] doInBackground(String... params) {
         try {
-            String birdLifeSpcRecId = GBIFLoader.getBirdLifeSpcRecId(params[0]);
-            return new String[] {birdLifeSpcRecId};
+            String swedishTaxonKey = GBIFLoader.getSwedishTaxonKey(params[0]);
+            DatabaseHandler dbHandler = ((BirdApp) view.getContext().getApplicationContext()).getDbHandler();
+            String birdLifeSpcRecId = dbHandler.getSpcRecId(bird.getLatinSpecies());
+            return new String[] {swedishTaxonKey, birdLifeSpcRecId};
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -39,7 +45,9 @@ public class LoadOccurrenceMapOperation extends
     protected void onPostExecute(final String[] result) {
         if (result != null) {
             view.setWebChromeClient(new WebChromeClient());
-            view.addJavascriptInterface(new GBIFMapJSObject(bird, bird.getDyntaxaTaxonId(), result[0], 63, 17.5, 4, true, false), "GBIFMapData");
+            view.addJavascriptInterface(new GBIFMapJSObject(bird, result[0], result[1], 63, 17.5, 4,
+                    MapType.OCCURRENCE.equals(mapType),
+                    MapType.DISTRIBUTION.equals(mapType)), "GBIFMapData");
             view.loadUrl("file:///android_asset/maps/gbif-occurrences.html");
         }
     }
@@ -187,5 +195,10 @@ public class LoadOccurrenceMapOperation extends
         public void setShowOccurrences(boolean showOccurrences) {
             this.showOccurrences = showOccurrences;
         }
+    }
+
+    public static enum MapType {
+        OCCURRENCE,
+        DISTRIBUTION;
     }
 }
