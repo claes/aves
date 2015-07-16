@@ -48,7 +48,7 @@ public class BirdDetailsTabActivity extends FragmentActivity {
 
 
 		Bundle bundle = new Bundle(1);
-		bundle.putString(BirdSpeciesWikipediaFragment.ENGLISH_SPECIES,
+		bundle.putString(BirdSpeciesWebFragment.ENGLISH_SPECIES,
 				englishSpecies);
 		bundle.putString(BirdSpeciesXenoCantoPlayerFragment.LATIN_SPECIES,
 				latinSpecies);
@@ -60,7 +60,7 @@ public class BirdDetailsTabActivity extends FragmentActivity {
 		tabHost.addTab(
 				tabHost.newTabSpec("Wikipedia").setIndicator("Wikipedia",
 						getResources().getDrawable(android.R.drawable.star_on)),
-				BirdSpeciesWikipediaFragment.class, bundle);
+				BirdSpeciesWebFragment.class, bundle);
 		tabHost.addTab(
 				tabHost.newTabSpec("Flickr").setIndicator("Flickr",
 						getResources().getDrawable(android.R.drawable.star_on)),

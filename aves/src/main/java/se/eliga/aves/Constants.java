@@ -22,4 +22,5 @@ public class Constants {
 	public static final String BIRD_AUDIO_AUTONEXT = "birdAudioAutoNext";
 	public static final String BIRD_MAP_REGION = "birdMapRegion";
 	public static final String BIRD_MAP_TYPE = "birdMapType";
+	public static final String BIRD_WEB_TYPE = "birdWebType";
 }

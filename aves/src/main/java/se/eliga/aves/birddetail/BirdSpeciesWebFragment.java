@@ -25,7 +25,7 @@ import se.eliga.aves.model.Bird;
 /**
  * Created by Claes on 2015-05-12.
  */
-public class BirdSpeciesWikipediaFragment extends AbstractBirdSpeciesFragment {
+public class BirdSpeciesWebFragment extends AbstractBirdSpeciesFragment {
 
     public static final String LATIN_SPECIES = "LATIN_SPECIES";
     public static final String ENGLISH_SPECIES = "ENGLISH_SPECIES";
@@ -66,34 +66,58 @@ public class BirdSpeciesWikipediaFragment extends AbstractBirdSpeciesFragment {
         super.onPrepareOptionsMenu(menu);
         menuItemSwedish = menu.findItem(R.id.wikipedia_swedish);
         menuItemEnglish = menu.findItem(R.id.wikipedia_english);
-        menuItemSwedish.setChecked(true);
+        SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, 0);
+        WebType webType = WebType.lookupByCode(settings.getString(Constants.BIRD_WEB_TYPE, WebType.WIKIPEDIA_SV.getCode()));
+        switch (webType) {
+            case WIKIPEDIA_EN:
+                menuItemEnglish.setChecked(true);
+                menuItemSwedish.setChecked(false);
+                break;
+            case WIKIPEDIA_SV:
+                menuItemEnglish.setChecked(false);
+                menuItemSwedish.setChecked(true);
+                break;
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.isCheckable()) {
-            menuItemEnglish.setChecked(false);
-            menuItemSwedish.setChecked(false);
-            item.setChecked(true);
-            loadBird(getCurrentBird());
+        switch (item.getItemId()) {
+            case R.id.wikipedia_swedish:
+                menuItemEnglish.setChecked(false);
+                menuItemSwedish.setChecked(true);
+                saveWebType(WebType.WIKIPEDIA_SV);
+                break;
+            case R.id.wikipedia_english:
+                menuItemEnglish.setChecked(true);
+                menuItemSwedish.setChecked(false);
+                saveWebType(WebType.WIKIPEDIA_EN);
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
         }
+        loadBird(getCurrentBird());
         return true;
     }
 
-    /*
-    private void saveRegionChoice(MapRegion region) {
+    private void saveWebType(WebType webType) {
         SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, 0);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putString(Constants.BIRD_WEB_CHOICE, region.getCode());
+        editor.putString(Constants.BIRD_WEB_TYPE, webType.getCode());
         editor.commit();
     }
-    */
 
     public void loadBird(Bird bird) {
         String url;
-        if (menuItemEnglish != null && menuItemEnglish.isChecked()) {
+        SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, 0);
+        WebType webType = WebType.lookupByCode(settings.getString(Constants.BIRD_WEB_TYPE, WebType.WIKIPEDIA_SV.getCode()));
+
+        switch (webType) {
+            case WIKIPEDIA_EN:
             url = getEnglishUrl(bird.getLatinSpecies(), bird.getEnglishSpecies());
-        } else {
+            break;
+            case WIKIPEDIA_SV:
+            default:
             url = getSwedishUrl(bird.getLatinSpecies(), bird.getEnglishSpecies());
         }
         webView.loadUrl(url);
