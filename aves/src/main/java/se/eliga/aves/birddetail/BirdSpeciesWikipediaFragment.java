@@ -5,6 +5,7 @@
 package se.eliga.aves.birddetail;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,7 +17,9 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import se.eliga.aves.Constants;
 import se.eliga.aves.R;
+import se.eliga.aves.maps.MapRegion;
 import se.eliga.aves.model.Bird;
 
 /**
@@ -77,6 +80,14 @@ public class BirdSpeciesWikipediaFragment extends AbstractBirdSpeciesFragment {
         return true;
     }
 
+    /*
+    private void saveRegionChoice(MapRegion region) {
+        SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(Constants.BIRD_WEB_CHOICE, region.getCode());
+        editor.commit();
+    }
+    */
 
     public void loadBird(Bird bird) {
         String url;
@@ -90,12 +101,12 @@ public class BirdSpeciesWikipediaFragment extends AbstractBirdSpeciesFragment {
 
     protected String getSwedishUrl(String latinSpecies, String englishSpecies) {
         String modifiedSpecies = latinSpecies.replaceAll(" ", "_");
-        return "http://sv.m.wikipedia.org/wiki/"+modifiedSpecies;
+        return "http://sv.m.wikipedia.org/wiki/"+modifiedSpecies + "#section_0";
     }
 
     protected String getEnglishUrl(String latinSpecies, String englishSpecies) {
         String modifiedSpecies = englishSpecies.replaceAll(" ", "_");
-        return "http://en.m.wikipedia.org/wiki/"+modifiedSpecies;
+        return "http://en.m.wikipedia.org/wiki/"+modifiedSpecies + "#section_0";
     }
 
 }

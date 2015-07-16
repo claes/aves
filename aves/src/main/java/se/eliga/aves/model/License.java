@@ -4,6 +4,8 @@
 
 package se.eliga.aves.model;
 
+import se.eliga.aves.BuildConfig;
+
 /**
  * Created by Claes on 2015-05-15.
  */
@@ -53,14 +55,15 @@ public enum License {
         return null;
     }
 
-
     public boolean isUsable() {
-        return true;
-        /*
-        return (this == BY_NC) || (this == BY_NC_SA) || (this == BY_NC_ND)
-                || (this == BY) || (this == BY_SA) || (this == BY_ND)
-                || (this == NO_KNOWN);
-                */
+        if ("release".equals(BuildConfig.BUILD_TYPE)) {
+            return (this == BY_NC) || (this == BY_NC_SA) || (this == BY_NC_ND)
+                    || (this == BY) || (this == BY_SA) || (this == BY_ND)
+                    || (this == NO_KNOWN);
+        } else {
+            return true;
+        }
+
     }
 
 }

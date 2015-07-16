@@ -16,6 +16,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import se.eliga.aves.BuildConfig;
 import se.eliga.aves.Constants;
 import se.eliga.aves.R;
 import se.eliga.aves.birddetail.AbstractBirdSpeciesFragment;
@@ -65,8 +66,16 @@ public class MapFragment extends AbstractBirdSpeciesFragment {
         menuItemWesternPalearctisPosition = menu.findItem(R.id.map_region_western_palearctis);
         menuItemShowOccurrences = menu.findItem(R.id.map_show_gbif_occurrences);
         menuItemDistribution = menu.findItem(R.id.map_show_distribution);
+        if ("release".equals(BuildConfig.BUILD_TYPE)) {
+            menuItemShowOccurrences.setVisible(false);
+            menuItemDistribution.setVisible(false);
+        } else {
+            menuItemShowOccurrences.setVisible(true);
+            menuItemDistribution.setVisible(true);
+        }
 
-        SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, 0);
+
+            SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, 0);
         MapType mapType = MapType.lookupByCode(settings.getString(Constants.BIRD_MAP_TYPE, MapType.OCCURRENCE.getCode()));
 
         menuItemShowOccurrences.setChecked(MapType.OCCURRENCE.equals(mapType));
@@ -114,6 +123,9 @@ public class MapFragment extends AbstractBirdSpeciesFragment {
         SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, 0);
         MapRegion mapRegion = MapRegion.lookupByCode(settings.getString(Constants.BIRD_MAP_REGION, MapRegion.SWEDEN.getCode()));
         MapType mapType = MapType.lookupByCode(settings.getString(Constants.BIRD_MAP_TYPE, MapType.OCCURRENCE.getCode()));
+        if ("release".equals(BuildConfig.BUILD_TYPE)) {
+            mapType = MapType.OCCURRENCE;
+        }
         double lat;
         double lng;
         int zoom;
