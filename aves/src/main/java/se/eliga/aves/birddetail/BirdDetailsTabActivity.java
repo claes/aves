@@ -21,6 +21,7 @@ import android.widget.TabWidget;
 import se.eliga.aves.BirdApp;
 import se.eliga.aves.Constants;
 import se.eliga.aves.R;
+import se.eliga.aves.birdlist.BirdListAdapter;
 import se.eliga.aves.birdlist.BirdListFragment;
 import se.eliga.aves.birdlist.BirdListSpinnerAdapter;
 import se.eliga.aves.maps.MapFragment;
@@ -90,6 +91,10 @@ public class BirdDetailsTabActivity extends FragmentActivity {
 		BirdListSpinnerAdapter birdListSpinnerAdapter = createAdapter();
 		birdListSpinnerAdapter.setFilterFamily(swedishFamily);
 		birdListSpinnerAdapter.initialize(getSharedPreferences(Constants.BIRD_APP_SETTINGS, Context.MODE_PRIVATE));
+		if (BirdListAdapter.SortOption.PHYLOGENETIC.equals(birdListSpinnerAdapter.getSortOption())) {
+			birdListSpinnerAdapter.setSortOption(BirdListAdapter.SortOption.SWEDISH);
+		}
+
 		birdListSpinnerAdapter.refresh();
 		birdListSpinnerAdapter.notifyDataSetChanged();
 
