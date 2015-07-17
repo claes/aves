@@ -6,9 +6,14 @@
 buildscript {
     repositories {
         jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.2.2'
+        classpath 'com.android.tools.build:gradle:1.2.3'
+        classpath('fr.avianey.androidsvgdrawable:gradle-plugin:1.0.2') {
+            // should be excluded to avoid conflict
+            exclude group: 'xerces'
+        }
     }
 }
 

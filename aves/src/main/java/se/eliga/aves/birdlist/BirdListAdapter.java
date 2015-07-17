@@ -158,6 +158,16 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 			holder.latinSpecies.setText(bird.getLatinSpecies());
 			holder.swedishSpecies.setText(bird.getSwedishSpecies());
 			holder.englishSpecies.setText(bird.getEnglishSpecies());
+
+			try {
+				int redlistImageResource = context.getResources().getIdentifier("redlist_" +
+						bird.getSwedishRedlistCategory().getText().toLowerCase(),
+						"drawable", context.getApplicationInfo().packageName);
+				holder.image.setImageResource(redlistImageResource);
+			} catch (Exception e) {
+				holder.image.setImageResource(0);
+			}
+
 		} else if (taxon instanceof Family) {
 			Family family = (Family) taxon;
 			FamilyHolder holder = null;
