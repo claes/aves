@@ -72,15 +72,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     ENGLISH_FAMILY_COLUMN + " text, " +
                     SWEDISH_FAMILY_COLUMN + " text)");
 
+            db.execSQL("create index cafIdx on ordersAndFamilies(" +FAMILY_SORTORDER_KEY_COLUMN + ")");
+
             db.execSQL("create table speciesData(" +
-                    SPECIES_SORTORDER_KEY_COLUMN + " text, " +
-                    FAMILY_SORTORDER_FK_COLUMN + " text, " +
-                    LATIN_SPECIES_COLUMN + " text, " +
-                    ENGLISH_SPECIES_COLUMN + " text, " +
-                    SWEDISH_SPECIES_COLUMN + " text, " +
-                    DYNTAXA_TAXONID_COLUMN + " text, " +
-                    SOF_STATUS_COLUMN + " text, " +
-                    SWEDISH_REDLIST_CATEGORY_COLUMN + " text)");
+            SPECIES_SORTORDER_KEY_COLUMN + " text, " +
+            FAMILY_SORTORDER_FK_COLUMN + " text, " +
+            LATIN_SPECIES_COLUMN + " text, " +
+            ENGLISH_SPECIES_COLUMN + " text, " +
+            SWEDISH_SPECIES_COLUMN + " text, " +
+            DYNTAXA_TAXONID_COLUMN + " text, " +
+            SOF_STATUS_COLUMN + " text, " +
+            SWEDISH_REDLIST_CATEGORY_COLUMN + " text)");
+
+            db.execSQL("create index sdIdx1 on speciesData(" + SPECIES_SORTORDER_KEY_COLUMN + ")");
+            db.execSQL("create index sdIdx2 on speciesData(" + FAMILY_SORTORDER_FK_COLUMN + ")");
 
             db.execSQL("create table birdlifeData(" +
                     IOC_LATIN_SPECIES_COLUMN + " text, " +
