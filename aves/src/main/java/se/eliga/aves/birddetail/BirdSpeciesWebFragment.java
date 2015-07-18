@@ -19,7 +19,6 @@ import android.webkit.WebViewClient;
 
 import se.eliga.aves.Constants;
 import se.eliga.aves.R;
-import se.eliga.aves.maps.MapRegion;
 import se.eliga.aves.model.Bird;
 
 /**
@@ -30,14 +29,14 @@ public class BirdSpeciesWebFragment extends AbstractBirdSpeciesFragment {
     public static final String LATIN_SPECIES = "LATIN_SPECIES";
     public static final String ENGLISH_SPECIES = "ENGLISH_SPECIES";
 
-    private MenuItem menuItemSwedish;
-    private MenuItem menuItemEnglish;
+    private MenuItem menuItemWikipediaSwedish;
+    private MenuItem menuItemWikipediaEnglish;
     private WebView webView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.wikipedia_layout, container, false);
+        View view = inflater.inflate(R.layout.detail_web_layout, container, false);
         setHasOptionsMenu(true);
         webView = (WebView) view.findViewById(R.id.webview);
         webView.setWebViewClient(new WebViewClient() {
@@ -57,46 +56,49 @@ public class BirdSpeciesWebFragment extends AbstractBirdSpeciesFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.wikipedia_menu, menu);
+        inflater.inflate(R.menu.detail_web_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        menuItemSwedish = menu.findItem(R.id.wikipedia_swedish);
-        menuItemEnglish = menu.findItem(R.id.wikipedia_english);
+        menuItemWikipediaSwedish = menu.findItem(R.id.wikipedia_swedish);
+        menuItemWikipediaEnglish = menu.findItem(R.id.wikipedia_english);
         SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, 0);
         WebType webType = WebType.lookupByCode(settings.getString(Constants.BIRD_WEB_TYPE, WebType.WIKIPEDIA_SV.getCode()));
         switch (webType) {
             case WIKIPEDIA_EN:
-                menuItemEnglish.setChecked(true);
-                menuItemSwedish.setChecked(false);
+                menuItemWikipediaEnglish.setChecked(true);
+                menuItemWikipediaSwedish.setChecked(false);
                 break;
             case WIKIPEDIA_SV:
-                menuItemEnglish.setChecked(false);
-                menuItemSwedish.setChecked(true);
+                menuItemWikipediaEnglish.setChecked(false);
+                menuItemWikipediaSwedish.setChecked(true);
                 break;
         }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Bird currentBird = getCurrentBird();
         switch (item.getItemId()) {
             case R.id.wikipedia_swedish:
-                menuItemEnglish.setChecked(false);
-                menuItemSwedish.setChecked(true);
+                menuItemWikipediaEnglish.setChecked(false);
+                menuItemWikipediaSwedish.setChecked(true);
                 saveWebType(WebType.WIKIPEDIA_SV);
+                loadBird(currentBird);
                 break;
             case R.id.wikipedia_english:
-                menuItemEnglish.setChecked(true);
-                menuItemSwedish.setChecked(false);
+                menuItemWikipediaEnglish.setChecked(true);
+                menuItemWikipediaSwedish.setChecked(false);
                 saveWebType(WebType.WIKIPEDIA_EN);
+                loadBird(currentBird);
                 break;
             default:
                 return super.onOptionsItemSelected(item);
         }
-        loadBird(getCurrentBird());
+
         return true;
     }
 
@@ -114,7 +116,7 @@ public class BirdSpeciesWebFragment extends AbstractBirdSpeciesFragment {
 
         switch (webType) {
             case WIKIPEDIA_EN:
-            url = getEnglishUrl(bird.getLatinSpecies(), bird.getEnglishSpecies());
+                url = getEnglishUrl(bird.getLatinSpecies(), bird.getEnglishSpecies());
             break;
             case WIKIPEDIA_SV:
             default:
@@ -122,6 +124,7 @@ public class BirdSpeciesWebFragment extends AbstractBirdSpeciesFragment {
         }
         webView.loadUrl(url);
     }
+
 
     protected String getSwedishUrl(String latinSpecies, String englishSpecies) {
         String modifiedSpecies = latinSpecies.replaceAll(" ", "_");

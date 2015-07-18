@@ -52,8 +52,8 @@
 <string name="drawer_close">Close navigation drawer</string>
 
     <string name="wikipedia_options">Språk</string>
-    <string name="wikipedia_swedish">Svenska</string>
-    <string name="wikipedia_english">Engelska</string>
+    <string name="wikipedia_swedish">Wikipedia (svenska)</string>
+    <string name="wikipedia_english">Wikipedia (engelska)</string>
     <string name="search_title">Sök</string>
     <string name="search_hint">Artnamn</string>
     <string name="crash_toast_text">Fågelappen kraschade! Vill du mejla kraschrapport?</string>
@@ -64,5 +64,11 @@
     <string name="map_show_gbif_occurrences">Observationer</string>
     <string name="map_show_distribution">Utbredning</string>
     <string name="map_region_world">Världen</string>
+    <string name="artportalen_photos">Artportalen foton</string>
+    <string name="artportalen_sightings">Artportalen obsar</string>
+    <string name="web_external">Webbsajter</string>
+    <string name="artfakta">Artfakta</string>
+    <string name="google_photos">Google Photos</string>
+    <string name="youtube">Youtube</string>
 
 </resources>

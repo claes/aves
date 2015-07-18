@@ -6,10 +6,15 @@ package se.eliga.aves.birddetail;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
@@ -17,6 +22,8 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TabWidget;
+
+import java.net.URLEncoder;
 
 import se.eliga.aves.BirdApp;
 import se.eliga.aves.Constants;
@@ -122,10 +129,72 @@ public class BirdDetailsTabActivity extends FragmentActivity {
 
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.detail_menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Bird currentBird = getCurrentBird();
+		Intent intent = new Intent(Intent.ACTION_VIEW);
+		String url;
+		switch (item.getItemId()) {
+			case R.id.artportalen_sightings:
+				url = getArtportalenSightingsUrl(currentBird);
+				break;
+			case R.id.artportalen_photos:
+				url = getArtportalenPhotosUrl(currentBird);
+				break;
+			case R.id.artfakta:
+				url = getArtfaktaUrl(currentBird);
+				break;
+			case R.id.google_photos:
+				url = getGoogleImagesUrl(currentBird);
+				break;
+			case R.id.youtube:
+				url = getYoutubeUrl(currentBird);
+				break;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+		intent.setData(Uri.parse(url));
+		startActivity(intent);
+		return true;
+	}
+
 	public BirdListSpinnerAdapter createAdapter() {
 		DatabaseHandler databaseHandler = ((BirdApp) getApplication())
 				.getDbHandler();
 		return new BirdListSpinnerAdapter(this, databaseHandler);
 	}
+
+	public Bird getCurrentBird() {
+		Spinner spinner  = (Spinner) getActionBar().getCustomView().findViewById(R.id.birdspecies_spinner);
+		return (Bird) spinner.getSelectedItem();
+	}
+
+	protected String getArtportalenSightingsUrl(Bird bird) {
+		return "http://artportalen.se/Mobile/Sightings/Observerad/Alla%20arter/"+bird.getDyntaxaTaxonId();
+	}
+
+	protected String getArtportalenPhotosUrl(Bird bird) {
+		return "http://artportalen.se/Mobile/TaxonGallery/"+bird.getDyntaxaTaxonId()+"/1";
+	}
+
+	protected String getArtfaktaUrl(Bird bird) {
+		return "http://artfakta.artdatabanken.se/taxon/" + bird.getDyntaxaTaxonId() + "#presentationArea";
+	}
+
+	protected String getGoogleImagesUrl(Bird bird) {
+		return "https://www.google.com/search?tbm=isch&q=" + Uri.encode(bird.getLatinSpecies()) + "#rcnt,  ";
+	}
+
+	protected String getYoutubeUrl(Bird bird) {
+		return "https://www.youtube.com/results?search_query=" + Uri.encode(bird.getLatinSpecies());
+	}
+
 
 }

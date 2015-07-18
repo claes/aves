@@ -4,7 +4,7 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
         <group
-            android:id="@+id/audio_group"
+            android:id="@+id/detail_web_group"
             android:checkableBehavior="single" >
             <item
                 android:id="@+id/wikipedia_swedish"
