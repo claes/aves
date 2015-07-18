@@ -60,9 +60,10 @@ public class BirdListSpinnerAdapter extends BirdListAdapter implements SpinnerAd
                 familyView.setTextColor(context.getResources().getColor(
                         android.R.color.secondary_text_dark));
                 familyView.setVisibility(View.VISIBLE);
+                familyView.setSingleLine(true);
+                familyView.setHorizontallyScrolling(true);
                 linearLayout.addView(familyView);
                 linearLayout.addView(speciesView);
-
                 convertView = linearLayout;
             } else {
                 TextView speciesView = (TextView) convertView.findViewById(R.id.birdspecies_spinner_species);
