@@ -120,6 +120,8 @@ public class MainActivity extends FragmentActivity {
 
 		if (position == 0) {
 			fragment = new BirdListFragment();
+		} else if (position == 1) {
+			fragment = new HelpFragment();
 		} else {
 			fragment = new AboutFragment();
 		}

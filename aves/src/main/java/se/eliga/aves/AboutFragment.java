@@ -37,7 +37,6 @@ public class AboutFragment extends Fragment {
         webView.loadUrl("file:///android_asset/about.html");
         webView.setBackgroundColor(0x00FFFFFF);
         webView.setVisibility(View.VISIBLE);
-        getVersion();
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
