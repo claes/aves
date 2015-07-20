@@ -24,6 +24,7 @@ public class LoadPhotosOperation extends
 		AsyncTask<String, Void, List<FlickrPhoto>> {
 
 	private View view;
+	private static final int NO_OF_PHOTOS = 50;
 
 	public LoadPhotosOperation(View context) {
 		this.view = context;
@@ -32,7 +33,7 @@ public class LoadPhotosOperation extends
 	@Override
 	protected List<FlickrPhoto> doInBackground(String... params) {
 		try {
-			return FlickrLoader.getPhotosForBirdSpecies(params[0], 10);
+			return FlickrLoader.getPhotosForBirdSpecies(params[0], NO_OF_PHOTOS);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -45,7 +46,7 @@ public class LoadPhotosOperation extends
 			final List<String> photos = new ArrayList<String>();
 			int i = 0;
 			for (FlickrPhoto photo : result) {
-				if (i++ >= 10) {
+				if (i++ >= NO_OF_PHOTOS) {
 					break;
 				}
 				if (photo.getLicense().isUsable()) {
@@ -59,7 +60,7 @@ public class LoadPhotosOperation extends
 
 				final GalleryViewPager galleryViewPager = (GalleryViewPager) view
 						.findViewById(R.id.gallery_view_layout);
-				galleryViewPager.setOffscreenPageLimit(10);
+				galleryViewPager.setOffscreenPageLimit(5);
 
 				UrlPagerAdapter pagerAdapter = new UrlPagerAdapter(
 						view.getContext(), photos) {

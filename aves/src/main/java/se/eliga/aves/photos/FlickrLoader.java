@@ -37,7 +37,7 @@ public class FlickrLoader {
 
     public static Bird initMetaData(Bird bird) {
         try {
-            bird.setPhotos(getPhotosForBirdSpecies(bird.getLatinSpecies(), 10));
+            bird.setPhotos(getPhotosForBirdSpecies(bird.getLatinSpecies(), 50));
         } catch (Exception e) {
             Log.e(TAG, "Exception while fetching photos for " + bird, e);
         }
@@ -60,7 +60,7 @@ public class FlickrLoader {
                 ArrayList<FlickrPhoto> photos = new ArrayList<FlickrPhoto>(count);
                 for (int i = 0; i < Math.min(max, photosJson.length()); i++) {
                 	FlickrPhoto photo = createPhoto(photosJson.getJSONObject(i));
-                    System.out.println("Photo: " + photo);
+                    //System.out.println("Photo: " + photo);
                 	if (photo.getLicense().isUsable()) {
                 		photos.add(photo);
                 	}
