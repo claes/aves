@@ -81,7 +81,7 @@ public class Bird implements Taxon {
 		UNSEEN("U"), //never seen in Sweden
 		UNCLASSIFIED("-"); //not classified as part of Holarctis
 
-		 private String text;
+		private String text;
 
 		SofStatus(String text) {
 		    this.text = text;

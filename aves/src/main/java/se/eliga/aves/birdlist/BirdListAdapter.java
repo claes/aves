@@ -150,6 +150,8 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 						.findViewById(R.id.englishTextView);
 				holder.image = (ImageView) convertView
 						.findViewById(R.id.imageView);
+				holder.sofStatusImage = (ImageView) convertView
+						.findViewById(R.id.sofStatusImageView);
 				convertView.setTag(holder);
 			} else {
 				holder = (BirdHolder) convertView.getTag();
@@ -162,6 +164,54 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 			try {
 				int redlistImageResource = context.getResources().getIdentifier("redlist_" +
 						bird.getSwedishRedlistCategory().getText().toLowerCase(),
+						"drawable", context.getApplicationInfo().packageName);
+				holder.image.setImageResource(redlistImageResource);
+			} catch (Exception e) {
+				holder.image.setImageResource(0);
+			}
+
+			try {
+				if (Bird.SofStatus.BREEDING.equals(bird.getSofStatus())) {
+					int sofStatusImageResource = context.getResources().getIdentifier("sofstatus_breeding",
+							"drawable", context.getApplicationInfo().packageName);
+					holder.sofStatusImage.setImageResource(sofStatusImageResource);
+				} else if (Bird.SofStatus.BREEDING_UNCLEAR.equals(bird.getSofStatus())) {
+					int sofStatusImageResource = context.getResources().getIdentifier("sofstatus_breeding_unclear",
+							"drawable", context.getApplicationInfo().packageName);
+					holder.sofStatusImage.setImageResource(sofStatusImageResource);
+				} else if (Bird.SofStatus.MIGRANT.equals(bird.getSofStatus())) {
+					int sofStatusImageResource = context.getResources().getIdentifier("sofstatus_migrant",
+							"drawable", context.getApplicationInfo().packageName);
+					holder.sofStatusImage.setImageResource(sofStatusImageResource);
+				} else if (Bird.SofStatus.REGULAR_VISITOR.equals(bird.getSofStatus())) {
+					int sofStatusImageResource = context.getResources().getIdentifier("sofstatus_regular_visitor",
+							"drawable", context.getApplicationInfo().packageName);
+					holder.sofStatusImage.setImageResource(sofStatusImageResource);
+				} else if (Bird.SofStatus.RARE.equals(bird.getSofStatus())) {
+					int sofStatusImageResource = context.getResources().getIdentifier("sofstatus_rare",
+							"drawable", context.getApplicationInfo().packageName);
+					holder.sofStatusImage.setImageResource(sofStatusImageResource);
+				} else if (Bird.SofStatus.UNSEEN.equals(bird.getSofStatus())) {
+					int sofStatusImageResource = context.getResources().getIdentifier("sofstatus_unseen",
+							"drawable", context.getApplicationInfo().packageName);
+					holder.sofStatusImage.setImageResource(sofStatusImageResource);
+				} else if (Bird.SofStatus.NON_SPONTANEOUS.equals(bird.getSofStatus())) {
+					int sofStatusImageResource = context.getResources().getIdentifier("sofstatus_non_spontaneous",
+							"drawable", context.getApplicationInfo().packageName);
+					holder.sofStatusImage.setImageResource(sofStatusImageResource);
+				} else if (Bird.SofStatus.UNCLASSIFIED.equals(bird.getSofStatus())) {
+					int sofStatusImageResource = context.getResources().getIdentifier("sofstatus_unclassified",
+							"drawable", context.getApplicationInfo().packageName);
+					holder.sofStatusImage.setImageResource(sofStatusImageResource);
+				}
+			} catch (Exception e) {
+				holder.sofStatusImage.setImageResource(0);
+			}
+
+
+			try {
+				int redlistImageResource = context.getResources().getIdentifier("redlist_" +
+								bird.getSwedishRedlistCategory().getText().toLowerCase(),
 						"drawable", context.getApplicationInfo().packageName);
 				holder.image.setImageResource(redlistImageResource);
 			} catch (Exception e) {
@@ -189,6 +239,7 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 
 	class BirdHolder {
 		public ImageView image;
+		public ImageView sofStatusImage;
 		public TextView latinSpecies;
 		public TextView swedishSpecies;
 		public TextView englishSpecies;
