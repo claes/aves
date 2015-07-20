@@ -71,5 +71,6 @@
     <string name="artfakta">Artfakta</string>
     <string name="google_photos">Google Photos</string>
     <string name="youtube">Youtube</string>
+    <string name="iucn_range_map">Utbredning (IUCN)</string>
 
 </resources>
