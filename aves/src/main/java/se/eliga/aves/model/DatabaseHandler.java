@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Claes on 2013-07-19.
@@ -186,7 +187,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return sisRecId;
     }
 
-    public List<Bird> getAllSpecies(String filterString, String filterFamily) {
+    public List<Bird> getAllSpecies(String filterString, String filterFamily, Set<Bird.SofStatus> validStatusSet) {
         List<Bird> birds = new ArrayList<Bird>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor;
@@ -199,6 +200,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         if (filterFamily != null) {
             query.append(" AND " + SWEDISH_FAMILY_COLUMN + " = '" + filterFamily + "' ");
+        }
+        if (validStatusSet != null && ! validStatusSet.isEmpty()) {
+            query.append(" AND " + SOF_STATUS_COLUMN + " in (");
+            boolean first = true;
+            for (Bird.SofStatus status : validStatusSet) {
+                if (! first) {
+                    query.append(", ");
+                }
+                first = false;
+                query.append("'" + status.getText() + "'");
+            }
+            query.append(") ");
         }
         query.append(" order by speciesData." + SPECIES_SORTORDER_KEY_COLUMN);
         String queryString = query.toString();

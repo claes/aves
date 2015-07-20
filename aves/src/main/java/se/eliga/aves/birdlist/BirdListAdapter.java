@@ -9,10 +9,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -250,7 +252,17 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 	}
 
 	public void refresh() {
-		List<Bird> localBirdList = databaseHandler.getAllSpecies(filterString, filterFamily);
+
+		Set<Bird.SofStatus> validStatusSet = new HashSet<Bird.SofStatus>();
+		if (showBreeding) validStatusSet.add(Bird.SofStatus.BREEDING);
+		if (showBreedingUnclear) validStatusSet.add(Bird.SofStatus.BREEDING_UNCLEAR);
+		if (showMigrant) validStatusSet.add(Bird.SofStatus.MIGRANT);
+		if (showRegularVisitor) validStatusSet.add(Bird.SofStatus.REGULAR_VISITOR);
+		if (showRare) validStatusSet.add(Bird.SofStatus.RARE);
+		if (showUnseen) validStatusSet.add(Bird.SofStatus.UNSEEN);
+		if (showUnclassified) validStatusSet.add(Bird.SofStatus.UNCLASSIFIED);
+
+		List<Bird> localBirdList = databaseHandler.getAllSpecies(filterString, filterFamily, validStatusSet);
 
 		switch (sortOption) {
 		case SWEDISH:
@@ -276,34 +288,18 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 		familyList.clear();
 
 		for (Bird bird : localBirdList) {
-			if ((showBreeding && Bird.SofStatus.BREEDING.equals(bird.getSofStatus()))
-					|| (showBreedingUnclear && Bird.SofStatus.BREEDING_UNCLEAR
-							.equals(bird.getSofStatus()))
-					|| (showMigrant && Bird.SofStatus.MIGRANT.equals(bird
-					.getSofStatus()))
-					|| (showRegularVisitor && Bird.SofStatus.REGULAR_VISITOR
-							.equals(bird.getSofStatus()))
-					|| (showUnseen && Bird.SofStatus.UNSEEN.equals(bird
-					.getSofStatus()))
-					|| (showUnclassified && Bird.SofStatus.UNCLASSIFIED.equals(bird
-					.getSofStatus()))
-					|| (showNonSpontaneous && Bird.SofStatus.NON_SPONTANEOUS
-							.equals(bird.getSofStatus()))
-					|| (showRare && Bird.SofStatus.RARE.equals(bird.getSofStatus()))) {
+			birds.put(bird.getLatinSpecies(), bird);
 
-				birds.put(bird.getLatinSpecies(), bird);
-
-				if (SortOption.PHYLOGENETIC.equals(sortOption)) {
-					Family family = new Family(bird.getSwedishOrder(),
-							bird.getSwedishFamily());
-					if (!familyList.contains(family)) {
-						familyList.add(family);
-						taxonList.add(new Family(bird.getSwedishOrder(), bird
-								.getSwedishFamily()));
-					}
+			if (SortOption.PHYLOGENETIC.equals(sortOption)) {
+				Family family = new Family(bird.getSwedishOrder(),
+						bird.getSwedishFamily());
+				if (!familyList.contains(family)) {
+					familyList.add(family);
+					taxonList.add(new Family(bird.getSwedishOrder(), bird
+							.getSwedishFamily()));
 				}
-				taxonList.add(bird);
 			}
+			taxonList.add(bird);
 		}
 	}
 
