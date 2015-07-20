@@ -164,6 +164,28 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return spcRecId;
     }
 
+    public String getSisRecId(String iocLatinSpecies) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor;
+        StringBuffer query = new StringBuffer("select * from speciesData inner join birdlifeData" +
+                " on speciesData." + LATIN_SPECIES_COLUMN + " = birdlifeData." + IOC_LATIN_SPECIES_COLUMN +
+                " where 1=1");
+        query.append(" AND birdlifeData." + IOC_LATIN_SPECIES_COLUMN + " = '" + iocLatinSpecies + "' ");
+        String queryString = query.toString();
+        cursor = db.rawQuery(queryString, null);
+        String sisRecId = null;
+        if (cursor.moveToFirst()) {
+            do {
+                sisRecId = cursor.getString(cursor.getColumnIndex(SIS_RECID_COLUMN));
+                String recognizedSpecies = cursor.getString(cursor.getColumnIndex(BIRDLIFE_RECOGNIZED_SPECIES_COLUMN));
+                if ("R".equals(recognizedSpecies)) {
+                    break;
+                }
+            } while (cursor.moveToNext());
+        }
+        return sisRecId;
+    }
+
     public List<Bird> getAllSpecies(String filterString, String filterFamily) {
         List<Bird> birds = new ArrayList<Bird>();
         SQLiteDatabase db = this.getReadableDatabase();

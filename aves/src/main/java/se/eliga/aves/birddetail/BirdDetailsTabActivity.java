@@ -157,6 +157,9 @@ public class BirdDetailsTabActivity extends FragmentActivity {
 			case R.id.youtube:
 				url = getYoutubeUrl(currentBird);
 				break;
+			case R.id.iucn_range_map:
+				url = getIUCNRangeMapUrl(currentBird);
+				break;
 			default:
 				return super.onOptionsItemSelected(item);
 		}
@@ -196,5 +199,10 @@ public class BirdDetailsTabActivity extends FragmentActivity {
 		return "https://www.youtube.com/results?search_query=" + Uri.encode(bird.getLatinSpecies());
 	}
 
+	protected String getIUCNRangeMapUrl(Bird bird) {
+		DatabaseHandler dbHandler = ((BirdApp) getApplicationContext()).getDbHandler();
+		String sisRecId = dbHandler.getSisRecId(bird.getLatinSpecies());
+		return "http://maps.iucnredlist.org/map.html?id="+ sisRecId;
+	}
 
 }
