@@ -56,7 +56,7 @@ public class BirdListSpinnerAdapter extends BirdListAdapter implements SpinnerAd
                 TextView familyView = new TextView(context);
                 familyView.setId(R.id.birdspecies_spinner_order_family);
                 familyView.setText(bird.getSwedishOrder() + " - " + bird.getSwedishFamily());
-                familyView.setTextSize(11);
+                familyView.setTextSize(10);
                 familyView.setTextColor(context.getResources().getColor(
                         android.R.color.secondary_text_dark));
                 familyView.setVisibility(View.VISIBLE);
@@ -67,7 +67,7 @@ public class BirdListSpinnerAdapter extends BirdListAdapter implements SpinnerAd
                 convertView = linearLayout;
             } else {
                 TextView speciesView = (TextView) convertView.findViewById(R.id.birdspecies_spinner_species);
-                speciesView.setTextSize(18);
+                speciesView.setTextSize(17);
                 speciesView.setText(bird.getSwedishSpecies());
                 TextView familyView = (TextView) convertView.findViewById(R.id.birdspecies_spinner_order_family);
                 familyView.setVisibility(View.VISIBLE);
