@@ -79,7 +79,7 @@ public class Bird implements Taxon {
 		RARE("S"),
 		NON_SPONTANEOUS("I"),
 		UNSEEN("U"), //never seen in Sweden
-		UNCLASSIFIED("-"); //not classified as part of Holarctis
+		UNCLASSIFIED("W"); //not classified as part of Western Palearctis
 
 		private String text;
 

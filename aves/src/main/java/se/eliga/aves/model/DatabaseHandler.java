@@ -202,7 +202,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             query.append(" AND " + SWEDISH_FAMILY_COLUMN + " = '" + filterFamily + "' ");
         }
         if (validStatusSet != null && ! validStatusSet.isEmpty()) {
-            query.append(" AND " + SOF_STATUS_COLUMN + " in (");
+            query.append(" AND ifnull(" + SOF_STATUS_COLUMN + ", 'W') in (");
             boolean first = true;
             for (Bird.SofStatus status : validStatusSet) {
                 if (! first) {
