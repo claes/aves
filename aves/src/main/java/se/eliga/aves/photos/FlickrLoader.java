@@ -60,7 +60,6 @@ public class FlickrLoader {
                 ArrayList<FlickrPhoto> photos = new ArrayList<FlickrPhoto>(count);
                 for (int i = 0; i < Math.min(max, photosJson.length()); i++) {
                 	FlickrPhoto photo = createPhoto(photosJson.getJSONObject(i));
-                    //System.out.println("Photo: " + photo);
                 	if (photo.getLicense().isUsable()) {
                 		photos.add(photo);
                 	}

@@ -23,4 +23,6 @@ public class Constants {
 	public static final String BIRD_MAP_REGION = "birdMapRegion";
 	public static final String BIRD_MAP_TYPE = "birdMapType";
 	public static final String BIRD_WEB_TYPE = "birdWebType";
+
+	public static final String BUILD_TYPE_RELEASE = "release";
 }

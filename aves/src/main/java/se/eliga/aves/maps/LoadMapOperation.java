@@ -4,6 +4,7 @@
 
 package se.eliga.aves.maps;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;

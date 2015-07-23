@@ -66,7 +66,7 @@ public class MapFragment extends AbstractBirdSpeciesFragment {
         menuItemWesternPalearctisPosition = menu.findItem(R.id.map_region_western_palearctis);
         menuItemShowOccurrences = menu.findItem(R.id.map_show_gbif_occurrences);
         menuItemDistribution = menu.findItem(R.id.map_show_distribution);
-        if ("release".equals(BuildConfig.BUILD_TYPE)) {
+        if (Constants.BUILD_TYPE_RELEASE.equals(BuildConfig.BUILD_TYPE)) {
             menuItemShowOccurrences.setVisible(false);
             menuItemDistribution.setVisible(false);
         } else {
@@ -123,7 +123,7 @@ public class MapFragment extends AbstractBirdSpeciesFragment {
         SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, 0);
         MapRegion mapRegion = MapRegion.lookupByCode(settings.getString(Constants.BIRD_MAP_REGION, MapRegion.SWEDEN.getCode()));
         MapType mapType = MapType.lookupByCode(settings.getString(Constants.BIRD_MAP_TYPE, MapType.OCCURRENCE.getCode()));
-        if ("release".equals(BuildConfig.BUILD_TYPE)) {
+        if (Constants.BUILD_TYPE_RELEASE.equals(BuildConfig.BUILD_TYPE)) {
             mapType = MapType.OCCURRENCE;
         }
         double lat;
