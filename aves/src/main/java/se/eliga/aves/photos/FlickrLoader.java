@@ -84,7 +84,7 @@ public class FlickrLoader {
             builder.appendQueryParameter("tags", species);
             builder.appendQueryParameter("group_id", "42637302@N00");
             builder.appendQueryParameter("format", "json");
-            builder.appendQueryParameter("extras", "license");
+            builder.appendQueryParameter("extras", "license,url_o,url_c,url_m");
 
             URL url = new URL(builder.toString());
             HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
@@ -124,8 +124,12 @@ public class FlickrLoader {
         String server = photoJson.getString("server");
         String title = photoJson.getString("title");
         String ownerName = photoJson.getString("ownername");
+        String url_c = photoJson.has("url_c") ? photoJson.getString("url_c") : null;
+        String url_m = photoJson.has("url_m") ? photoJson.getString("url_m") : null;
+        String url_o = photoJson.has("url_o") ? photoJson.getString("url_o") : null;
+
         License license = License.fromFlickrCode(photoJson.getString("license"));
-        return new FlickrPhoto(id, farm, secret, server, title, ownerName, license);
+        return new FlickrPhoto(id, farm, secret, server, title, ownerName, license, url_m, url_c, url_o);
     }
 
     public static FlickrPhoto insertPhoto(FlickrPhoto photo) {

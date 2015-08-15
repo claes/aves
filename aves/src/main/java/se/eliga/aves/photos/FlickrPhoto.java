@@ -25,12 +25,21 @@ public class FlickrPhoto {
     private String mServer;
     private Bitmap image;
     private License license;
+    private String originalSizeUrl;
+    private String mediumSizeUrl;
+    private String fallbackSizeUrl;
 
-    public FlickrPhoto(String id, int farm, String secret, String server, String title, String ownerName, License license) {
+
+    public FlickrPhoto(String id, int farm, String secret, String server, String title,
+                       String ownerName, License license,
+                       String fallbackSizeUrl, String mediumSizeUrl, String originalSizeUrl) {
         this.id = id;
         this.title = title;
         this.ownerName = ownerName;
         this.license = license;
+        this.originalSizeUrl = originalSizeUrl;
+        this.mediumSizeUrl = mediumSizeUrl;
+        this.fallbackSizeUrl = fallbackSizeUrl;
         mFarm = farm;
         mSecret = secret;
         mServer = server;
@@ -90,6 +99,30 @@ public class FlickrPhoto {
 
     public String get800pxUrl() {
         return createUrl(PX_800);
+    }
+
+    public String getFallbackSizeUrl() {
+        return fallbackSizeUrl;
+    }
+
+    public void setFallbackSizeUrl(String fallbackSizeUrl) {
+        this.fallbackSizeUrl = fallbackSizeUrl;
+    }
+
+    public String getMediumSizeUrl() {
+        return mediumSizeUrl;
+    }
+
+    public void setMediumSizeUrl(String mediumSizeUrl) {
+        this.mediumSizeUrl = mediumSizeUrl;
+    }
+
+    public String getOriginalSizeUrl() {
+        return originalSizeUrl;
+    }
+
+    public void setOriginalSizeUrl(String originalSizeUrl) {
+        this.originalSizeUrl = originalSizeUrl;
     }
 
     public String createUrl(String sizeSuffix) {
