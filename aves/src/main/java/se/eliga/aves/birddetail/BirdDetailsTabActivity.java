@@ -66,20 +66,20 @@ public class BirdDetailsTabActivity extends FragmentActivity {
 
 
 		tabHost.addTab(
-				tabHost.newTabSpec("Wikipedia").setIndicator("Wikipedia",
+				tabHost.newTabSpec("Wikipedia").setIndicator(getText(R.string.tab_wikipedia),
 						getResources().getDrawable(android.R.drawable.star_on)),
 				BirdSpeciesWebFragment.class, bundle);
 		tabHost.addTab(
-				tabHost.newTabSpec("Flickr").setIndicator("Flickr",
+				tabHost.newTabSpec("Flickr").setIndicator(getText(R.string.tab_photos),
 						getResources().getDrawable(android.R.drawable.star_on)),
 				BirdSpeciesFlickrGalleryFragment.class, bundle);
 		tabHost.addTab(
-				tabHost.newTabSpec("xeno-canto").setIndicator("xeno-canto",
+				tabHost.newTabSpec("xeno-canto").setIndicator(getText(R.string.tab_sounds),
 						getResources().getDrawable(android.R.drawable.star_on)),
 				BirdSpeciesXenoCantoPlayerFragment.class, bundle);
 
 		tabHost.addTab(
-				tabHost.newTabSpec("Karta").setIndicator("Karta",
+				tabHost.newTabSpec("Karta").setIndicator(getText(R.string.tab_map),
 						getResources().getDrawable(android.R.drawable.star_on)),
 				MapFragment.class, bundle);
 
