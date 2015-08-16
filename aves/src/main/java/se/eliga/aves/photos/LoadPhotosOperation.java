@@ -50,9 +50,7 @@ public class LoadPhotosOperation extends
 					break;
 				}
 				if (photo.getLicense().isUsable()) {
-					if (photo.getOriginalSizeUrl() != null) {
-						photos.add(photo.getOriginalSizeUrl());
-					} else if (photo.getMediumSizeUrl() != null) {
+					if (photo.getMediumSizeUrl() != null) {
 						photos.add(photo.getMediumSizeUrl());
 					} else if (photo.getFallbackSizeUrl() != null) {
 						photos.add(photo.getFallbackSizeUrl());
