@@ -5,15 +5,11 @@
 
 <html>
 <head>
-	<title>Leaflet mobile example</title>
-
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
     <link rel="stylesheet" href="leaflet.css" />
     <link rel="stylesheet" href="custom.css" />
-
 	<script src="leaflet.js"></script>
-
 	<style>
 		body {
 		padding: 0;
@@ -102,7 +98,7 @@ if (showNatureReserves) {
         service: 'WMS',
         bgcolor: ('0x' + natureReserveColor),
         minZoom: 9,
-        attribution: escapeHTML('Naturreservat: Naturvårdsverket'),
+        attribution: escapeHTML('Naturreservat: NaturvÃ¥rdsverket'),
     });
     natureReserves.setOpacity(0.2);
     natureReserves.addTo(map);
@@ -119,7 +115,7 @@ if (showNationalParks) {
         service: 'WMS',
         bgcolor: ('0x' + nationalParkColor),
         minZoom: 9,
-        attribution: escapeHTML('Nationalparker: Naturvårdsverket'),
+        attribution: escapeHTML('Nationalparker: NaturvÃ¥rdsverket'),
     });
     nationalParks.setOpacity(0.35);
     nationalParks.addTo(map);
@@ -137,7 +133,7 @@ if (showAnimalReserves) {
         service: 'WMS',
         minZoom: 9,
         bgcolor: ('0x' + animalReserveColor),
-        attribution: escapeHTML('Skyddsområden: Naturvårdsverket'),
+        attribution: escapeHTML('SkyddsomrÃ¥den: NaturvÃ¥rdsverket'),
     });
     animalReserve.setOpacity(0.45);
     animalReserve.addTo(map);

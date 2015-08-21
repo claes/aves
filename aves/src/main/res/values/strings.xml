@@ -12,7 +12,7 @@
     <string name="app_name">Fågelappen Online
 </string>
 <string-array name="drawer_menu_list">
-    <item>Fågelindex</item>
+    <item>Fåglar</item>
     <item>Hjälp</item>
     <item>Om Fågelappen Online</item>
     </string-array>
