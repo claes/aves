@@ -7,8 +7,8 @@
 
     <item
         android:id="@+id/sort_order"
-        android:orderInCategory="100"
         android:icon="@drawable/ic_swap_vert_white_36dp"
+        android:orderInCategory="100"
         android:showAsAction="always"
         android:title="@string/sort_order">
         <menu>
@@ -39,15 +39,20 @@
                     android:orderInCategory="100"
                     android:showAsAction="always"
                     android:title="@string/phylogenic_sort"/>
+                <item
+                    android:id="@+id/population_sort"
+                    android:checkable="true"
+                    android:orderInCategory="100"
+                    android:showAsAction="always"
+                    android:title="@string/population_sort"/>
             </group>
         </menu>
     </item>
     <item
         android:id="@+id/filtering_options"
+        android:icon="@drawable/ic_filter_list_white_36dp"
         android:orderInCategory="100"
         android:showAsAction="always"
-        android:icon="@drawable/ic_filter_list_white_36dp"
-
         android:title="@string/filtering">
         <menu>
             <group

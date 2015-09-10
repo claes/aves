@@ -26,6 +26,13 @@ public class Bird implements Taxon {
 	private String spcRecid;
 	private String dyntaxaTaxonId;
 	private RedlistCategory swedishRedlistCategory;
+	private int minPopulationEstimate;
+	private int maxPopulationEstimate;
+	private int bestPopulationEstimate;
+	private String populationUnit;
+	private String populationType;
+
+
 
     private List<FlickrPhoto> photos;
     private List<XenoCantoAudio> audios;
@@ -224,6 +231,46 @@ public class Bird implements Taxon {
 
 	public void setSwedishRedlistCategory(RedlistCategory swedishRedlistCategory) {
 		this.swedishRedlistCategory = swedishRedlistCategory;
+	}
+
+	public String getPopulationType() {
+		return populationType;
+	}
+
+	public void setPopulationType(String populationType) {
+		this.populationType = populationType;
+	}
+
+	public int getMaxPopulationEstimate() {
+		return maxPopulationEstimate;
+	}
+
+	public void setMaxPopulationEstimate(int maxPopulationEstimate) {
+		this.maxPopulationEstimate = maxPopulationEstimate;
+	}
+
+	public int getBestPopulationEstimate() {
+		return bestPopulationEstimate;
+	}
+
+	public void setBestPopulationEstimate(int bestPopulationEstimate) {
+		this.bestPopulationEstimate = bestPopulationEstimate;
+	}
+
+	public String getPopulationUnit() {
+		return populationUnit;
+	}
+
+	public void setPopulationUnit(String populationUnit) {
+		this.populationUnit = populationUnit;
+	}
+
+	public int getMinPopulationEstimate() {
+		return minPopulationEstimate;
+	}
+
+	public void setMinPopulationEstimate(int minPopulationEstimate) {
+		this.minPopulationEstimate = minPopulationEstimate;
 	}
 
 	@Override

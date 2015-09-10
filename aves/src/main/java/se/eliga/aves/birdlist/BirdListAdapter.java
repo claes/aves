@@ -65,7 +65,8 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 		SWEDISH("swedish"),
 		ENGLISH("english"),
 		SCIENTIFIC("latin"),
-		PHYLOGENETIC("phylogenetic");
+		PHYLOGENETIC("phylogenetic"),
+		POPULATION("population");
 
 		private final String code;
 		private static final Map<String,SortOption> valuesByCode;
@@ -280,6 +281,10 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 		case PHYLOGENETIC:
 			sectionIndexer = new PhylogeneticSectionIndexer();
 			Collections.sort(localBirdList, new PhylogeneticBirdComparator());
+			break;
+		case POPULATION:
+			sectionIndexer = new PhylogeneticSectionIndexer();
+			Collections.sort(localBirdList, new BestPopulationEstimateBirdComparator());
 			break;
 		}
 
@@ -549,6 +554,15 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 					.getPhylogeneticSortId());
 		}
 	}
+
+	class BestPopulationEstimateBirdComparator implements Comparator<Bird> {
+		@Override
+		public int compare(Bird lhs, Bird rhs) {
+			return new Integer(rhs.getBestPopulationEstimate()).compareTo(lhs
+					.getBestPopulationEstimate());
+		}
+	}
+
 
 	@Override
 	public Object[] getSections() {

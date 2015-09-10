@@ -55,6 +55,7 @@ public class BirdListFragment extends ListFragment {
     private MenuItem englishSortItem;
     private MenuItem latinSortItem;
     private MenuItem phylogeneticSortItem;
+    private MenuItem populationSortItem;
 
     private String filterString;
 
@@ -152,6 +153,10 @@ public class BirdListFragment extends ListFragment {
         phylogeneticSortItem = menu.findItem(R.id.phylogenic_sort);
         phylogeneticSortItem.setChecked(birdListAdapter.getSortOption().equals(
                 BirdListAdapter.SortOption.PHYLOGENETIC));
+        populationSortItem = menu.findItem(R.id.population_sort);
+        populationSortItem.setChecked(birdListAdapter.getSortOption().equals(
+                BirdListAdapter.SortOption.POPULATION));
+
     }
 
     @Override
@@ -186,6 +191,7 @@ public class BirdListFragment extends ListFragment {
                 englishSortItem.setChecked(false);
                 latinSortItem.setChecked(false);
                 phylogeneticSortItem.setChecked(false);
+                populationSortItem.setChecked(false);
                 item.setChecked(true);
             }
 
@@ -206,6 +212,9 @@ public class BirdListFragment extends ListFragment {
                 case R.id.phylogenic_sort:
                     birdListAdapter
                             .setSortOption(BirdListAdapter.SortOption.PHYLOGENETIC);
+                case R.id.population_sort:
+                    birdListAdapter
+                            .setSortOption(BirdListAdapter.SortOption.POPULATION);
                     break;
 
             }
