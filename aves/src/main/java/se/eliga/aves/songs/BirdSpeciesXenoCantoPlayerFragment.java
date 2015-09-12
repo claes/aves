@@ -188,10 +188,14 @@ public class BirdSpeciesXenoCantoPlayerFragment extends ListFragment implements 
 
     @Override
     public int getBufferPercentage() {
-        int percentage = (mediaPlayer.getCurrentPosition() * 100)
-                / mediaPlayer.getDuration();
-
-        return percentage;
+        int currentPos = (mediaPlayer.getCurrentPosition() * 100);
+        int duration = mediaPlayer.getDuration();
+        if (duration != 0) {
+            int percentage = currentPos / duration;
+            return percentage;
+        } else {
+            return 0;
+        }
     }
 
     @Override
