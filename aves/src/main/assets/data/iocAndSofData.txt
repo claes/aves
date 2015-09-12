@@ -73,7 +73,7 @@
 82;73;Thalassornis leuconotus;White-backed Duck;Vitryggig and;;;;;;;;
 83;73;Cereopsis novaehollandiae;Cape Barren Goose;Hönsgås;;;;;;;;
 84;73;Anser cygnoides;Swan Goose;Svangås;233814;;NA;;;;;
-85;73;Anser fabalis;Taiga Bean Goose;Sädgås (Tajgasädgås);100009;B;NT;;;;;
+85;73;Anser fabalis;Taiga Bean Goose;Sädgås (Tajgasädgås);100009;B;NT;650;1000;850;P;B
 86;73;Anser serrirostris;Tundra Bean Goose;Sädgås (Tundrasädgås);;;;;;;;
 88;73;Anser anser;Greylag Goose;Grågås;102928;B;LC;32000;51000;41000;P;B
 90;73;Anser erythropus;Lesser White-fronted Goose;Fjällgås;100008;B;CR;15;25;20;P;B
@@ -6751,7 +6751,7 @@
 6925;6816;Corvus leucognaphalus;White-necked Crow;Hispaniolakråka;;;;;;;;
 6926;6816;Corvus hawaiiensis;Hawaiian Crow;Hawaiikråka;;;;;;;;
 6927;6816;Corvus corone;Carrion Crow;Kråka (Svartkråka);103035;;LC;;;;;
-6928;6816;Corvus cornix;Hooded Crow;Kråka (Gråkråka);;B;;;;;;
+6928;6816;Corvus cornix;Hooded Crow;Kråka (Gråkråka);;B;;122000;233000;177000;P;B
 6929;6816;Corvus torquatus;Collared Crow;Halsbandskråka;;;;;;;;
 6930;6816;Corvus macrorhynchos;Large-billed Crow;Stornäbbad kråka;;U;;;;;;
 6931;6816;Corvus levaillantii;Eastern Jungle Crow;Östlig djungelkråka;;;;;;;;

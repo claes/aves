@@ -213,6 +213,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     LATIN_SPECIES_COLUMN + " like '%" + filterString + "%' OR "+
                     ENGLISH_SPECIES_COLUMN + " like '%" + filterString + "%' )");
         }
+        if (filterFamily != null) {
+            query.append(" AND " + SWEDISH_FAMILY_COLUMN + " = '" + filterFamily + "' ");
+        }
         if (validStatusSet != null && ! validStatusSet.isEmpty()) {
             query.append(" AND ifnull(" + SOF_STATUS_COLUMN + ", 'W') in (");
             boolean first = true;
@@ -245,9 +248,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 bird.setDyntaxaTaxonId(cursor.getString(cursor.getColumnIndex(DYNTAXA_TAXONID_COLUMN)));
                 bird.setMinPopulationEstimate(cursor.getInt(cursor.getColumnIndex(POPULATION_MIN_ESTIMATE_COLUMN)));
                 bird.setMaxPopulationEstimate(cursor.getInt(cursor.getColumnIndex(POPULATION_MAX_ESTIMATE_COLUMN)));
-                bird.setBestPopulationEstimate(cursor.getInt(cursor.getColumnIndex(POPULATION_BEST_ESTIMATE_COLUMN)));
+                bird.setBestPopulationEstimate(cursor.isNull(cursor.getColumnIndex(POPULATION_BEST_ESTIMATE_COLUMN)) ?
+                        -1 : cursor.getInt(cursor.getColumnIndex(POPULATION_BEST_ESTIMATE_COLUMN)));
                 bird.setPopulationType(cursor.getString(cursor.getColumnIndex(POPULATION_TYPE_COLUMN)));
-                bird.setPopulationUnit(cursor.getString(cursor.getColumnIndex(POPULATION_UNIT_COLUMN)));
+                bird.setPopulationUnit(Bird.PopulationUnit.fromString(cursor.getString(cursor.getColumnIndex(POPULATION_UNIT_COLUMN))));
                 bird.setSofStatus(Bird.SofStatus.fromString(cursor.getString(cursor.getColumnIndex(SOF_STATUS_COLUMN))));
                 bird.setSwedishRedlistCategory(Bird.RedlistCategory.fromString(cursor.getString(cursor.getColumnIndex(SWEDISH_REDLIST_CATEGORY_COLUMN))));
                 if (bird.getSwedishSpecies() != null) {

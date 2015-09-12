@@ -5,6 +5,7 @@
 package se.eliga.aves.birdlist;
 
 import java.text.Collator;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -57,7 +58,7 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 	private boolean showNonSpontaneous = false;
 	private String filterString = null;
 	private String filterFamily = null;
-
+	private DecimalFormat numberFormatter;
 	private SortOption sortOption = SortOption.SWEDISH;
 
 	public enum SortOption {
@@ -94,6 +95,8 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 	public BirdListAdapter(Activity context, DatabaseHandler databaseHandler) {
 		this.context = context;
 		this.databaseHandler = databaseHandler;
+		numberFormatter = new DecimalFormat("#,###");
+		numberFormatter.setGroupingUsed(true);
 	}
 
 	public void initialize(SharedPreferences settings) {
@@ -155,6 +158,8 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 						.findViewById(R.id.imageView);
 				holder.sofStatusImage = (ImageView) convertView
 						.findViewById(R.id.sofStatusImageView);
+				holder.population = (TextView) convertView
+						.findViewById(R.id.populationView);
 				convertView.setTag(holder);
 			} else {
 				holder = (BirdHolder) convertView.getTag();
@@ -211,6 +216,31 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 				holder.sofStatusImage.setImageResource(0);
 			}
 
+			if (bird.getBestPopulationEstimate() >= 0) {
+				String population =
+						numberFormatter.format(bird.getBestPopulationEstimate());
+				switch (bird.getPopulationUnit()) {
+					case PAIRS:
+						population = population + " par";
+						break;
+					case CALLING_MALES:
+						population = population + "\nlockande hanar";
+						break;
+					case BREEDING_FEMALES:
+						population = population + "\nhäckande honor";
+						break;
+					case MALES:
+						population = population + "\nhanar";
+						break;
+					case INDIVIDUALS:
+						population = population + "\nindivider";
+						break;
+
+				}
+				holder.population.setText(population);
+			} else {
+				holder.population.setText("");
+			}
 
 			try {
 				int redlistImageResource = context.getResources().getIdentifier("redlist_" +
@@ -243,6 +273,8 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 	class BirdHolder {
 		public ImageView image;
 		public ImageView sofStatusImage;
+		public ImageView populationImage;
+		public TextView population;
 		public TextView latinSpecies;
 		public TextView swedishSpecies;
 		public TextView englishSpecies;
@@ -283,7 +315,7 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 			Collections.sort(localBirdList, new PhylogeneticBirdComparator());
 			break;
 		case POPULATION:
-			sectionIndexer = new PhylogeneticSectionIndexer();
+			sectionIndexer = null;
 			Collections.sort(localBirdList, new BestPopulationEstimateBirdComparator());
 			break;
 		}
@@ -566,17 +598,29 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 
 	@Override
 	public Object[] getSections() {
-		return sectionIndexer.getSections();
+		if (sectionIndexer != null) {
+			return sectionIndexer.getSections();
+		} else {
+			return new Object[] {};
+		}
 	}
 
 	@Override
 	public int getPositionForSection(int section) {
-		return sectionIndexer.getPositionForSection(section);
+		if (sectionIndexer != null) {
+			return sectionIndexer.getPositionForSection(section);
+		} else {
+			return 0;
+		}
 	}
 
 	@Override
 	public int getSectionForPosition(int position) {
-		return sectionIndexer.getSectionForPosition(position);
+		if (sectionIndexer != null) {
+			return sectionIndexer.getSectionForPosition(position);
+		} else {
+			return 0;
+		}
 	}
 
 	public String getFilterString() {
@@ -594,6 +638,5 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 	public void setFilterFamily(String filterFamily) {
 		this.filterFamily = filterFamily;
 	}
-
 
 }

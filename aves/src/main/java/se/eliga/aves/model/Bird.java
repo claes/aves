@@ -29,7 +29,7 @@ public class Bird implements Taxon {
 	private int minPopulationEstimate;
 	private int maxPopulationEstimate;
 	private int bestPopulationEstimate;
-	private String populationUnit;
+	private PopulationUnit populationUnit;
 	private String populationType;
 
 
@@ -39,6 +39,37 @@ public class Bird implements Taxon {
 
     private SofStatus sofStatus;
 
+
+	public static enum PopulationUnit {
+
+		PAIRS("P"),
+		MALES("males"),
+		CALLING_MALES("cmales"),
+		BREEDING_FEMALES("bfemales"),
+		INDIVIDUALS("i");
+
+		private String text;
+
+		PopulationUnit(String text) {
+			this.text = text;
+		}
+
+		public String getText() {
+			return this.text;
+		}
+
+		public static PopulationUnit fromString(String text) {
+			if (text != null) {
+				for (PopulationUnit b : PopulationUnit.values()) {
+					if (text.equals(b.text)) {
+						return b;
+					}
+				}
+			}
+			return null;
+		}
+
+	}
 
 	public static enum RedlistCategory {
 		EXTINCT("EX"),
@@ -257,11 +288,11 @@ public class Bird implements Taxon {
 		this.bestPopulationEstimate = bestPopulationEstimate;
 	}
 
-	public String getPopulationUnit() {
+	public PopulationUnit getPopulationUnit() {
 		return populationUnit;
 	}
 
-	public void setPopulationUnit(String populationUnit) {
+	public void setPopulationUnit(PopulationUnit populationUnit) {
 		this.populationUnit = populationUnit;
 	}
 

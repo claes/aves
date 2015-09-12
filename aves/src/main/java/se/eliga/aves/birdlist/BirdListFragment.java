@@ -212,6 +212,7 @@ public class BirdListFragment extends ListFragment {
                 case R.id.phylogenic_sort:
                     birdListAdapter
                             .setSortOption(BirdListAdapter.SortOption.PHYLOGENETIC);
+                    break;
                 case R.id.population_sort:
                     birdListAdapter
                             .setSortOption(BirdListAdapter.SortOption.POPULATION);
