@@ -31,7 +31,9 @@ public class GoToCurrentPositionOperation extends
     @Override
     protected void onPostExecute(final String result) {
         Location location = ((BirdApp) view.getContext().getApplicationContext()).getLocation();
-        view.loadUrl("javascript:setLatLongZoom("+location.getLatitude()+","+location.getLongitude()+",8);");
+        if (location != null) {
+            view.loadUrl("javascript:setLatLongZoom(" + location.getLatitude() + "," + location.getLongitude() + ",8);");
+        }
     }
 
 }
