@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,12 +51,19 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.bird_facts_layout, container, false);
+        setHasOptionsMenu(true);
         return view;
     }
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         loadBird(getCurrentBird());
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.facts_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -144,7 +152,7 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
         List<LocationStats> stats = databaseHandler.getLocationStats(bird.getDyntaxaTaxonId(), "AB");
 
         TableLayout tl = (TableLayout) getView().findViewById(R.id.locationStatsTable);
-
+        tl.removeAllViews();
         for (LocationStats locationStat : stats) {
             TableRow tr = new TableRow(getActivity());
             tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
@@ -171,12 +179,20 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
             for (int i = 1; i <= 12; i++) {
                 xVals.add("" + i);
             }
+        } else {
+            for (int i = 1; i <= 52; i++) {
+                xVals.add("" + i);
+            }
         }
 
         ArrayList<BarEntry> yVals = new ArrayList<BarEntry>();
 
         for (ObsStats obsStats : stats) {
-            yVals.add(new BarEntry(obsStats.getObservations(), obsStats.getMonth()));
+            if (StatsType.STATS_MONTHLY.equals(statsType)) {
+                yVals.add(new BarEntry(obsStats.getObservations(), obsStats.getMonth()));
+            } else {
+                yVals.add(new BarEntry(obsStats.getObservations(), obsStats.getWeek()));
+            }
         }
 
         BarDataSet observationDataSet = new BarDataSet(yVals, "Observationer");
@@ -190,7 +206,7 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
         BarData observationData = new BarData(xVals, dataSets);
         observationData.setValueTextSize(10f);
 
-        //chart = (BarChart) getView().findViewById(R.id.birdStatsBarchart);
+        chart = (BarChart) getView().findViewById(R.id.birdStatsBarchart);
         chart.setNoDataText("Inga kända eller publika observationer");
         chart.setDescription(null);
         chart.setPinchZoom(false);

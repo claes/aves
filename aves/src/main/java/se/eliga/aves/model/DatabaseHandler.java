@@ -15,7 +15,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.zip.GZIPInputStream;
 
 /**
  * Created by Claes on 2013-07-19.
@@ -119,8 +118,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                                 POPULATION_UNIT_COLUMN + " text," +
                                 POPULATION_TYPE_COLUMN + " text)"
                 );
-                    InputStream is = context.getAssets().open("data/iocAndSofData.txt.gz");
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(new GZIPInputStream(is), "UTF-8"));
+                    InputStream is = context.getAssets().open("data/iocAndSofData.txt");
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
                     String line;
                     while ((line = reader.readLine()) != null) {
                         String columns[] = line.split(";");
@@ -141,8 +140,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         SIS_RECID_COLUMN + " text, " +
                         SPC_RECID_COLUMN + " text)");
 
-                InputStream is = context.getAssets().open("data/birdLifeData.txt.gz");
-                BufferedReader reader = new BufferedReader(new InputStreamReader(new GZIPInputStream(is), "UTF-8"));
+                InputStream is = context.getAssets().open("data/birdLifeData.txt");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 
                 String line;
                 while ((line = reader.readLine()) != null) {
@@ -161,8 +160,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         LONGITUDE + " number, " +
                         OBSERVATIONS + " integer)");
 
-                InputStream is = context.getAssets().open("data/localityStats.txt.gz");
-                BufferedReader reader = new BufferedReader(new InputStreamReader(new GZIPInputStream(is), "UTF-8"));
+                InputStream is = context.getAssets().open("data/localityStats.txt");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
                 String line;
                 while ((line = reader.readLine()) != null) {
                     String columns[] = line.split(";");
@@ -182,13 +181,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         OBSERVATIONS + " integer, " +
                         OBSERVED_INDIVIDUALS + " integer)");
                 {
-                    InputStream is = context.getAssets().open("data/observationData.txt.gz");
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(new GZIPInputStream(is), "UTF-8"));
+                    InputStream is = context.getAssets().open("data/observationData.txt");
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
                     String line;
                     while ((line = reader.readLine()) != null) {
                         String columns[] = line.split(";");
                         String remappedColumns[] = new String[] {columns[2], columns[3], columns[4], columns[5], columns[0], columns[1]};
-                        db.execSQL("insert into observationStats values(?,?,?,?,?)", remappedColumns);
+                        db.execSQL("insert into observationStats values(?,?,?,?,?,?)", remappedColumns);
                     }
                     reader.close();
                 }
