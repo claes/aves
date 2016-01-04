@@ -1,0 +1,21 @@
+K;Blekinge
+W;Dalarnas
+I;Gotlands
+X;Gävleborgs
+N;Hallands
+Z;Jämtlands
+F;Jönköpings
+H;Kalmar
+G;Kronobergs
+BD;Norrbottens
+M;Skåne
+AB;Stockholms
+D;Södermanlands
+C;Uppsala
+S;Värmlands
+AC;Västerbottens
+Y;Västernorrlands
+U;Västmanlands
+O;Västra Götalands
+T;Örebro
+E;Östergötlands

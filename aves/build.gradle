@@ -65,9 +65,16 @@ task svgToDrawablePng(type: fr.avianey.androidsvgdrawable.gradle.SvgDrawableTask
 }
 
 
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
 dependencies {
     compile project(':library')
     compile files('libs/smoothie-0.1.jar')
     compile files('libs/universal-image-loader-1.8.5-with-sources.jar')
     compile 'ch.acra:acra:4.6.1'
+    compile 'com.github.PhilJay:MPAndroidChart:v2.1.4'
+
+
 }

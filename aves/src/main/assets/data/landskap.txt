@@ -1,0 +1,29 @@
+Blek;Blekinge
+Bohu;Bohuslän
+Dala;Dalarna
+Dals;Dalsland
+Gotl;Gotland
+Gast;Gästrikland
+Hall;Halland
+Hals;Hälsingland
+Harj;Härjedalen
+Jamt;Jämtland
+Lule;Lule lappmark
+Lyck;Lycksele lappmark
+Mede;Medelpad
+Nobo;Norrbotten
+Nark;Närke
+Pite;Pite lappmark
+Skan;Skåne
+Smal;Småland
+Sodm;Södermanland
+Torn;Torne lappmark
+Uppl;Uppland
+Varm;Värmland
+Vabo;Västerbotten
+Vago;Västergötland
+Vasm;Västmanland
+Ange;Ångermanland
+Asel;Åsele lappmark
+Olan;Öland
+Ostg;Östergötland

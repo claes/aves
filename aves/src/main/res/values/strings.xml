@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) Claes Holmerson 2013, 2015. The program is licensed under GNU GPL v3. See LICENSE.txt for details.
   -->
 
@@ -11,10 +10,10 @@
 </string>
     <string name="app_name">Fågelappen Online
 </string>
-<string-array name="drawer_menu_list">
-    <item>Fåglar</item>
-    <item>Hjälp</item>
-    <item>Om Fågelappen Online</item>
+    <string-array name="drawer_menu_list">
+        <item>Fåglar</item>
+        <item>Hjälp</item>
+        <item>Om Fågelappen Online</item>
     </string-array>
 <string name="action_settings">Settings
 </string>
@@ -50,9 +49,17 @@
 </string>
     <string name="audio_options">Inställningar
 </string>
+    <string name="species">Art</string>
+    <string name="family">Familj</string>
+    <string name="order">Ordning</string>
+    <string name="least">Minsta</string>
+    <string name="best">Bästa</string>
+    <string name="most">Högsta</string>
+    <string name="monthly_stats">Månadsbaserad</string>
+    <string name="weekly_stats">Veckobaserad</string>
 
-<string name="drawer_open">Open navigation drawer</string>
-<string name="drawer_close">Close navigation drawer</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 
     <string name="wikipedia_options">Språk</string>
     <string name="wikipedia_swedish">Wikipedia (svenska)</string>
@@ -77,6 +84,7 @@
     <string name="tab_map">Karta</string>
     <string name="tab_sounds">Läten</string>
     <string name="tab_photos">Foton</string>
+    <string name="tab_facts">Fakta</string>
     <string name="tab_wikipedia">Wikipedia</string>
 
 </resources>

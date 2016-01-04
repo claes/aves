@@ -32,6 +32,7 @@ import se.eliga.aves.R;
 import se.eliga.aves.birdlist.BirdListAdapter;
 import se.eliga.aves.birdlist.BirdListFragment;
 import se.eliga.aves.birdlist.BirdListSpinnerAdapter;
+import se.eliga.aves.facts.BirdSpeciesFactsFragment;
 import se.eliga.aves.maps.MapFragment;
 import se.eliga.aves.model.Bird;
 import se.eliga.aves.model.DatabaseHandler;
@@ -64,11 +65,14 @@ public class BirdDetailsTabActivity extends FragmentActivity {
 		tabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
 		tabHost.setup(this, getSupportFragmentManager(), R.id.tabFrameLayout);
 
-
 		tabHost.addTab(
 				tabHost.newTabSpec("Wikipedia").setIndicator(getText(R.string.tab_wikipedia),
 						getResources().getDrawable(android.R.drawable.star_on)),
 				BirdSpeciesWebFragment.class, bundle);
+		tabHost.addTab(
+				tabHost.newTabSpec("Fakta").setIndicator(getText(R.string.tab_facts),
+						getResources().getDrawable(android.R.drawable.star_on)),
+				BirdSpeciesFactsFragment.class, bundle);
 		tabHost.addTab(
 				tabHost.newTabSpec("Flickr").setIndicator(getText(R.string.tab_photos),
 						getResources().getDrawable(android.R.drawable.star_on)),

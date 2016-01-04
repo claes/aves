@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.zip.GZIPInputStream;
 
 /**
  * Created by Claes on 2013-07-19.
@@ -23,7 +24,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 9;
 
     // Database Name
     private static final String DATABASE_NAME = "birdsDb12";
@@ -56,6 +57,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String POPULATION_BEST_ESTIMATE_COLUMN = "populationBestEstimate";
     private static final String POPULATION_UNIT_COLUMN = "populationUnit";
     private static final String POPULATION_TYPE_COLUMN = "populationType";
+    public static final String AREA_ID = "areaId";
+    public static final String LOCATION = "location";
+    public static final String LATITUDE = "latitude";
+    public static final String LONGITUDE = "longitude";
+    public static final String OBSERVATIONS = "observations";
+    public static final String PERIOD_VALUE = "period"; //month value or week value
+    public static final String PERIOD_TYPE = "periodType";
+    public static final String OBSERVED_INDIVIDUALS = "observedIndividuals";
+    public static final String LAN_NAME = "lanName";
+    public static final String LAN_ID = "lanId";
 
     private final Context context;
 
@@ -69,45 +80,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         try {
-            db.execSQL("create table ordersAndFamilies(" +
-                    FAMILY_SORTORDER_KEY_COLUMN + " text, " +
-                    LATIN_ORDER_COLUMN + " text, " +
-                    ENGLISH_ORDER_COLUMN + " text, " +
-                    SWEDISH_ORDER_COLUMN + " text, " +
-                    LATIN_FAMILY_COLUMN + " text, " +
-                    ENGLISH_FAMILY_COLUMN + " text, " +
-                    SWEDISH_FAMILY_COLUMN + " text)");
-
-            db.execSQL("create index cafIdx on ordersAndFamilies(" +FAMILY_SORTORDER_KEY_COLUMN + ")");
-
-            db.execSQL("create table speciesData(" +
-            SPECIES_SORTORDER_KEY_COLUMN + " text, " +
-            FAMILY_SORTORDER_FK_COLUMN + " text, " +
-            LATIN_SPECIES_COLUMN + " text, " +
-            ENGLISH_SPECIES_COLUMN + " text, " +
-            SWEDISH_SPECIES_COLUMN + " text, " +
-            DYNTAXA_TAXONID_COLUMN + " text, " +
-            SOF_STATUS_COLUMN + " text, " +
-            SWEDISH_REDLIST_CATEGORY_COLUMN + " text," +
-            POPULATION_MIN_ESTIMATE_COLUMN + " text," +
-            POPULATION_MAX_ESTIMATE_COLUMN + " text," +
-            POPULATION_BEST_ESTIMATE_COLUMN + " text," +
-            POPULATION_UNIT_COLUMN + " text," +
-            POPULATION_TYPE_COLUMN + " text)"
-            );
-
-            db.execSQL("create index sdIdx1 on speciesData(" + SPECIES_SORTORDER_KEY_COLUMN + ")");
-            db.execSQL("create index sdIdx2 on speciesData(" + FAMILY_SORTORDER_FK_COLUMN + ")");
-
-            db.execSQL("create table birdlifeData(" +
-                    IOC_LATIN_SPECIES_COLUMN + " text, " +
-                    BIRDLIFE_LATIN_SPECIES_COLUMN + " text, " +
-                    BIRDLIFE_RECOGNIZED_SPECIES_COLUMN + " text, " +
-                    GLOBAL_REDLIST_CATEGORY_COLUMN + " text, " +
-                    SIS_RECID_COLUMN + " text, " +
-                    SPC_RECID_COLUMN + " text)");
 
             {
+                db.execSQL("create table ordersAndFamilies(" +
+                        FAMILY_SORTORDER_KEY_COLUMN + " text, " +
+                        LATIN_ORDER_COLUMN + " text, " +
+                        ENGLISH_ORDER_COLUMN + " text, " +
+                        SWEDISH_ORDER_COLUMN + " text, " +
+                        LATIN_FAMILY_COLUMN + " text, " +
+                        ENGLISH_FAMILY_COLUMN + " text, " +
+                        SWEDISH_FAMILY_COLUMN + " text)");
+
                 InputStream is = context.getAssets().open("data/ordersAndFamilies.txt");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
                 String line;
@@ -116,20 +99,51 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     db.execSQL("insert into ordersAndFamilies values(?,?,?,?,?,?,?)", columns);
                 }
                 reader.close();
+
+                db.execSQL("create index cafIdx on ordersAndFamilies(" + FAMILY_SORTORDER_KEY_COLUMN + ")");
             }
+
             {
-                InputStream is = context.getAssets().open("data/iocAndSofData.txt");
-                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    String columns[] = line.split(";");
-                    db.execSQL("insert into speciesData values(?,?,?,?,?,?,?,?,?,?,?,?,?)", columns);
-                }
-                reader.close();
+                db.execSQL("create table speciesData(" +
+                                SPECIES_SORTORDER_KEY_COLUMN + " text, " +
+                                FAMILY_SORTORDER_FK_COLUMN + " text, " +
+                                LATIN_SPECIES_COLUMN + " text, " +
+                                ENGLISH_SPECIES_COLUMN + " text, " +
+                                SWEDISH_SPECIES_COLUMN + " text, " +
+                                DYNTAXA_TAXONID_COLUMN + " text, " +
+                                SOF_STATUS_COLUMN + " text, " +
+                                SWEDISH_REDLIST_CATEGORY_COLUMN + " text," +
+                                POPULATION_MIN_ESTIMATE_COLUMN + " text," +
+                                POPULATION_MAX_ESTIMATE_COLUMN + " text," +
+                                POPULATION_BEST_ESTIMATE_COLUMN + " text," +
+                                POPULATION_UNIT_COLUMN + " text," +
+                                POPULATION_TYPE_COLUMN + " text)"
+                );
+                    InputStream is = context.getAssets().open("data/iocAndSofData.txt.gz");
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(new GZIPInputStream(is), "UTF-8"));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        String columns[] = line.split(";");
+                        db.execSQL("insert into speciesData values(?,?,?,?,?,?,?,?,?,?,?,?,?)", columns);
+                    }
+                    reader.close();
+
+                db.execSQL("create index sdIdx1 on speciesData(" + SPECIES_SORTORDER_KEY_COLUMN + ")");
+                db.execSQL("create index sdIdx2 on speciesData(" + FAMILY_SORTORDER_FK_COLUMN + ")");
             }
+
             {
-                InputStream is = context.getAssets().open("data/birdLifeData.txt");
-                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                db.execSQL("create table birdlifeData(" +
+                        IOC_LATIN_SPECIES_COLUMN + " text, " +
+                        BIRDLIFE_LATIN_SPECIES_COLUMN + " text, " +
+                        BIRDLIFE_RECOGNIZED_SPECIES_COLUMN + " text, " +
+                        GLOBAL_REDLIST_CATEGORY_COLUMN + " text, " +
+                        SIS_RECID_COLUMN + " text, " +
+                        SPC_RECID_COLUMN + " text)");
+
+                InputStream is = context.getAssets().open("data/birdLifeData.txt.gz");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(new GZIPInputStream(is), "UTF-8"));
+
                 String line;
                 while ((line = reader.readLine()) != null) {
                     String columns[] = line.split(";");
@@ -137,6 +151,68 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 }
                 reader.close();
             }
+
+            {
+                db.execSQL("create table locationStats(" +
+                        DYNTAXA_TAXONID_COLUMN + " text, " +
+                        AREA_ID + " text, " +
+                        LOCATION + " text, " +
+                        LATITUDE + " number, " +
+                        LONGITUDE + " number, " +
+                        OBSERVATIONS + " integer)");
+
+                InputStream is = context.getAssets().open("data/localityStats.txt.gz");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(new GZIPInputStream(is), "UTF-8"));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String columns[] = line.split(";");
+                    db.execSQL("insert into locationStats values(?,?,?,?,?,?)", columns);
+                }
+                reader.close();
+                db.execSQL("create index dyntaxaLocIdx on locationStats(" + DYNTAXA_TAXONID_COLUMN + ")");
+                db.execSQL("create index areaLocIdx on locationStats(" + AREA_ID + ")");
+            }
+
+            {
+                db.execSQL("create table observationStats(" +
+                        DYNTAXA_TAXONID_COLUMN + " text, " +
+                        AREA_ID + " text, " +
+                        PERIOD_VALUE + " integer, " +
+                        PERIOD_TYPE + " text, " +
+                        OBSERVATIONS + " integer, " +
+                        OBSERVED_INDIVIDUALS + " integer)");
+                {
+                    InputStream is = context.getAssets().open("data/observationData.txt.gz");
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(new GZIPInputStream(is), "UTF-8"));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        String columns[] = line.split(";");
+                        String remappedColumns[] = new String[] {columns[2], columns[3], columns[4], columns[5], columns[0], columns[1]};
+                        db.execSQL("insert into observationStats values(?,?,?,?,?)", remappedColumns);
+                    }
+                    reader.close();
+                }
+                db.execSQL("create index dyntaxaObsIdx on observationStats(" + DYNTAXA_TAXONID_COLUMN + ")");
+                db.execSQL("create index areaObsIdx on observationStats(" + AREA_ID + ")");
+                db.execSQL("create index periodTypeIdx on observationStats(" + PERIOD_TYPE + ")");
+            }
+
+            {
+                db.execSQL("create table lan(" +
+                        LAN_ID + " text, " +
+                        LAN_NAME + " text)");
+                {
+                    InputStream is = context.getAssets().open("data/lan.txt");
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        String columns[] = line.split(";");
+                        db.execSQL("insert into lan values(?,?)", columns);
+                    }
+                    reader.close();
+                }
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -146,9 +222,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
-        db.execSQL("drop table if exists ordersAndFamilies");
-        db.execSQL("drop table if exists speciesData");
-        db.execSQL("drop table if exists birdlifeData");
+        db.execSQL("drop table if exists ordersAndFamilies;");
+        db.execSQL("drop table if exists speciesData;");
+        db.execSQL("drop table if exists birdlifeData;");
+        db.execSQL("drop table if exists observationStats;");
+        db.execSQL("drop table if exists locationStats;");
+        db.execSQL("drop table if exists lan;");
 
         // Create tables again
         onCreate(db);
@@ -235,7 +314,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-
                 Bird bird = new Bird();
                 bird.setPhylogeneticSortId(cursor.getInt(cursor.getColumnIndex(SPECIES_SORTORDER_KEY_COLUMN)));
                 bird.setLatinOrder(cursor.getString(cursor.getColumnIndex(LATIN_ORDER_COLUMN)));
@@ -245,6 +323,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 bird.setSwedishFamily(cursor.getString(cursor.getColumnIndex(SWEDISH_FAMILY_COLUMN)));
                 bird.setSwedishSpecies(cursor.getString(cursor.getColumnIndex(SWEDISH_SPECIES_COLUMN)));
                 bird.setEnglishSpecies(cursor.getString(cursor.getColumnIndex(ENGLISH_SPECIES_COLUMN)));
+                bird.setEnglishOrder(cursor.getString(cursor.getColumnIndex(ENGLISH_ORDER_COLUMN)));
+                bird.setEnglishFamily(cursor.getString(cursor.getColumnIndex(ENGLISH_FAMILY_COLUMN)));
                 bird.setDyntaxaTaxonId(cursor.getString(cursor.getColumnIndex(DYNTAXA_TAXONID_COLUMN)));
                 bird.setMinPopulationEstimate(cursor.getInt(cursor.getColumnIndex(POPULATION_MIN_ESTIMATE_COLUMN)));
                 bird.setMaxPopulationEstimate(cursor.getInt(cursor.getColumnIndex(POPULATION_MAX_ESTIMATE_COLUMN)));
@@ -262,107 +342,58 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return birds;
     }
 
+    public List<LocationStats> getLocationStats(String taxonId, String areaId) {
 
+        List<LocationStats> stats = new ArrayList<LocationStats>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        StringBuffer query = new StringBuffer("select * from locationStats where 1=1");
+        query.append(" AND " + DYNTAXA_TAXONID_COLUMN + " = '" + taxonId + "' ");
+        query.append(" AND " + AREA_ID + " = '" + areaId + "' ");
+        query.append(" ORDER BY " + OBSERVATIONS + " DESC");
+        String queryString = query.toString();
+        Cursor cursor = db.rawQuery(queryString, null);
 
-//  private static String DB_PATH = "/data/data/" + "se.eliga.aves" + "/databases/";
-//  private SQLiteDatabase database;
-//  private final Context context;
-//
-//  /**
-//   * Creates a empty database on the system and rewrites it with your own database.
-//   */
-//  public void createDataBase() throws IOException {
-//
-//      boolean dbExist = checkDataBase();
-//      if (dbExist) {
-//          //do nothing - database already exist
-//      } else {
-//          //By calling this method and empty database will be created into the default system path
-//          //of your application so we are gonna be able to overwrite that database with our database.
-//          this.getReadableDatabase();
-//          try {
-//              copyDataBase();
-//          } catch (IOException e) {
-//              throw new Error("Error copying database");
-//          }
-//      }
-//  }
-//
-//
-//  /**
-//   * Check if the database already exist to avoid re-copying the file each time you open the application.
-//   *
-//   * @return true if it exists, false if it doesn't
-//   */
-//  private boolean checkDataBase() {
-//
-//      SQLiteDatabase checkDB = null;
-//      try {
-//          String myPath = DB_PATH + DATABASE_NAME;
-//          checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
-//      } catch (SQLiteException e) {
-//          //database doesn't exist yet.
-//      }
-//
-//      if (checkDB != null) {
-//          checkDB.close();
-//      }
-//
-//      return checkDB != null ? true : false;
-//  }
-//
-//  /**
-//   * Copies your database from your local assets-folder to the just created empty database in the
-//   * system folder, from where it can be accessed and handled.
-//   * This is done by transfering bytestream.
-//   */
-//  private void copyDataBase() throws IOException {
-//
-//      //Open your local db as the input stream
-//      InputStream is = context.getAssets().open(DATABASE_NAME);
-//
-//      // Path to the just created empty db
-//      String outFileName = DB_PATH + DATABASE_NAME;
-//
-//      //Open the empty db as the output stream
-//      OutputStream os = new FileOutputStream(outFileName);
-//
-//      //transfer bytes from the inputfile to the outputfile
-//      byte[] buffer = new byte[1024];
-//      int length;
-//      while ((length = is.read(buffer)) > 0) {
-//          os.write(buffer, 0, length);
-//      }
-//
-//      //Close the streams
-//      os.flush();
-//      os.close();
-//      is.close();
-//  }
-//
-//  public void openDataBase() {
-//      //Open the database
-//      String myPath = DB_PATH + DATABASE_NAME;
-//      database = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
-//  }
-//
-//  @Override
-//  public synchronized void close() {
-//
-//      if (database != null)
-//          database.close();
-//
-//      super.close();
-//  }
-//
-//  @Override
-//  public void onCreate(SQLiteDatabase db) {
-//
-//  }
-//
-//  @Override
-//  public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-//
-//  }
+        if (cursor.moveToFirst()) {
+            do {
+                LocationStats locationStat = new LocationStats();
+                locationStat.setDyntaxaTaxonId(taxonId);
+                locationStat.setAreaId(areaId);
+                locationStat.setLocality(cursor.getString(cursor.getColumnIndex(LOCATION)));
+                locationStat.setCount(cursor.getInt(cursor.getColumnIndex(OBSERVATIONS)));
+                stats.add(locationStat);
+            } while (cursor.moveToNext());
+        }
+        return stats;
+    }
+
+    public List<ObsStats> getObsStats(String taxonId, String areaId, String periodType) {
+        List<ObsStats> stats = new ArrayList<ObsStats>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        StringBuffer query = new StringBuffer("select * from observationStats where 1=1");
+        query.append(" AND " + DYNTAXA_TAXONID_COLUMN + " = '" + taxonId + "' ");
+        query.append(" AND " + AREA_ID + " = '" + areaId + "' ");
+        query.append(" AND " + PERIOD_TYPE + " = '" + periodType + "' ");
+        query.append(" ORDER BY " + PERIOD_VALUE + " ASC");
+        String queryString = query.toString();
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                ObsStats obsStats = new ObsStats();
+                obsStats.setDyntaxaTaxonId(taxonId);
+                obsStats.setAreaId(areaId);
+                if ("W".equalsIgnoreCase(periodType)) {
+                    obsStats.setWeek(cursor.getInt(cursor.getColumnIndex(PERIOD_VALUE)));
+                } else if ("M".equalsIgnoreCase(periodType)) {
+                    obsStats.setMonth(cursor.getInt(cursor.getColumnIndex(PERIOD_VALUE)));
+                }
+                obsStats.setObservations(cursor.getInt(cursor.getColumnIndex(OBSERVATIONS)));
+                obsStats.setObservedIndividuals(cursor.getInt(cursor.getColumnIndex(OBSERVED_INDIVIDUALS)));
+                stats.add(obsStats);
+            } while (cursor.moveToNext());
+        }
+
+        return stats;
+    }
 
 }

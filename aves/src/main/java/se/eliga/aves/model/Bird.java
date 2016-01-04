@@ -23,6 +23,8 @@ public class Bird implements Taxon {
     private String swedishFamily;
     private String swedishSpecies;
 	private String englishSpecies;
+	private String englishOrder;
+	private String englishFamily;
 	private String spcRecid;
 	private String dyntaxaTaxonId;
 	private RedlistCategory swedishRedlistCategory;
@@ -31,8 +33,6 @@ public class Bird implements Taxon {
 	private int bestPopulationEstimate;
 	private PopulationUnit populationUnit;
 	private String populationType;
-
-
 
     private List<FlickrPhoto> photos;
     private List<XenoCantoAudio> audios;
@@ -180,7 +180,23 @@ public class Bird implements Taxon {
         this.englishSpecies = englishSpecies;
     }
 
-    void setLatinSpecies(String latinSpecies) {
+	public String getEnglishOrder() {
+		return englishOrder;
+	}
+
+	public void setEnglishOrder(String englishOrder) {
+		this.englishOrder = englishOrder;
+	}
+
+	public String getEnglishFamily() {
+		return englishFamily;
+	}
+
+	public void setEnglishFamily(String englishFamily) {
+		this.englishFamily = englishFamily;
+	}
+
+	void setLatinSpecies(String latinSpecies) {
         this.latinSpecies = latinSpecies;
     }
 
