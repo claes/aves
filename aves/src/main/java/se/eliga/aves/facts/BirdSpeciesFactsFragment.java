@@ -32,6 +32,7 @@ import se.eliga.aves.Constants;
 import se.eliga.aves.R;
 import se.eliga.aves.birddetail.AbstractBirdSpeciesFragment;
 import se.eliga.aves.model.Bird;
+import se.eliga.aves.model.BirdFormatter;
 import se.eliga.aves.model.DatabaseHandler;
 import se.eliga.aves.model.LocationStats;
 import se.eliga.aves.model.ObsStats;
@@ -126,13 +127,12 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
         ((TextView) getView().findViewById(R.id.factsEnglishOrder)).setText(bird.getEnglishOrder());
         */
 
-        /*
         if (bird.getMinPopulationEstimate() >= 0 && bird.getMaxPopulationEstimate() >= 0 && bird.getBestPopulationEstimate() >= 0) {
-            ((TextView) getView().findViewById(R.id.factsPopulationMinEstimate)).setText(""+bird.getMinPopulationEstimate());
-            ((TextView) getView().findViewById(R.id.factsPopulationMaxEstimate)).setText(""+bird.getMaxPopulationEstimate());
-            ((TextView) getView().findViewById(R.id.factsPopulationBestEstimate)).setText(""+bird.getBestPopulationEstimate());
+            BirdFormatter birdFormatter = new BirdFormatter();
+            ((TextView) getView().findViewById(R.id.bestEstimate)).setText(birdFormatter.getFormattedPopulation(bird));
+            ((TextView) getView().findViewById(R.id.rangeEstimate)).setText("(" + birdFormatter.getFormattedPopulationRange(bird) + ")");
         }
-        */
+
 
         /*
         int redlistImageResource = getRedlistImageResource(bird, getActivity());

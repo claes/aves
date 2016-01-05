@@ -29,6 +29,7 @@ import android.widget.TextView;
 
 import se.eliga.aves.Constants;
 import se.eliga.aves.R;
+import se.eliga.aves.model.BirdFormatter;
 import se.eliga.aves.model.DatabaseHandler;
 import se.eliga.aves.model.Taxon;
 import se.eliga.aves.model.Bird;
@@ -58,8 +59,8 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 	private boolean showNonSpontaneous = false;
 	private String filterString = null;
 	private String filterFamily = null;
-	private DecimalFormat numberFormatter;
 	private SortOption sortOption = SortOption.SWEDISH;
+	private BirdFormatter birdFormatter = new BirdFormatter();
 
 	public enum SortOption {
 
@@ -95,8 +96,6 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 	public BirdListAdapter(Activity context, DatabaseHandler databaseHandler) {
 		this.context = context;
 		this.databaseHandler = databaseHandler;
-		numberFormatter = new DecimalFormat("#,###");
-		numberFormatter.setGroupingUsed(true);
 	}
 
 	public void initialize(SharedPreferences settings) {
@@ -217,26 +216,7 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 			}
 
 			if (bird.getBestPopulationEstimate() >= 0) {
-				String population =
-						numberFormatter.format(bird.getBestPopulationEstimate());
-				switch (bird.getPopulationUnit()) {
-					case PAIRS:
-						population = population + " par";
-						break;
-					case CALLING_MALES:
-						population = population + "\nlockande hanar";
-						break;
-					case BREEDING_FEMALES:
-						population = population + "\nhäckande honor";
-						break;
-					case MALES:
-						population = population + "\nhanar";
-						break;
-					case INDIVIDUALS:
-						population = population + "\nindivider";
-						break;
-
-				}
+				String population = birdFormatter.getFormattedPopulation(bird);
 				holder.population.setText(population);
 			} else {
 				holder.population.setText("");
@@ -269,6 +249,8 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 		}
 		return convertView;
 	}
+
+
 
 	class BirdHolder {
 		public ImageView image;
