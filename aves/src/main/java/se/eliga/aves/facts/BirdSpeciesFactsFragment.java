@@ -114,7 +114,7 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
         editor.commit();
     }
 
-    public void loadBird(Bird bird) {
+    public void loadBirdInternal(Bird bird) {
         /*
         ((TextView) getView().findViewById(R.id.factsSwedishSpecies)).setText(bird.getSwedishSpecies());
         ((TextView) getView().findViewById(R.id.factsSwedishFamily)).setText(bird.getSwedishFamily());

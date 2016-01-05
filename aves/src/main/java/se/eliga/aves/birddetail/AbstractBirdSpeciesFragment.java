@@ -17,9 +17,20 @@ public abstract class AbstractBirdSpeciesFragment extends Fragment implements Bi
 
     public Bird getCurrentBird() {
         Spinner spinner  = (Spinner) getActivity().getActionBar().getCustomView().findViewById(R.id.birdspecies_spinner);
-        return (Bird) spinner.getSelectedItem();
+        Bird bird = (Bird) spinner.getSelectedItem();
+        return bird;
     }
 
-    public abstract void loadBird(Bird bird);
+    public final void loadBird(Bird bird) {
+        int redlistImageResource = getActivity().getResources().getIdentifier("redlist_" +
+                        bird.getSwedishRedlistCategory().getText().toLowerCase(),
+                "drawable", getActivity().getApplicationInfo().packageName);
+        //Use IUCN icon if can be determined.
+        int icon = redlistImageResource > 0 ? redlistImageResource : R.mipmap.ic_launcher;
+        getActivity().getActionBar().setIcon(icon);
+        loadBirdInternal(bird);
+    }
+
+    public abstract void loadBirdInternal(Bird bird);
 
 }

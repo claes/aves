@@ -119,7 +119,7 @@ public class MapFragment extends AbstractBirdSpeciesFragment {
     }
 
     @Override
-    public void loadBird(Bird bird) {
+    public void loadBirdInternal(Bird bird) {
         SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, 0);
         MapRegion mapRegion = MapRegion.lookupByCode(settings.getString(Constants.BIRD_MAP_REGION, MapRegion.SWEDEN.getCode()));
         MapType mapType = MapType.lookupByCode(settings.getString(Constants.BIRD_MAP_TYPE, MapType.OCCURRENCE.getCode()));

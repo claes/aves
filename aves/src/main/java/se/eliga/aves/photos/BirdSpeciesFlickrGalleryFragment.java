@@ -27,7 +27,7 @@ public class BirdSpeciesFlickrGalleryFragment extends AbstractBirdSpeciesFragmen
         loadBird(getCurrentBird());
     }
 
-	public void loadBird(Bird bird) {
+	public void loadBirdInternal(Bird bird) {
 		new LoadPhotosOperation(getView()).execute(bird.getLatinSpecies());
 	}
 }

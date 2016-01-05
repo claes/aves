@@ -109,7 +109,7 @@ public class BirdSpeciesWebFragment extends AbstractBirdSpeciesFragment {
         editor.commit();
     }
 
-    public void loadBird(Bird bird) {
+    public void loadBirdInternal(Bird bird) {
         String url;
         SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, 0);
         WebType webType = WebType.lookupByCode(settings.getString(Constants.BIRD_WEB_TYPE, WebType.WIKIPEDIA_SV.getCode()));
