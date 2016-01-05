@@ -5,15 +5,43 @@
     android:orientation="vertical"
     android:showDividers="none">
 
-    <TableLayout
-
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/locationStatsTable"></TableLayout>
+        android:layout_height="wrap_content">
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/birdStatsBarchart"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Mest observerade lokaler"
+            android:id="@+id/textView" />
+
+        <TableLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/locationStatsTable">
+
+        </TableLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Observationer"
+            android:id="@+id/textView2" />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/birdStatsBarchart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
 </LinearLayout>

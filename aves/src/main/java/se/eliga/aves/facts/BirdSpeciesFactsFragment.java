@@ -31,7 +31,6 @@ import se.eliga.aves.BirdApp;
 import se.eliga.aves.Constants;
 import se.eliga.aves.R;
 import se.eliga.aves.birddetail.AbstractBirdSpeciesFragment;
-import se.eliga.aves.birddetail.WebType;
 import se.eliga.aves.model.Bird;
 import se.eliga.aves.model.DatabaseHandler;
 import se.eliga.aves.model.LocationStats;
@@ -153,60 +152,51 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
 
         TableLayout tl = (TableLayout) getView().findViewById(R.id.locationStatsTable);
         tl.removeAllViews();
+        int i = 1;
+        TableRow tr = null;
         for (LocationStats locationStat : stats) {
-            TableRow tr = new TableRow(getActivity());
-            tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+            //Two column layout
+            if ((i-1) % 2 == 0) {
+                tr = new TableRow(getActivity());
+                tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+                tl.addView(tr, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
+            }
             TextView location = new TextView(getActivity());
-            location.setText(locationStat.getLocality());
-            location.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+            location.setText(i + ": " + locationStat.getLocality());
+            location.setPadding(5, 2, 10, 2);
+            location.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
             tr.addView(location);
-            tl.addView(tr, new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
+            i++;
         }
     }
 
     private void initializeObservationsChart(Bird bird) {
 
-
         SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, 0);
         StatsType statsType = StatsType.lookupByCode(settings.getString(Constants.STATS_TYPE, StatsType.STATS_MONTHLY.getCode()));
 
-        DatabaseHandler databaseHandler = ((BirdApp) getActivity().getApplication())
-                .getDbHandler();
+        chart = (BarChart) getView().findViewById(R.id.birdStatsBarchart);
+        initBarChart(statsType);
+
+        DatabaseHandler databaseHandler = ((BirdApp) getActivity().getApplication()).getDbHandler();
         List<ObsStats> stats = databaseHandler.getObsStats(bird.getDyntaxaTaxonId(), "AB", statsType.getCode());
+        BarData observationData = getObservationBarData(statsType, stats);
 
-        List<String> xVals = new ArrayList<String>();
-        if (StatsType.STATS_MONTHLY.equals(statsType)) {
-            for (int i = 1; i <= 12; i++) {
-                xVals.add("" + i);
-            }
-        } else {
-            for (int i = 1; i <= 52; i++) {
-                xVals.add("" + i);
-            }
-        }
+        chart.setData(observationData);
+    }
 
-        ArrayList<BarEntry> yVals = new ArrayList<BarEntry>();
-
-        for (ObsStats obsStats : stats) {
-            if (StatsType.STATS_MONTHLY.equals(statsType)) {
-                yVals.add(new BarEntry(obsStats.getObservations(), obsStats.getMonth()));
-            } else {
-                yVals.add(new BarEntry(obsStats.getObservations(), obsStats.getWeek()));
-            }
-        }
-
-        BarDataSet observationDataSet = new BarDataSet(yVals, "Observationer");
-        observationDataSet.setBarSpacePercent(35f);
-        observationDataSet.setDrawValues(false);
-        observationDataSet.setValueTextColor(Color.WHITE);
-
-        ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
-        dataSets.add(observationDataSet);
+    private BarData getObservationBarData(StatsType statsType, List<ObsStats> stats) {
+        List<String> xVals = getXValues(statsType);
+        ArrayList<BarEntry> yVals = getBarEntries(statsType, stats);
+        ArrayList<BarDataSet> dataSets = getBarDataSets(yVals);
 
         BarData observationData = new BarData(xVals, dataSets);
         observationData.setValueTextSize(10f);
+        return observationData;
+    }
 
-        chart = (BarChart) getView().findViewById(R.id.birdStatsBarchart);
+    private void initBarChart(StatsType statsType) {
+        chart.clear();
         chart.setNoDataText("Inga kända eller publika observationer");
         chart.setDescription(null);
         chart.setPinchZoom(false);
@@ -218,13 +208,15 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
         chart.setDrawBorders(false);
         chart.setDrawGridBackground(false);
 
+        // X Axis
         XAxis xAxis = chart.getXAxis();
         xAxis.setDrawLabels(true);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
         xAxis.setTextColor(Color.WHITE);
-        xAxis.setLabelsToSkip(0);
+
         if (StatsType.STATS_MONTHLY.equals(statsType)) {
+            xAxis.setLabelsToSkip(0);
             xAxis.setValueFormatter(new XAxisValueFormatter() {
                 private String[] labels = {"J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"};
 
@@ -233,15 +225,54 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
                     return labels[index];
                 }
             });
+        } else {
+            xAxis.setLabelsToSkip(4);
+            xAxis.setValueFormatter(null);
         }
 
+        // Y Axis
         YAxis leftAxis = chart.getAxisLeft();
         leftAxis.setTextColor(Color.WHITE);
         leftAxis.setDrawGridLines(false);
         YAxis rightAxis = chart.getAxisRight();
         rightAxis.setEnabled(false);
+    }
 
-        chart.setData(observationData);
+    private List<String> getXValues(StatsType statsType) {
+        List<String> xVals = new ArrayList<String>();
+        if (StatsType.STATS_MONTHLY.equals(statsType)) {
+            for (int i = 1; i <= 12; i++) {
+                xVals.add("" + i);
+            }
+        } else {
+            for (int i = 1; i <= 53; i++) {
+                xVals.add("" + i);
+            }
+        }
+        return xVals;
+    }
+
+    private ArrayList<BarDataSet> getBarDataSets(ArrayList<BarEntry> yVals) {
+        ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
+        BarDataSet observationDataSet = new BarDataSet(yVals, "Observationer");
+        observationDataSet.setBarSpacePercent(35f);
+        observationDataSet.setDrawValues(false);
+        observationDataSet.setValueTextColor(Color.WHITE);
+        dataSets.add(observationDataSet);
+        return dataSets;
+    }
+
+    private ArrayList<BarEntry> getBarEntries(StatsType statsType, List<ObsStats> stats) {
+        ArrayList<BarEntry> yVals = new ArrayList<BarEntry>();
+
+        for (ObsStats obsStats : stats) {
+            if (StatsType.STATS_MONTHLY.equals(statsType)) {
+                yVals.add(new BarEntry(obsStats.getObservations(), obsStats.getMonth()));
+            } else {
+                yVals.add(new BarEntry(obsStats.getObservations(), obsStats.getWeek()));
+            }
+        }
+        return yVals;
     }
 
     public static int getRedlistImageResource(Bird bird, Context context) {
