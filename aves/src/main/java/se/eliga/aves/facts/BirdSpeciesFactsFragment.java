@@ -16,15 +16,21 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.XAxisValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import se.eliga.aves.BirdApp;
@@ -115,31 +121,15 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
     }
 
     public void loadBirdInternal(Bird bird) {
-        /*
-        ((TextView) getView().findViewById(R.id.factsSwedishSpecies)).setText(bird.getSwedishSpecies());
-        ((TextView) getView().findViewById(R.id.factsSwedishFamily)).setText(bird.getSwedishFamily());
-        ((TextView) getView().findViewById(R.id.factsSwedishOrder)).setText(bird.getSwedishOrder());
-        ((TextView) getView().findViewById(R.id.factsLatinSpecies)).setText(bird.getLatinSpecies());
-        ((TextView) getView().findViewById(R.id.factsLatinFamily)).setText(bird.getLatinFamily());
-        ((TextView) getView().findViewById(R.id.factsLatinOrder)).setText(bird.getLatinOrder());
-        ((TextView) getView().findViewById(R.id.factsEnglishSpecies)).setText(bird.getEnglishSpecies());
-        ((TextView) getView().findViewById(R.id.factsEnglishFamily)).setText(bird.getEnglishFamily());
-        ((TextView) getView().findViewById(R.id.factsEnglishOrder)).setText(bird.getEnglishOrder());
-        */
 
         if (bird.getMinPopulationEstimate() >= 0 && bird.getMaxPopulationEstimate() >= 0 && bird.getBestPopulationEstimate() >= 0) {
             BirdFormatter birdFormatter = new BirdFormatter();
             ((TextView) getView().findViewById(R.id.bestEstimate)).setText(birdFormatter.getFormattedPopulation(bird));
             ((TextView) getView().findViewById(R.id.rangeEstimate)).setText("(" + birdFormatter.getFormattedPopulationRange(bird) + ")");
+        } else {
+            ((TextView) getView().findViewById(R.id.bestEstimate)).setText("");
+            ((TextView) getView().findViewById(R.id.rangeEstimate)).setText("Estimat saknas");
         }
-
-
-        /*
-        int redlistImageResource = getRedlistImageResource(bird, getActivity());
-        if (redlistImageResource != -1) {
-            ((ImageView) getView().findViewById(R.id.factsRedlistImageView)).setImageResource(redlistImageResource);
-        }
-        */
 
         initializeObservationsChart(bird);
         initializeLocationStats(bird);
@@ -202,11 +192,17 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
         chart.setPinchZoom(false);
         chart.setDrawGridBackground(false);
         chart.setDoubleTapToZoomEnabled(false);
-        chart.setDragEnabled(false);
         chart.setScaleEnabled(false);
         chart.setDrawValueAboveBar(false);
         chart.setDrawBorders(false);
         chart.setDrawGridBackground(false);
+        chart.getLegend().setTextColor(Color.WHITE);
+        chart.setScaleXEnabled(true);
+        chart.setDragEnabled(true);
+
+        BarChartMarkerView markerView =
+                new BarChartMarkerView (getActivity(), R.layout.barchart_marker_layout, statsType);
+        chart.setMarkerView(markerView);
 
         // X Axis
         XAxis xAxis = chart.getXAxis();
@@ -214,6 +210,14 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
         xAxis.setTextColor(Color.WHITE);
+
+
+        // Y Axis
+        YAxis leftAxis = chart.getAxisLeft();
+        leftAxis.setTextColor(Color.WHITE);
+        leftAxis.setDrawGridLines(false);
+        YAxis rightAxis = chart.getAxisRight();
+        rightAxis.setEnabled(false);
 
         if (StatsType.STATS_MONTHLY.equals(statsType)) {
             xAxis.setLabelsToSkip(0);
@@ -230,12 +234,6 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
             xAxis.setValueFormatter(null);
         }
 
-        // Y Axis
-        YAxis leftAxis = chart.getAxisLeft();
-        leftAxis.setTextColor(Color.WHITE);
-        leftAxis.setDrawGridLines(false);
-        YAxis rightAxis = chart.getAxisRight();
-        rightAxis.setEnabled(false);
     }
 
     private List<String> getXValues(StatsType statsType) {
@@ -267,24 +265,59 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
 
         for (ObsStats obsStats : stats) {
             if (StatsType.STATS_MONTHLY.equals(statsType)) {
-                yVals.add(new BarEntry(obsStats.getObservations(), obsStats.getMonth()));
+                yVals.add(new BarEntry(obsStats.getObservations(), obsStats.getMonth() - 1 ));
             } else {
-                yVals.add(new BarEntry(obsStats.getObservations(), obsStats.getWeek()));
+                yVals.add(new BarEntry(obsStats.getObservations(), obsStats.getWeek() - 1 ));
             }
         }
         return yVals;
     }
 
-    public static int getRedlistImageResource(Bird bird, Context context) {
+    public class BarChartMarkerView extends MarkerView {
 
-        if (bird.getSwedishRedlistCategory() != null) {
-            return context.getResources().getIdentifier("redlist_" +
-                            bird.getSwedishRedlistCategory().getText().toLowerCase(),
-                    "drawable", context.getApplicationInfo().packageName);
-        } else {
-            return -1;
+        private TextView markerText;
+        private StatsType statsType;
+
+        public BarChartMarkerView (Context context, int layoutResource, StatsType statsType) {
+            super(context, layoutResource);
+            this.statsType = statsType;
+            markerText = (TextView) findViewById(R.id.barChartDescriptor);
         }
 
+        // callbacks everytime the MarkerView is redrawn, can be used to update the
+        // content (user-interface)
+        @Override
+        public void refreshContent(Entry e, Highlight highlight) {
+            if (StatsType.STATS_WEEKLY.equals(statsType)) {
+                markerText.setText(getFormattedDatePeriod(e.getXIndex()));
+            }
+        }
+
+        @Override
+        public int getXOffset() {
+            // this will center the marker-view horizontally
+            return -(getWidth() / 2);    }
+
+        @Override
+        public int getYOffset() {
+            // this will cause the marker-view to be above the selected value
+            return -getHeight();
+        }
+
+        public String getFormattedDatePeriod(int xIndex) {
+            int firstDayNo = (xIndex) * 7 + 1; //xIndex starts from 0
+            int lastDayNo = firstDayNo + 6;
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.DAY_OF_YEAR, firstDayNo);
+            cal.set(Calendar.YEAR, 2016);
+            Date firstDate = cal.getTime();
+            cal.set(Calendar.DAY_OF_YEAR, lastDayNo);
+            Date lastDate = cal.getTime();
+            SimpleDateFormat sdf = new SimpleDateFormat("d/M");
+            return sdf.format(firstDate) + " - " + sdf.format(lastDate);
+        }
     }
 
 }
+
+
