@@ -8,21 +8,26 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.CombinedChart;
+import com.github.mikephil.charting.charts.ScatterChart;
 import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.ScatterData;
+import com.github.mikephil.charting.data.ScatterDataSet;
 import com.github.mikephil.charting.formatter.XAxisValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.utils.ViewPortHandler;
@@ -31,7 +36,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import se.eliga.aves.BirdApp;
 import se.eliga.aves.Constants;
@@ -40,6 +47,7 @@ import se.eliga.aves.birddetail.AbstractBirdSpeciesFragment;
 import se.eliga.aves.model.Bird;
 import se.eliga.aves.model.BirdFormatter;
 import se.eliga.aves.model.DatabaseHandler;
+import se.eliga.aves.model.Lan;
 import se.eliga.aves.model.LocationStats;
 import se.eliga.aves.model.ObsStats;
 
@@ -47,11 +55,14 @@ import se.eliga.aves.model.ObsStats;
  */
 public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
 
-
     protected BarChart chart;
+    protected CombinedChart chart2;
 
     private MenuItem menuItemMonthlyStats;
     private MenuItem menuItemWeeklyStats;
+
+    private SubMenu lanMenu;
+    private Map<String, MenuItem> lanMenuItems = new HashMap<String, MenuItem>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,9 +86,30 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
+
+        SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, 0);
+
+        DatabaseHandler databaseHandler = ((BirdApp) getActivity().getApplication())
+                .getDbHandler();
+        List<Lan> lans = databaseHandler.getLan();
+
+        String selectedLanId = settings.getString(Constants.SELECTED_LAN_ID, null);
+        if (lanMenu == null) {
+            lanMenu = menu.addSubMenu("Lan");
+            for (Lan lan : lans) {
+                MenuItem menuItem = lanMenu.add(lan.getName());
+                lanMenuItems.put(lan.getId(), menuItem);
+                menuItem.setCheckable(true);
+                if (selectedLanId != null && selectedLanId.equals(lan.getId())) {
+                    menuItem.setChecked(true);
+                } else {
+                    menuItem.setChecked(false);
+                }
+            }
+        }
+
         menuItemMonthlyStats = menu.findItem(R.id.stats_monthly);
         menuItemWeeklyStats = menu.findItem(R.id.stats_weekly);
-        SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, 0);
         StatsType statsType = StatsType.lookupByCode(settings.getString(Constants.STATS_TYPE, StatsType.STATS_MONTHLY.getCode()));
         switch (statsType) {
             case STATS_MONTHLY:
@@ -93,7 +125,24 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         Bird currentBird = getCurrentBird();
+        String chosenLanId = null;
+        for (String lanId : lanMenuItems.keySet()) {
+            MenuItem lanItem = lanMenuItems.get(lanId);
+            if (lanItem == item) {
+                lanItem.setChecked(true);
+                chosenLanId = lanId;
+            } else {
+                lanItem.setChecked(false);
+            }
+        }
+        if (chosenLanId != null) {
+            saveLanId(chosenLanId);
+            loadBird(currentBird);
+            return true;
+        }
+
         switch (item.getItemId()) {
             case R.id.stats_weekly:
                 menuItemMonthlyStats.setChecked(false);
@@ -120,8 +169,14 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
         editor.commit();
     }
 
-    public void loadBirdInternal(Bird bird) {
+    private void saveLanId(String lanId) {
+        SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(Constants.SELECTED_LAN_ID, lanId);
+        editor.commit();
+    }
 
+    public void loadBirdInternal(Bird bird) {
         if (bird.getMinPopulationEstimate() >= 0 && bird.getMaxPopulationEstimate() >= 0 && bird.getBestPopulationEstimate() >= 0) {
             BirdFormatter birdFormatter = new BirdFormatter();
             ((TextView) getView().findViewById(R.id.bestEstimate)).setText(birdFormatter.getFormattedPopulation(bird));
@@ -131,14 +186,17 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
             ((TextView) getView().findViewById(R.id.rangeEstimate)).setText("Estimat saknas");
         }
 
-        initializeObservationsChart(bird);
+        initializeObservationsChart2(bird);
         initializeLocationStats(bird);
     }
 
     private void initializeLocationStats(Bird bird) {
+        SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, 0);
+        String lanId = settings.getString(Constants.SELECTED_LAN_ID, "AB");
         DatabaseHandler databaseHandler = ((BirdApp) getActivity().getApplication())
                 .getDbHandler();
-        List<LocationStats> stats = databaseHandler.getLocationStats(bird.getDyntaxaTaxonId(), "AB");
+
+        List<LocationStats> stats = databaseHandler.getLocationStats(bird.getDyntaxaTaxonId(), lanId);
 
         TableLayout tl = (TableLayout) getView().findViewById(R.id.locationStatsTable);
         tl.removeAllViews();
@@ -164,16 +222,107 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
 
         SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, 0);
         StatsType statsType = StatsType.lookupByCode(settings.getString(Constants.STATS_TYPE, StatsType.STATS_MONTHLY.getCode()));
+        String lanId = settings.getString(Constants.SELECTED_LAN_ID, "AB");
 
         chart = (BarChart) getView().findViewById(R.id.birdStatsBarchart);
         initBarChart(statsType);
 
         DatabaseHandler databaseHandler = ((BirdApp) getActivity().getApplication()).getDbHandler();
-        List<ObsStats> stats = databaseHandler.getObsStats(bird.getDyntaxaTaxonId(), "AB", statsType.getCode());
+        List<ObsStats> stats = databaseHandler.getObsStats(bird.getDyntaxaTaxonId(), lanId, statsType.getCode());
         BarData observationData = getObservationBarData(statsType, stats);
 
         chart.setData(observationData);
     }
+
+    private void initializeObservationsChart2(Bird bird) {
+
+        SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, 0);
+        StatsType statsType = StatsType.lookupByCode(settings.getString(Constants.STATS_TYPE, StatsType.STATS_MONTHLY.getCode()));
+        String lanId = settings.getString(Constants.SELECTED_LAN_ID, "AB");
+
+        chart2 = (CombinedChart) getView().findViewById(R.id.birdStatsCombinedchart);
+
+        //initBarChart(statsType);
+        //
+        chart2.clear();
+        chart2.setNoDataText("Inga kända eller publika observationer");
+        chart2.setDescription(null);
+        chart2.setPinchZoom(false);
+        chart2.setDrawGridBackground(false);
+        chart2.setDoubleTapToZoomEnabled(false);
+        chart2.setScaleEnabled(false);
+        chart2.setDrawValueAboveBar(false);
+        chart2.setDrawBorders(false);
+        chart2.setDrawGridBackground(false);
+        chart2.getLegend().setTextColor(Color.WHITE);
+        chart2.setScaleXEnabled(true);
+        chart2.setDragEnabled(true);
+        chart2.setDrawHighlightArrow(false);
+
+        BarChartMarkerView markerView =
+                new BarChartMarkerView (getActivity(), R.layout.barchart_marker_layout, statsType);
+        chart2.setMarkerView(markerView);
+
+        // X Axis
+        XAxis xAxis = chart2.getXAxis();
+        xAxis.setDrawLabels(true);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+        xAxis.setTextColor(Color.WHITE);
+
+
+        // Y Axis
+        YAxis leftAxis = chart2.getAxisLeft();
+        leftAxis.setTextColor(Color.WHITE);
+        leftAxis.setDrawGridLines(false);
+        YAxis rightAxis = chart2.getAxisRight();
+        rightAxis.setEnabled(false);
+
+        if (StatsType.STATS_MONTHLY.equals(statsType)) {
+            xAxis.setLabelsToSkip(0);
+            xAxis.setValueFormatter(new XAxisValueFormatter() {
+                private String[] labels = {"J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"};
+
+                @Override
+                public String getXValue(String original, int index, ViewPortHandler viewPortHandler) {
+                    return labels[index];
+                }
+            });
+        } else {
+            xAxis.setLabelsToSkip(4);
+            xAxis.setValueFormatter(null);
+        }
+        //
+
+        DatabaseHandler databaseHandler = ((BirdApp) getActivity().getApplication()).getDbHandler();
+        List<ObsStats> stats = databaseHandler.getObsStats(bird.getDyntaxaTaxonId(), lanId, statsType.getCode());
+        BarData observationData = getObservationBarData(statsType, stats);
+
+        ScatterData scatterData = new ScatterData(observationData.getXVals());
+
+        ArrayList<Entry> entries = new ArrayList<Entry>();
+        Calendar calendar = Calendar.getInstance();
+        if (StatsType.STATS_MONTHLY.equals(statsType)) {
+            entries.add(new Entry(0f, calendar.get(Calendar.MONTH)));
+        } else {
+            entries.add(new Entry(0f, calendar.get(Calendar.DAY_OF_YEAR)/ 7));
+        }
+
+        ScatterDataSet set = new ScatterDataSet(entries, "Idag");
+        set.setColor(Color.RED);
+        set.setScatterShape(ScatterChart.ScatterShape.TRIANGLE);
+        set.setScatterShapeSize(10f);
+        set.setDrawValues(false);
+        set.setValueTextSize(15f);
+        scatterData.addDataSet(set);
+
+        CombinedData data = new CombinedData(observationData.getXVals());
+        data.setData(observationData);
+        data.setData(scatterData);
+
+        chart2.setData(data);
+    }
+
 
     private BarData getObservationBarData(StatsType statsType, List<ObsStats> stats) {
         List<String> xVals = getXValues(statsType);
@@ -317,7 +466,4 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
             return sdf.format(firstDate) + " - " + sdf.format(lastDate);
         }
     }
-
 }
-
-

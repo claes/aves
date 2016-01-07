@@ -395,5 +395,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return stats;
     }
 
+    public List<Lan> getLan() {
+        List<Lan> lans = new ArrayList<Lan>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        StringBuffer query = new StringBuffer("select * from lan order by " + LAN_NAME);
+        String queryString = query.toString();
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Lan lan = new Lan();
+                lan.setId(cursor.getString(cursor.getColumnIndex(LAN_ID)));
+                lan.setName(cursor.getString(cursor.getColumnIndex(LAN_NAME)));
+                lans.add(lan);
+            } while (cursor.moveToNext());
+        }
+        return lans;
+    }
+
 
 }
