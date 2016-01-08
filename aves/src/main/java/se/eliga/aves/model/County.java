@@ -3,7 +3,7 @@ package se.eliga.aves.model;
 /**
  * Created by Claes on 1/7/16.
  */
-public class Lan {
+public class County {
 
     private String id;
     private String name;

@@ -365,13 +365,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return stats;
     }
 
-    public List<ObsStats> getObsStats(String taxonId, String areaId, String periodType) {
+    public List<ObsStats> getObsStats(String taxonId, String areaId) {
         List<ObsStats> stats = new ArrayList<ObsStats>();
         SQLiteDatabase db = this.getReadableDatabase();
         StringBuffer query = new StringBuffer("select * from observationStats where 1=1");
         query.append(" AND " + DYNTAXA_TAXONID_COLUMN + " = '" + taxonId + "' ");
         query.append(" AND " + AREA_ID + " = '" + areaId + "' ");
-        query.append(" AND " + PERIOD_TYPE + " = '" + periodType + "' ");
+        query.append(" AND " + PERIOD_TYPE + " = '" + "W" + "' ");
         query.append(" ORDER BY " + PERIOD_VALUE + " ASC");
         String queryString = query.toString();
         Cursor cursor = db.rawQuery(queryString, null);
@@ -381,11 +381,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 ObsStats obsStats = new ObsStats();
                 obsStats.setDyntaxaTaxonId(taxonId);
                 obsStats.setAreaId(areaId);
-                if ("W".equalsIgnoreCase(periodType)) {
-                    obsStats.setWeek(cursor.getInt(cursor.getColumnIndex(PERIOD_VALUE)));
-                } else if ("M".equalsIgnoreCase(periodType)) {
-                    obsStats.setMonth(cursor.getInt(cursor.getColumnIndex(PERIOD_VALUE)));
-                }
+                obsStats.setWeek(cursor.getInt(cursor.getColumnIndex(PERIOD_VALUE)));
                 obsStats.setObservations(cursor.getInt(cursor.getColumnIndex(OBSERVATIONS)));
                 obsStats.setObservedIndividuals(cursor.getInt(cursor.getColumnIndex(OBSERVED_INDIVIDUALS)));
                 stats.add(obsStats);
@@ -395,8 +391,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return stats;
     }
 
-    public List<Lan> getLan() {
-        List<Lan> lans = new ArrayList<Lan>();
+    public List<County> getCounties() {
+        List<County> counties = new ArrayList<County>();
         SQLiteDatabase db = this.getReadableDatabase();
         StringBuffer query = new StringBuffer("select * from lan order by " + LAN_NAME);
         String queryString = query.toString();
@@ -404,13 +400,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                Lan lan = new Lan();
-                lan.setId(cursor.getString(cursor.getColumnIndex(LAN_ID)));
-                lan.setName(cursor.getString(cursor.getColumnIndex(LAN_NAME)));
-                lans.add(lan);
+                County county = new County();
+                county.setId(cursor.getString(cursor.getColumnIndex(LAN_ID)));
+                county.setName(cursor.getString(cursor.getColumnIndex(LAN_NAME)));
+                counties.add(county);
             } while (cursor.moveToNext());
         }
-        return lans;
+        return counties;
     }
 
 

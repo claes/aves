@@ -6,17 +6,5 @@
     <group
         android:id="@+id/facts_stats_group"
         android:checkableBehavior="single" >
-        <item
-            android:id="@+id/stats_monthly"
-            android:checkable="true"
-            android:orderInCategory="100"
-            android:showAsAction="never"
-            android:title="@string/monthly_stats" />
-        <item
-            android:id="@+id/stats_weekly"
-            android:checkable="true"
-            android:orderInCategory="100"
-            android:showAsAction="never"
-            android:title="@string/weekly_stats" />
     </group>
 </menu>

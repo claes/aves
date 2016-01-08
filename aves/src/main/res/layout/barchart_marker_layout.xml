@@ -4,7 +4,20 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/barChartDescriptor"
+        android:id="@+id/barChartDateDescriptor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text=""
+        android:textSize="14dp"
+        android:textColor="@android:color/white"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:background="@android:color/black"
+        android:padding="2sp"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+    <TextView
+        android:id="@+id/barChartValueDescriptor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"

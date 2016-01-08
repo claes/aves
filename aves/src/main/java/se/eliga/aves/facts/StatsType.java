@@ -9,7 +9,7 @@ import java.util.Map;
 
 public enum StatsType {
 
-    STATS_MONTHLY("M"),
+    //STATS_MONTHLY("M"),
     STATS_WEEKLY("W");
 
     private final String code;
