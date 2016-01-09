@@ -51,7 +51,7 @@ import se.eliga.aves.model.ObsStats;
  */
 public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
 
-    protected CombinedChart chart2;
+    protected CombinedChart chart;
 
     private Map<String, MenuItem> countyMenuItems = new HashMap<String, MenuItem>();
 
@@ -76,7 +76,7 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
                 .getDbHandler();
         List<County> counties = databaseHandler.getCounties();
         for (County county : counties) {
-            MenuItem menuItem = menu.add(county.getName());
+            MenuItem menuItem = menu.add(county.getName() + " län");
             countyMenuItems.put(county.getId(), menuItem);
             menuItem.setCheckable(true);
         }
@@ -129,6 +129,12 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
         editor.commit();
     }
 
+
+    private String getSavedCountyId() {
+        SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, 0);
+        return settings.getString(Constants.SELECTED_COUNTY_ID, "AB");
+    }
+
     public void loadBirdInternal(Bird bird) {
         if (bird.getMinPopulationEstimate() >= 0 && bird.getMaxPopulationEstimate() >= 0 && bird.getBestPopulationEstimate() >= 0) {
             BirdFormatter birdFormatter = new BirdFormatter();
@@ -139,13 +145,19 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
             ((TextView) getView().findViewById(R.id.rangeEstimate)).setText("Estimat saknas");
         }
 
-        initializeObservationsChart2(bird);
+        String countyId = getSavedCountyId();
+        String countyName = countyMenuItems.get(countyId) != null ? ((MenuItem) countyMenuItems.get(countyId)).getTitle().toString() : null;
+        if (countyName != null) {
+            ((TextView) getView().findViewById(R.id.observationsHeading)).setText(String.format("Observationer i %1$s", countyName));
+            ((TextView) getView().findViewById(R.id.locationsHeading)).setText(String.format("Oftast observerad i %1$s", countyName));
+        }
+
+        initializeObservationsChart(bird);
         initializeLocationStats(bird);
     }
 
     private void initializeLocationStats(Bird bird) {
-        SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, 0);
-        String countyId = settings.getString(Constants.SELECTED_COUNTY_ID, "AB");
+        String countyId = getSavedCountyId();
         DatabaseHandler databaseHandler = ((BirdApp) getActivity().getApplication())
                 .getDbHandler();
 
@@ -171,19 +183,18 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
         }
     }
 
-    private void initializeObservationsChart2(Bird bird) {
+    private void initializeObservationsChart(Bird bird) {
 
-        SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, 0);
-        String countyId = settings.getString(Constants.SELECTED_COUNTY_ID, "AB");
+        String countyId = getSavedCountyId();
 
-        BarData observationData = initBarChart2(bird, countyId);
+        BarData observationData = initBarChart(bird, countyId);
         ScatterData scatterData = initScatterChart(observationData);
 
         CombinedData data = new CombinedData(observationData.getXVals());
         data.setData(observationData);
         data.setData(scatterData);
 
-        chart2.setData(data);
+        chart.setData(data);
     }
 
     private ScatterData initScatterChart(BarData observationData) {
@@ -203,30 +214,30 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
         return scatterData;
     }
 
-    private BarData initBarChart2(Bird bird, String countyId) {
-        chart2 = (CombinedChart) getView().findViewById(R.id.birdStatsCombinedchart);
+    private BarData initBarChart(Bird bird, String countyId) {
+        chart = (CombinedChart) getView().findViewById(R.id.birdStatsCombinedchart);
 
-        chart2.clear();
-        chart2.setNoDataText("Inga kända eller publika observationer");
-        chart2.setDescription(null);
-        chart2.setPinchZoom(false);
-        chart2.setDrawGridBackground(false);
-        chart2.setDoubleTapToZoomEnabled(false);
-        chart2.setScaleEnabled(false);
-        chart2.setDrawValueAboveBar(false);
-        chart2.setDrawBorders(false);
-        chart2.setDrawGridBackground(false);
-        chart2.getLegend().setTextColor(Color.WHITE);
-        chart2.setScaleXEnabled(true);
-        chart2.setDragEnabled(true);
-        chart2.setDrawHighlightArrow(false);
+        chart.clear();
+        chart.setNoDataText("Inga kända eller publika observationer");
+        chart.setDescription(null);
+        chart.setPinchZoom(false);
+        chart.setDrawGridBackground(false);
+        chart.setDoubleTapToZoomEnabled(false);
+        chart.setScaleEnabled(false);
+        chart.setDrawValueAboveBar(false);
+        chart.setDrawBorders(false);
+        chart.setDrawGridBackground(false);
+        chart.getLegend().setTextColor(Color.WHITE);
+        chart.setScaleXEnabled(true);
+        chart.setDragEnabled(true);
+        chart.setDrawHighlightArrow(false);
 
         BarChartMarkerView markerView =
                 new BarChartMarkerView(getActivity(), R.layout.barchart_marker_layout);
-        chart2.setMarkerView(markerView);
+        chart.setMarkerView(markerView);
 
         // X Axis
-        XAxis xAxis = chart2.getXAxis();
+        XAxis xAxis = chart.getXAxis();
         xAxis.setDrawLabels(true);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
@@ -235,10 +246,10 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
         xAxis.setValueFormatter(null);
 
         // Y Axis
-        YAxis leftAxis = chart2.getAxisLeft();
+        YAxis leftAxis = chart.getAxisLeft();
         leftAxis.setTextColor(Color.WHITE);
         leftAxis.setDrawGridLines(false);
-        YAxis rightAxis = chart2.getAxisRight();
+        YAxis rightAxis = chart.getAxisRight();
         rightAxis.setEnabled(false);
 
         DatabaseHandler databaseHandler = ((BirdApp) getActivity().getApplication()).getDbHandler();
@@ -267,7 +278,7 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
 
     private ArrayList<BarDataSet> getBarDataSets(ArrayList<BarEntry> yVals) {
         ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
-        BarDataSet observationDataSet = new BarDataSet(yVals, "Observationer");
+        BarDataSet observationDataSet = new BarDataSet(yVals, "Antal observationer 2000 - 2015");
         observationDataSet.setBarSpacePercent(35f);
         observationDataSet.setDrawValues(false);
         observationDataSet.setValueTextColor(Color.WHITE);
@@ -300,7 +311,7 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
         @Override
         public void refreshContent(Entry e, Highlight highlight) {
             dateMarkerText.setText(getFormattedDatePeriod(e.getXIndex()));
-            valueMarkerText.setText((int) e.getVal());
+            valueMarkerText.setText(("" + (int) e.getVal()));
         }
 
         @Override
@@ -311,7 +322,7 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
         @Override
         public int getYOffset() {
             // this will cause the marker-view to be above the selected value
-            return -getHeight();
+            return 0; //-getHeight();
         }
 
         public String getFormattedDatePeriod(int xIndex) {
