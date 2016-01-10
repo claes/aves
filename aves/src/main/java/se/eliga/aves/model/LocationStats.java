@@ -9,6 +9,8 @@ public class LocationStats {
     private String areaId;
     private String locality;
     private int count;
+    private String latitude;
+    private String longitude;
 
     public String getDyntaxaTaxonId() {
         return dyntaxaTaxonId;
@@ -40,5 +42,21 @@ public class LocationStats {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 }

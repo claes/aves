@@ -359,6 +359,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 locationStat.setAreaId(areaId);
                 locationStat.setLocality(cursor.getString(cursor.getColumnIndex(LOCATION)));
                 locationStat.setCount(cursor.getInt(cursor.getColumnIndex(OBSERVATIONS)));
+                locationStat.setLatitude(cursor.getString(cursor.getColumnIndex(LATITUDE)));
+                locationStat.setLongitude(cursor.getString(cursor.getColumnIndex(LONGITUDE)));
                 stats.add(locationStat);
             } while (cursor.moveToNext());
         }

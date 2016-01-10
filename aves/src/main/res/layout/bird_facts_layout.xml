@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Estimerat antal i Sverige"
-            android:id="@+id/estimateHeading" />
+            android:id="@+id/estimateHeading"  />
 
         <LinearLayout
             android:orientation="horizontal"

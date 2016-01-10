@@ -1,9 +1,13 @@
 package se.eliga.aves.facts;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -60,6 +64,12 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.bird_facts_layout, container, false);
         setHasOptionsMenu(true);
+
+        if (getSavedCountyId() == null) {
+            DialogFragment dialog = new CountyListDialogFragment();
+            dialog.show(getFragmentManager(), "CountyListFragment");
+        }
+
         return view;
     }
 
@@ -129,10 +139,10 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
         editor.commit();
     }
 
-
     private String getSavedCountyId() {
         SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, 0);
-        return settings.getString(Constants.SELECTED_COUNTY_ID, "AB");
+        String countyId = settings.getString(Constants.SELECTED_COUNTY_ID, null);
+        return countyId;
     }
 
     public void loadBirdInternal(Bird bird) {
@@ -158,6 +168,9 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
 
     private void initializeLocationStats(Bird bird) {
         String countyId = getSavedCountyId();
+        if (countyId == null) {
+            return;
+        }
         DatabaseHandler databaseHandler = ((BirdApp) getActivity().getApplication())
                 .getDbHandler();
 
@@ -167,17 +180,34 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
         tl.removeAllViews();
         int i = 1;
         TableRow tr = null;
-        for (LocationStats locationStat : stats) {
+        for (final LocationStats locationStat : stats) {
             //Two column layout
             if ((i-1) % 2 == 0) {
                 tr = new TableRow(getActivity());
                 tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
                 tl.addView(tr, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
             }
+
             TextView location = new TextView(getActivity());
             location.setText(i + ": " + locationStat.getLocality());
             location.setPadding(5, 2, 10, 2);
+            location.setPaintFlags(location.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             location.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+            location.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                        Uri geoLocation = Uri.parse("geo:" + locationStat.getLatitude() + "," + locationStat.getLongitude() + "?z=14");
+
+                        //geoLocation = Uri.parse("http://maps.google.com/maps?q=" + locationStat.getLatitude() + ',' + locationStat.getLongitude()+ "("+ locationStat.getLocality() +")&z=15");
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(geoLocation);
+                        intent.setPackage("com.google.android.apps.maps");
+                        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                                startActivity(intent);
+                        }
+                }
+            });
             tr.addView(location);
             i++;
         }
@@ -186,6 +216,10 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
     private void initializeObservationsChart(Bird bird) {
 
         String countyId = getSavedCountyId();
+        if (countyId == null) {
+            return;
+        }
+
 
         BarData observationData = initBarChart(bird, countyId);
         ScatterData scatterData = initScatterChart(observationData);
@@ -316,13 +350,12 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
 
         @Override
         public int getXOffset() {
-            // this will center the marker-view horizontally
-            return -(getWidth() / 2);    }
+            return -(getWidth() / 2);
+        }
 
         @Override
         public int getYOffset() {
-            // this will cause the marker-view to be above the selected value
-            return 0; //-getHeight();
+            return -getHeight();
         }
 
         public String getFormattedDatePeriod(int xIndex) {
