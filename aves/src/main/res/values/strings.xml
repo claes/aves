@@ -86,5 +86,6 @@
     <string name="tab_photos">Foton</string>
     <string name="tab_facts">Fakta</string>
     <string name="tab_wikipedia">Wikipedia</string>
+    <string name="county_list">Län</string>
 
 </resources>

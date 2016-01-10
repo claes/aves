@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TableLayout;
@@ -85,8 +86,11 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
         DatabaseHandler databaseHandler = ((BirdApp) getActivity().getApplication())
                 .getDbHandler();
         List<County> counties = databaseHandler.getCounties();
+
+
+        SubMenu countyListItemSubMenu  = menu.findItem(R.id.county_list).getSubMenu();
         for (County county : counties) {
-            MenuItem menuItem = menu.add(county.getName() + " län");
+            MenuItem menuItem = countyListItemSubMenu.add(county.getName() + " län");
             countyMenuItems.put(county.getId(), menuItem);
             menuItem.setCheckable(true);
         }
@@ -178,25 +182,25 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
 
         TableLayout tl = (TableLayout) getView().findViewById(R.id.locationStatsTable);
         tl.removeAllViews();
-        int i = 1;
-        TableRow tr = null;
-        for (final LocationStats locationStat : stats) {
-            //Two column layout
-            if ((i-1) % 2 == 0) {
-                tr = new TableRow(getActivity());
-                tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-                tl.addView(tr, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
-            }
+        if (stats.size() > 0 ) {
+            int i = 1;
+            TableRow tr = null;
+            for (final LocationStats locationStat : stats) {
+                //Two column layout
+                if ((i - 1) % 2 == 0) {
+                    tr = new TableRow(getActivity());
+                    tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+                    tl.addView(tr, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
+                }
 
-            TextView location = new TextView(getActivity());
-            location.setText(i + ": " + locationStat.getLocality());
-            location.setPadding(5, 2, 10, 2);
-            location.setPaintFlags(location.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-            location.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-            location.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View view) {
+                TextView location = new TextView(getActivity());
+                location.setText(i + ": " + locationStat.getLocality());
+                location.setPadding(5, 2, 10, 2);
+                location.setPaintFlags(location.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                location.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+                location.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
                         Uri geoLocation = Uri.parse("geo:" + locationStat.getLatitude() + "," + locationStat.getLongitude() + "?z=14");
 
                         //geoLocation = Uri.parse("http://maps.google.com/maps?q=" + locationStat.getLatitude() + ',' + locationStat.getLongitude()+ "("+ locationStat.getLocality() +")&z=15");
@@ -204,12 +208,20 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
                         intent.setData(geoLocation);
                         intent.setPackage("com.google.android.apps.maps");
                         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-                                startActivity(intent);
+                            startActivity(intent);
                         }
-                }
-            });
-            tr.addView(location);
-            i++;
+                    }
+                });
+                tr.addView(location);
+                i++;
+            }
+        } else {
+            TableRow tr = new TableRow(getActivity());
+            tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+            tl.addView(tr, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
+            TextView text  = new TextView(getActivity());
+            text.setText("Uppgifter saknas");
+            tr.addView(text);
         }
     }
 
@@ -220,20 +232,18 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
             return;
         }
 
-
         BarData observationData = initBarChart(bird, countyId);
         ScatterData scatterData = initScatterChart(observationData);
 
         CombinedData data = new CombinedData(observationData.getXVals());
         data.setData(observationData);
-        data.setData(scatterData);
+        //data.setData(scatterData);
 
         chart.setData(data);
     }
 
     private ScatterData initScatterChart(BarData observationData) {
         ScatterData scatterData = new ScatterData(observationData.getXVals());
-
         ArrayList<Entry> entries = new ArrayList<Entry>();
         Calendar calendar = Calendar.getInstance();
         entries.add(new Entry(0f, (calendar.get(Calendar.DAY_OF_YEAR) - 1)/ 7));
@@ -245,10 +255,10 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
         set.setDrawValues(false);
         set.setValueTextSize(15f);
         scatterData.addDataSet(set);
-        return scatterData;
+        return scatterData;observationData.get
     }
 
-    private BarData initBarChart(Bird bird, String countyId) {
+    private BarData initBarChart(BobservationData.getird bird, String countyId) {
         chart = (CombinedChart) getView().findViewById(R.id.birdStatsCombinedchart);
 
         chart.clear();

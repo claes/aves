@@ -2,9 +2,19 @@
   ~ Copyright (c) Claes Holmerson 2013, 2015. The program is licensed under GNU GPL v3. See LICENSE.txt for details.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <item android:id="@+id/county_list"
+        android:icon="@drawable/sweden"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="@string/county_list">
+        <menu >
+
+        </menu>
+<!--    <group
         android:id="@+id/facts_stats_group"
         android:checkableBehavior="single" >
-    </group>
+    </group> -->
+    </item>
 </menu>
