@@ -70,10 +70,6 @@ public class BirdDetailsTabActivity extends FragmentActivity {
 						getResources().getDrawable(android.R.drawable.star_on)),
 				BirdSpeciesWebFragment.class, bundle);
 		tabHost.addTab(
-				tabHost.newTabSpec("Fakta").setIndicator(getText(R.string.tab_facts),
-						getResources().getDrawable(android.R.drawable.star_on)),
-				BirdSpeciesFactsFragment.class, bundle);
-		tabHost.addTab(
 				tabHost.newTabSpec("Flickr").setIndicator(getText(R.string.tab_photos),
 						getResources().getDrawable(android.R.drawable.star_on)),
 				BirdSpeciesFlickrGalleryFragment.class, bundle);
@@ -81,7 +77,10 @@ public class BirdDetailsTabActivity extends FragmentActivity {
 				tabHost.newTabSpec("xeno-canto").setIndicator(getText(R.string.tab_sounds),
 						getResources().getDrawable(android.R.drawable.star_on)),
 				BirdSpeciesXenoCantoPlayerFragment.class, bundle);
-
+		tabHost.addTab(
+				tabHost.newTabSpec("Statistik").setIndicator(getText(R.string.tab_facts),
+						getResources().getDrawable(android.R.drawable.star_on)),
+				BirdSpeciesFactsFragment.class, bundle);
 		tabHost.addTab(
 				tabHost.newTabSpec("Karta").setIndicator(getText(R.string.tab_map),
 						getResources().getDrawable(android.R.drawable.star_on)),

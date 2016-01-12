@@ -80,7 +80,7 @@
 91;73;Anser indicus;Bar-headed Goose;Stripgås;233813;I;NA;;;;;
 92;73;Chen caerulescens;Snow Goose;Snögås;233778;I;NA;;;;;
 93;73;Chen rossii;Ross's Goose;Dvärgsnögås;233777;I;NA;;;;;
-94;73;Chen canagica;Emperor Goose;Kejsargås;;;;;;;;
+94;73;Chen canagica;Emperor Goose;Kejsargås;233815;;NA;;;;;
 95;73;Branta canadensis;Canada Goose;Kanadagås;102929;B;NA;13000;21000;17000;P;B
 96;73;Branta hutchinsii;Cackling Goose;Dvärgkanadagås;233816;I;NA;;;;;
 97;73;Branta sandvicensis;Nene;Hawaiigås;;;;;;;;
@@ -116,7 +116,7 @@
 129;73;Tadorna radjah;Raja Shelduck;Vithuvad gravand;;;;;;;;
 130;73;Tadorna ferruginea;Ruddy Shelduck;Rostand;233138;R;NA;;;;;
 131;73;Tadorna cana;South African Shelduck;Gråhuvad rostand;;;;;;;;
-132;73;Tadorna tadornoides;Australian Shelduck;Australisk gravand;233139;;NA;;;;;
+132;73;Tadorna tadornoides;Australian Shelduck;Australisk gravand;;;;;;;;
 133;73;Tadorna variegata;Paradise Shelduck;Paradisgravand;266748;;NA;;;;;
 134;73;Tadorna cristata;Crested Shelduck;Tofsgravand;;;;;;;;
 135;73;Malacorhynchus membranaceus;Pink-eared Duck;Zebraand;;;;;;;;
@@ -137,7 +137,7 @@
 150;73;Anas capensis;Cape Teal;Kapand;234082;I;NA;;;;;
 151;73;Anas strepera;Gadwall;Snatterand;102105;B;LC;1400;2600;2000;P;B
 152;73;Anas falcata;Falcated Duck;Praktand;233819;I;NA;;;;;
-153;73;Anas sibilatrix;Chiloe Wigeon;Chilensk bläsand;234081;;NA;;;;;
+153;73;Anas sibilatrix;Chiloe Wigeon;Chilensk bläsand;;;;;;;;
 154;73;Anas penelope;Eurasian Wigeon;Bläsand;102931;B;LC;29000;40000;34000;P;B
 155;73;Anas americana;American Wigeon;Amerikansk bläsand;233782;S;NA;;;;;
 156;73;Anas marecula;Amsterdam Wigeon;Amsterdamand;;;;;;;;
@@ -487,7 +487,7 @@
 506;367;Lophophorus impejanus;Himalayan Monal;Himalayamonal;;;;;;;;
 507;367;Lophophorus sclateri;Sclater's Monal;Vitstjärtad monal;;;;;;;;
 508;367;Lophophorus lhuysii;Chinese Monal;Kinesisk monal;;;;;;;;
-509;367;Gallus gallus;Red Junglefowl;Röd djungelhöna;264919;;NA;;;;;
+509;367;Gallus gallus;Red Junglefowl;Röd djungelhöna;;;;;;;;
 510;367;Gallus sonneratii;Grey Junglefowl;Grå djungelhöna;;;;;;;;
 511;367;Gallus lafayettii;Sri Lanka Junglefowl;Ceylondjungelhöna;;;;;;;;
 512;367;Gallus varius;Green Junglefowl;Grön djungelhöna;;;;;;;;
@@ -619,7 +619,7 @@
 645;624;Pterodroma ultima;Murphy's Petrel;Murphypetrell;;;;;;;;
 646;624;Pterodroma mollis;Soft-plumaged Petrel;Sammetspetrell;266785;U;;;;;;
 647;624;Pterodroma madeira;Zino's Petrel;Madeirapetrell;266784;U;NA;;;;;
-648;624;Pterodroma feae;Fea's Petrel;AtlantpetrHour iell (Kapverdepetrell);266782;S;NA;;;;;
+648;624;Pterodroma feae;Fea's Petrel;AtlantpetrHour iell (Kapverdepetrell);;;;;;;;
 649;624;Pterodroma deserta;Desertas Petrel;Atlantpetrell (Desertaspetrell);;;;;;;;
 650;624;Pterodroma cahow;Bermuda Petrel;Bermudapetrell;;U;;;;;;
 651;624;Pterodroma hasitata;Black-capped Petrel;Karibpetrell;;U;;;;;;
@@ -656,8 +656,8 @@
 682;624;Procellaria parkinsoni;Black Petrel;Mindre sotpetrell;;;;;;;;
 683;624;Procellaria westlandica;Westland Petrel;Större sotpetrell;;;;;;;;
 684;624;Calonectris leucomelas;Streaked Shearwater;Vithuvad lira;;U;;;;;;
-685;624;Calonectris diomedea;Scopoli's Shearwater;Scopolilira;205480;R;NA;;;;;
-686;624;Calonectris borealis;Cory's Shearwater;Gulnäbbad lira;;;;;;;;
+685;624;Calonectris diomedea;Scopoli's Shearwater;Scopolilira;;;;;;;;
+686;624;Calonectris borealis;Cory's Shearwater;Gulnäbbad lira;205480;R;NA;;;;;
 687;624;Calonectris edwardsii;Cape Verde Shearwater;Kapverdelira;;U;;;;;;
 688;624;Puffinus pacificus;Wedge-tailed Shearwater;Kilstjärtslira;;U;;;;;;
 689;624;Puffinus bulleri;Buller's Shearwater;Gråryggig lira;;;;;;;;
@@ -811,7 +811,7 @@
 844;814;Nycticorax mauritianus;Mauritius Night Heron;Mauritiusnatthäger;;;;;;;;
 845;814;Nycticorax megacephalus;Rodrigues Night heron;Rodriguesnatthäger;;;;;;;;
 846;814;Nycticorax caledonicus;Nankeen Night Heron;Rostnatthäger;;;;;;;;
-847;814;Nyctanassa violacea;Yellow-crowned Night Heron;Gulkronad natthäger;;;;;;;;
+847;814;Nyctanassa violacea;Yellow-crowned Night Heron;Gulkronad natthäger;;U;;;;;;
 848;814;Nyctanassa carcinocatactes;Bermuda Night Heron;Bermudanatthäger;;;;;;;;
 849;814;Butorides virescens;Green Heron;Grönryggig häger;266913;U;;;;;;
 850;814;Butorides sundevalli;Lava Heron;Galápagoshäger;;;;;;;;
@@ -854,7 +854,7 @@
 888;887;Scopus umbretta;Hamerkop;Skuggstork;;U;;;;;;
 890;889;Balaeniceps rex;Shoebill;Träskonäbb;;;;;;;;
 892;891;Pelecanus onocrotalus;Great White Pelican;Vit pelikan;233824;I;NA;;;;;
-893;891;Pelecanus rufescens;Pink-backed Pelican;Rosaryggig pelikan;266797;I;NA;;;;;
+893;891;Pelecanus rufescens;Pink-backed Pelican;Rosaryggig pelikan;;I;;;;;;
 894;891;Pelecanus philippensis;Spot-billed Pelican;Fläcknäbbad pelikan;;;;;;;;
 895;891;Pelecanus crispus;Dalmatian Pelican;Krushuvad pelikan;266796;U;;;;;;
 896;891;Pelecanus conspicillatus;Australian Pelican;Australisk pelikan;;;;;;;;
@@ -1016,7 +1016,7 @@
 1060;977;Clanga hastata;Indian Spotted Eagle;Indisk skrikörn;;;;;;;;
 1061;977;Clanga clanga;Greater Spotted Eagle;Större skrikörn;103061;R;NA;;;;;
 1062;977;Hieraaetus wahlbergi;Wahlberg's Eagle;Wahlbergs örn;;U;;;;;;
-1063;977;Hieraaetus pennatus;Booted Eagle;Dvärgörn;;;;;;;;
+1063;977;Hieraaetus pennatus;Booted Eagle;Dvärgörn;205555;S;NA;;;;;
 1064;977;Hieraaetus morphnoides;Little Eagle;Småörn;;;;;;;;
 1065;977;Hieraaetus weiskei;Pygmy Eagle;Pygméörn;;;;;;;;
 1066;977;Hieraaetus ayresii;Ayres's Hawk-Eagle;Ayresörn;;;;;;;;
@@ -1628,7 +1628,7 @@
 1701;1614;Calidris ptilocnemis;Rock Sandpiper;Klippsnäppa;;;;;;;;
 1702;1614;Calidris alpina;Dunlin;Kärrsnäppa;205617;B;LC;10000;20000;15000;P;B
 1703;1614;Calidris himantopus;Stilt Sandpiper;Styltsnäppa;205618;S;NA;;;;;
-1704;1614;Eurynorhynchus pygmeus;Spoon-billed Sandpiper;Skedsnäppa;;;;;;;;
+1704;1614;Eurynorhynchus pygmeus;Spoon-billed Sandpiper;Skedsnäppa;266827;;;;;;;
 1705;1614;Limicola falcinellus;Broad-billed Sandpiper;Myrsnäppa;102114;B;LC;4300;7600;5900;P;B
 1706;1614;Tryngites subruficollis;Buff-breasted Sandpiper;Prärielöpare;205620;R;NA;;;;;
 1707;1614;Philomachus pugnax;Ruff;Brushane;100103;B;VU;16000;35000;25000;cmales;B
@@ -1715,7 +1715,7 @@
 1792;1729;Larus fuscus;Lesser Black-backed Gull;Silltrut;205660;B;NT;6500;11000;6500;P;B
 1793;1729;Gelochelidon nilotica;Gull-billed Tern;Sandtärna;205670;S;NA;;;;;
 1794;1729;Hydroprogne caspia;Caspian Tern;Skräntärna;100134;B;NT;400;700;600;P;B
-1795;1729;Thalasseus maximus;Royal Tern;Kungstärna;;;;;;;;
+1795;1729;Thalasseus maximus;Royal Tern;Kungstärna;266843;U;;;;;;
 1796;1729;Thalasseus bergii;Greater Crested Tern;Tofstärna;;U;;;;;;
 1797;1729;Thalasseus elegans;Elegant Tern;Aztektärna;;U;;;;;;
 1798;1729;Thalasseus bengalensis;Lesser Crested Tern;Iltärna;266844;U;;;;;;
@@ -1813,7 +1813,7 @@
 1894;1883;Columba bollii;Bolle's Pigeon;Kanarieduva;;U;;;;;;
 1895;1883;Columba junoniae;Laurel Pigeon;Lagerduva;;U;;;;;;
 1896;1883;Columba unicincta;Afep Pigeon;Afrikansk ringduva;;;;;;;;
-1897;1883;Columba arquatrix;African Olive Pigeon;Olivduva;;U;;;;;;
+1897;1883;Columba arquatrix;African Olive Pigeon;Olivduva;;;;;;;;
 1898;1883;Columba sjostedti;Cameroon Olive Pigeon;Sjöstedts duva;;;;;;;;
 1899;1883;Columba thomensis;Sao Tome Olive Pigeon;Sãotoméduva;;;;;;;;
 1900;1883;Columba pollenii;Comoros Olive Pigeon;Komorskogsduva;;;;;;;;
@@ -1830,7 +1830,7 @@
 1911;1883;Columba jouyi;Ryukyu Wood Pigeon;Ryukyuduva;;;;;;;;
 1912;1883;Columba vitiensis;Metallic Pigeon;Vitstrupig duva;;;;;;;;
 1913;1883;Columba leucomela;White-headed Pigeon;Vithuvad duva;;;;;;;;
-1914;1883;Columba pallidiceps;Yellow-legged Pigeon;Gulfotad duva;;;;;;;;
+1914;1883;Columba pallidiceps;Yellow-legged Pigeon;Gulfotad duva;;U;;;;;;
 1915;1883;Columba delegorguei;Eastern Bronze-naped Pigeon;Östlig bronsduva;;;;;;;;
 1916;1883;Columba iriditorques;Western Bronze-naped Pigeon;Västlig bronsduva;;;;;;;;
 1917;1883;Columba malherbii;Island Bronze-naped Pigeon;Malherbeduva;;;;;;;;
@@ -3269,7 +3269,7 @@
 3369;3305;Ispidina picta;African Pygmy Kingfisher;Pygmékungsfiskare;;;;;;;;
 3370;3305;Corythornis madagascariensis;Madagascan Pygmy Kingfisher;Rostvit kungsfiskare;;;;;;;;
 3371;3305;Corythornis leucogaster;White-bellied Kingfisher;Vitbukig kungsfiskare;;;;;;;;
-3372;3305;Corythornis cristatus;Malachite Kingfisher;Malakitkungsfiskare;;;;;;;;
+3372;3305;Corythornis cristatus;Malachite Kingfisher;Malakitkungsfiskare;;U;;;;;;
 3373;3305;Corythornis vintsioides;Malagasy Kingfisher;Madagaskarkungsfiskare;;;;;;;;
 3374;3305;Alcedo coerulescens;Cerulean Kingfisher;Akvamarinkungsfiskare;;;;;;;;
 3375;3305;Alcedo euryzona;Blue-banded Kingfisher;Blåbandad kungsfiskare;;;;;;;;
@@ -3371,7 +3371,7 @@
 3478;3466;Lophoceros alboterminatus;Crowned Hornbill;Krontoko;;;;;;;;
 3479;3466;Lophoceros fasciatus;African Pied Hornbill;Palmtoko;;;;;;;;
 3480;3466;Lophoceros hemprichii;Hemprich's Hornbill;Klipptoko;;;;;;;;
-3481;3466;Lophoceros nasutus;African Grey Hornbill;Gråtoko;;;;;;;;
+3481;3466;Lophoceros nasutus;African Grey Hornbill;Gråtoko;;U;;;;;;
 3482;3466;Lophoceros camurus;Red-billed Dwarf Hornbill;Rödnäbbad dvärgtoko;;;;;;;;
 3483;3466;Lophoceros pallidirostris;Pale-billed Hornbill;Bleknäbbad toko;;;;;;;;
 3484;3466;Bycanistes fistulator;Piping Hornbill;Skriknäshornsfågel;;;;;;;;
@@ -4125,11 +4125,11 @@
 4245;4073;Lophopsittacus mauritianus;Broad-billed Parrot;Korppapegoja;;;;;;;;
 4246;4073;Necropsittacus rodricanus;Rodrigues Parrot;Rodriguespapegoja;;;;;;;;
 4247;4073;Agapornis canus;Grey-headed Lovebird;Gråhuvad dvärgpapegoja;;;;;;;;
-4248;4073;Agapornis pullarius;Red-headed Lovebird;Rödhuvad dvärgpapegoja;;;;;;;;
+4248;4073;Agapornis pullarius;Red-headed Lovebird;Rödhuvad dvärgpapegoja;;U;;;;;;
 4249;4073;Agapornis taranta;Black-winged Lovebird;Svartvingad dvärgpapegoja;;;;;;;;
 4250;4073;Agapornis swindernianus;Black-collared Lovebird;Svarthalsad dvärgpapegoja;;;;;;;;
 4251;4073;Agapornis roseicollis;Rosy-faced Lovebird;Rosenhuvad dvärgpapegoja;;;;;;;;
-4252;4073;Agapornis fischeri;Fischer's Lovebird;Fischers dvärgpapegoja;;U;;;;;;
+4252;4073;Agapornis fischeri;Fischer's Lovebird;Fischers dvärgpapegoja;;;;;;;;
 4253;4073;Agapornis personatus;Yellow-collared Lovebird;Svarthuvad dvärgpapegoja;;;;;;;;
 4254;4073;Agapornis lilianae;Lilian's Lovebird;Malawidvärgpapegoja;;;;;;;;
 4255;4073;Agapornis nigrigenis;Black-cheeked Lovebird;Svartkindad dvärgpapegoja;;;;;;;;
@@ -4182,7 +4182,7 @@
 4302;4073;Eupsittula aurea;Peach-fronted Parakeet;Guldpannad parakit;;;;;;;;
 4303;4073;Eupsittula pertinax;Brown-throated Parakeet;Brunstrupig parakit;;;;;;;;
 4304;4073;Eupsittula cactorum;Caatinga Parakeet;Kaktusparakit;;;;;;;;
-4305;4073;Thectocercus acuticaudatus;Blue-crowned Parakeet;Blåkronad parakit;;;;;;;;
+4305;4073;Thectocercus acuticaudatus;Blue-crowned Parakeet;Blåkronad parakit;;U;;;;;;
 4306;4073;Psittacara holochlorus;Green Parakeet;Grön parakit;;;;;;;;
 4307;4073;Psittacara brevipes;Socorro Parakeet;Socorroparakit;;;;;;;;
 4308;4073;Psittacara rubritorquis;Red-throated Parakeet;Rödhakad parakit;;;;;;;;
@@ -6354,7 +6354,7 @@
 6522;6502;Lanius ludovicianus;Loggerhead Shrike;Amerikansk törnskata;;;;;;;;
 6523;6502;Lanius excubitor;Great Grey Shrike;Varfågel;103029;B;LC;4000;8000;6000;P;B
 6524;6502;Lanius meridionalis;Southern Grey Shrike;Iberisk varfågel;;U;;;;;;
-6525;6502;Lanius pallidirostris;Steppe Grey Shrike;Saxaulvarfågel;205874;S;NA;;;;;
+6525;6502;Lanius pallidirostris;Steppe Grey Shrike;Saxaulvarfågel;;;;;;;;
 6526;6502;Lanius sphenocercus;Chinese Grey Shrike;Kinesisk varfågel;;;;;;;;
 6527;6502;Lanius excubitoroides;Grey-backed Fiscal;Gråryggig törnskata;;;;;;;;
 6528;6502;Lanius cabanisi;Long-tailed Fiscal;Långstjärtad törnskata;;;;;;;;
@@ -6687,7 +6687,7 @@
 6861;6816;Garrulus glandarius;Eurasian Jay;Nötskrika;103030;B;LC;178000;407000;290000;P;B
 6862;6816;Garrulus lanceolatus;Black-headed Jay;Svarthuvad nötskrika;;;;;;;;
 6863;6816;Garrulus lidthi;Lidth's Jay;Amamiskrika;;;;;;;;
-6864;6816;Cyanopica cyanus;Azure-winged Magpie;Östlig blåskata;;U;;;;;;
+6864;6816;Cyanopica cyanus;Azure-winged Magpie;Östlig blåskata;;;;;;;;
 6865;6816;Cyanopica cooki;Iberian Magpie;Iberisk blåskata;;;;;;;;
 6866;6816;Urocissa ornata;Sri Lanka Blue Magpie;Ceylonblåskata;;;;;;;;
 6867;6816;Urocissa caerulea;Taiwan Blue Magpie;Taiwanblåskata;;;;;;;;
@@ -6753,7 +6753,7 @@
 6927;6816;Corvus corone;Carrion Crow;Kråka (Svartkråka);;;;;;;;
 6928;6816;Corvus cornix;Hooded Crow;Kråka (Gråkråka);103035;B;LC;122000;233000;177000;P;B
 6929;6816;Corvus torquatus;Collared Crow;Halsbandskråka;;;;;;;;
-6930;6816;Corvus macrorhynchos;Large-billed Crow;Stornäbbad kråka;;U;;;;;;
+6930;6816;Corvus macrorhynchos;Large-billed Crow;Stornäbbad kråka;;;;;;;;
 6931;6816;Corvus levaillantii;Eastern Jungle Crow;Östlig djungelkråka;;;;;;;;
 6932;6816;Corvus culminatus;Indian Jungle Crow;Indisk djungelkråka;;;;;;;;
 6933;6816;Corvus orru;Torresian Crow;Torreskråka;;;;;;;;
@@ -7061,7 +7061,7 @@
 7255;7166;Melanocorypha mongolica;Mongolian Lark;Mongollärka;;;;;;;;
 7256;7166;Melanocorypha maxima;Tibetan Lark;Tibetlärka;;;;;;;;
 7257;7166;Chersophilus duponti;Dupont's Lark;Dupontlärka;;U;;;;;;
-7258;7166;Eremalauda dunni;Dunn's Lark;Streckig ökenlärka;;U;;;;;;
+7258;7166;Eremalauda dunni;Dunn's Lark;Streckig ökenlärka;;;;;;;;
 7259;7166;Alaudala athensis;Athi Short-toed Lark;Athidvärglärka;;;;;;;;
 7260;7166;Alaudala cheleensis;Asian Short-toed Lark;Mongolisk dvärglärka;;;;;;;;
 7261;7166;Alaudala somalica;Somali Short-toed Lark;Somaliadvärglärka;;;;;;;;
@@ -7654,7 +7654,7 @@
 7863;7802;Prinia buchanani;Rufous-fronted Prinia;Indisk prinia;;;;;;;;
 7864;7802;Prinia rufescens;Rufescent Prinia;Rostprinia;;;;;;;;
 7865;7802;Prinia hodgsonii;Grey-breasted Prinia;Gråbröstad prinia;;;;;;;;
-7866;7802;Prinia gracilis;Graceful Prinia;Streckig prinia;;U;;;;;;
+7866;7802;Prinia gracilis;Graceful Prinia;Streckig prinia;;;;;;;;
 7867;7802;Prinia sylvatica;Jungle Prinia;Djungelprinia;;;;;;;;
 7868;7802;Prinia familiaris;Bar-winged Prinia;Bandvingad prinia;;;;;;;;
 7869;7802;Prinia flaviventris;Yellow-bellied Prinia;Gulbukig prinia;;;;;;;;
@@ -8797,7 +8797,7 @@
 9027;8922;Cyanoptila cyanomelana;Blue-and-white Flycatcher;Blåvit flugsnappare;;U;;;;;;
 9028;8922;Cyanoptila cumatilis;Zappey's Flycatcher;Manchurisk flugsnappare;;;;;;;;
 9029;8922;Eumyias sordidus;Dull-blue Flycatcher;Ceylonflugsnappare;;;;;;;;
-9030;8922;Eumyias thalassinus;Verditer Flycatcher;Turkosflugsnappare;;;;;;;;
+9030;8922;Eumyias thalassinus;Verditer Flycatcher;Turkosflugsnappare;;U;;;;;;
 9031;8922;Eumyias panayensis;Turquoise Flycatcher;Cyanflugsnappare;;;;;;;;
 9032;8922;Eumyias albicaudatus;Nilgiri Flycatcher;Nilgiriflugsnappare;;;;;;;;
 9033;8922;Eumyias indigo;Indigo Flycatcher;Indigoflugsnappare;;;;;;;;
@@ -8930,11 +8930,11 @@
 9160;8922;Phoenicurus phoenicurus;Common Redstart;Rödstjärt;102994;B;LC;678000;1580000;1130000;P;B
 9161;8922;Phoenicurus hodgsoni;Hodgson's Redstart;Hodgsons rödstjärt;;;;;;;;
 9162;8922;Phoenicurus schisticeps;White-throated Redstart;Vitstrupig rödstjärt;;;;;;;;
-9163;8922;Phoenicurus auroreus;Daurian Redstart;Svartryggig rödstjärt;266865;I;NA;;;;;
+9163;8922;Phoenicurus auroreus;Daurian Redstart;Svartryggig rödstjärt;;I;;;;;;
 9164;8922;Phoenicurus moussieri;Moussier's Redstart;Diademrödstjärt;;U;;;;;;
 9165;8922;Phoenicurus erythrogastrus;Güldenstädt's Redstart;Bergrödstjärt;;U;;;;;;
 9166;8922;Phoenicurus frontalis;Blue-fronted Redstart;Blåstrupig rödstjärt;;;;;;;;
-9167;8922;Phoenicurus fuliginosus;Plumbeous Water Redstart;Forsrödstjärt;;;;;;;;
+9167;8922;Phoenicurus fuliginosus;Plumbeous Water Redstart;Forsrödstjärt;266866;;NA;;;;;
 9168;8922;Phoenicurus bicolor;Luzon Water Redstart;Luzonrödstjärt;;;;;;;;
 9169;8922;Phoenicurus leucocephalus;White-capped Redstart;Strömrödstjärt;;;;;;;;
 9170;8922;Monticola semirufus;White-winged Cliff Chat;Svarthuvad stentrast;;;;;;;;
@@ -9093,8 +9093,8 @@
 9327;9311;Anthreptes rectirostris;Grey-chinned Sunbird;Grön solfågel;;;;;;;;
 9328;9311;Anthreptes rubritorques;Banded Green Sunbird;Rödbandad solfågel;;;;;;;;
 9329;9311;Hedydipna collaris;Collared Sunbird;Halsbandssolfågel;;;;;;;;
-9330;9311;Hedydipna platura;Pygmy Sunbird;Dvärgsolfågel;;;;;;;;
-9331;9311;Hedydipna metallica;Nile Valley Sunbird;Nilsolfågel;;;;;;;;
+9330;9311;Hedydipna platura;Pygmy Sunbird;Dvärgsolfågel;;U;;;;;;
+9331;9311;Hedydipna metallica;Nile Valley Sunbird;Nilsolfågel;;U;;;;;;
 9332;9311;Hedydipna pallidigaster;Amani Sunbird;Amanisolfågel;;;;;;;;
 9333;9311;Hypogramma hypogrammicum;Purple-naped Sunbird;Violettnackad solfågel;;;;;;;;
 9334;9311;Anabathmis reichenbachii;Reichenbach's Sunbird;Reichenbachsolfågel;;;;;;;;
@@ -9159,7 +9159,7 @@
 9393;9311;Cinnyris pembae;Pemba Sunbird;Pembasolfågel;;;;;;;;
 9394;9311;Cinnyris bouvieri;Orange-tufted Sunbird;Orangetofsad solfågel;;;;;;;;
 9395;9311;Cinnyris osea;Palestine Sunbird;Palestinasolfågel;;U;;;;;;
-9396;9311;Cinnyris habessinicus;Shining Sunbird;Abessinsk solfågel;;;;;;;;
+9396;9311;Cinnyris habessinicus;Shining Sunbird;Abessinsk solfågel;;U;;;;;;
 9397;9311;Cinnyris coccinigastrus;Splendid Sunbird;Regnbågssolfågel;;;;;;;;
 9398;9311;Cinnyris johannae;Johanna's Sunbird;Johannasolfågel;;;;;;;;
 9399;9311;Cinnyris superbus;Superb Sunbird;Praktsolfågel;;;;;;;;
@@ -9171,7 +9171,7 @@
 9405;9311;Cinnyris ursulae;Ursula's Sunbird;Ursulasolfågel;;;;;;;;
 9406;9311;Cinnyris batesi;Bates's Sunbird;Batessolfågel;;;;;;;;
 9407;9311;Cinnyris cupreus;Copper Sunbird;Kopparsolfågel;;;;;;;;
-9408;9311;Cinnyris asiaticus;Purple Sunbird;Purpursolfågel;;;;;;;;
+9408;9311;Cinnyris asiaticus;Purple Sunbird;Purpursolfågel;;U;;;;;;
 9409;9311;Cinnyris jugularis;Olive-backed Sunbird;Olivryggig solfågel;;;;;;;;
 9410;9311;Cinnyris buettikoferi;Apricot-breasted Sunbird;Sumbasolfågel;;;;;;;;
 9411;9311;Cinnyris solaris;Flame-breasted Sunbird;Flambröstad solfågel;;;;;;;;
@@ -9315,7 +9315,7 @@
 9551;9507;Ploceus weynsi;Weyns's Weaver;Weyns vävare;;;;;;;;
 9552;9507;Ploceus golandi;Clarke's Weaver;Sokokevävare;;;;;;;;
 9553;9507;Ploceus dichrocephalus;Juba Weaver;Jubavävare;;;;;;;;
-9554;9507;Ploceus melanocephalus;Black-headed Weaver;Svarthuvad vävare;;;;;;;;
+9554;9507;Ploceus melanocephalus;Black-headed Weaver;Svarthuvad vävare;;U;;;;;;
 9555;9507;Ploceus jacksoni;Golden-backed Weaver;Gulryggig vävare;;U;;;;;;
 9556;9507;Ploceus badius;Cinnamon Weaver;Kanelvävare;;;;;;;;
 9557;9507;Ploceus rubiginosus;Chestnut Weaver;Kastanjevävare;;;;;;;;
@@ -9327,7 +9327,7 @@
 9563;9507;Ploceus hypoxanthus;Asian Golden Weaver;Risvävare;;;;;;;;
 9564;9507;Ploceus superciliosus;Compact Weaver;Kompakt vävare;;;;;;;;
 9565;9507;Ploceus benghalensis;Black-breasted Weaver;Bengalvävare;;U;;;;;;
-9566;9507;Ploceus manyar;Streaked Weaver;Streckig vävare;;U;;;;;;
+9566;9507;Ploceus manyar;Streaked Weaver;Streckig vävare;;;;;;;;
 9567;9507;Ploceus philippinus;Baya Weaver;Bayavävare;;U;;;;;;
 9568;9507;Ploceus megarhynchus;Finn's Weaver;Teraivävare;;;;;;;;
 9569;9507;Ploceus bicolor;Dark-backed Weaver;Skogsvävare;;;;;;;;
@@ -9353,7 +9353,7 @@
 9589;9507;Quelea cardinalis;Cardinal Quelea;Kardinalvävare;;;;;;;;
 9590;9507;Quelea erythrops;Red-headed Quelea;Rödhuvad vävare;;;;;;;;
 9591;9507;Quelea quelea;Red-billed Quelea;Blodnäbbsvävare;;;;;;;;
-9592;9507;Foudia madagascariensis;Red Fody;Röd fody;;;;;;;;
+9592;9507;Foudia madagascariensis;Red Fody;Röd fody;;U;;;;;;
 9593;9507;Foudia eminentissima;Comoros Fody;Komorfody;;;;;;;;
 9594;9507;Foudia aldabrana;Aldabra Fody;Aldabrafody;;;;;;;;
 9595;9507;Foudia omissa;Forest Fody;Skogsfody;;;;;;;;
@@ -9449,7 +9449,7 @@
 9686;9617;Estrilda charmosyna;Black-cheeked Waxbill;Törnastrild;;;;;;;;
 9687;9617;Amandava amandava;Red Avadavat;Röd tigerfink;;U;;;;;;
 9688;9617;Amandava formosa;Green Avadavat;Grön tigerfink;;;;;;;;
-9689;9617;Amandava subflava;Orange-breasted Waxbill;Guldbröstad tigerfink;;U;;;;;;
+9689;9617;Amandava subflava;Orange-breasted Waxbill;Guldbröstad tigerfink;;;;;;;;
 9690;9617;Ortygospiza atricollis;Quailfinch;Vaktelastrild;;;;;;;;
 9691;9617;Paludipasser locustella;Locust Finch;Gräshoppsastrild;;;;;;;;
 9692;9617;Emblema pictum;Painted Finch;Målad astrild;;;;;;;;
@@ -9575,7 +9575,7 @@
 9816;9796;Macronyx aurantiigula;Pangani Longclaw;Panganisporrpiplärka;;;;;;;;
 9817;9796;Macronyx ameliae;Rosy-throated Longclaw;Rödstrupig sporrpiplärka;;;;;;;;
 9818;9796;Macronyx grimwoodi;Grimwood's Longclaw;Angolasporrpiplärka;;;;;;;;
-9819;9796;Anthus richardi;Richard's Pipit;Större piplärka;205750;;NA;;;;;
+9819;9796;Anthus richardi;Richard's Pipit;Större piplärka;205750;R;NA;;;;;
 9820;9796;Anthus rufulus;Paddyfield Pipit;Orientpiplärka;;U;;;;;;
 9821;9796;Anthus australis;Australian Pipit;Australisk piplärka;;;;;;;;
 9822;9796;Anthus novaeseelandiae;New Zealand Pipit;Nyazeelandpiplärka;;;;;;;;
@@ -9639,7 +9639,7 @@
 9882;9864;Pyrrhula leucogenis;White-cheeked Bullfinch;Vitkindad domherre;;;;;;;;
 9883;9864;Pyrrhula pyrrhula;Eurasian Bullfinch;Domherre;103052;B;LC;226000;523000;380000;P;B
 9884;9864;Pyrrhula murina;Azores Bullfinch;Azorisk domherre;;U;;;;;;
-9885;9864;Rhodopechys sanguineus;Eurasian Crimson-winged Finch;Asiatisk bergsökenfink;;U;;;;;;
+9885;9864;Rhodopechys sanguineus;Eurasian Crimson-winged Finch;Asiatisk bergsökenfink;;;;;;;;
 9886;9864;Rhodopechys alienus;African Crimson-winged Finch;Afrikansk bergsökenfink;;;;;;;;
 9887;9864;Bucanetes githagineus;Trumpeter Finch;Ökentrumpetare;205903;S;NA;;;;;
 9888;9864;Bucanetes mongolicus;Mongolian Finch;Mongolfink;;U;;;;;;
@@ -9660,7 +9660,7 @@
 9903;9864;Carpodacus rubicilloides;Streaked Rosefinch;Himalayarosenfink;;;;;;;;
 9904;9864;Carpodacus rubicilla;Great Rosefinch;Större rosenfink;266894;U;;;;;;
 9905;9864;Carpodacus grandis;Blyth's Rosefinch;Blythrosenfink;;;;;;;;
-9906;9864;Carpodacus rhodochlamys;Red-mantled Rosefinch;Rosaryggig rosenfink;;U;;;;;;
+9906;9864;Carpodacus rhodochlamys;Red-mantled Rosefinch;Rosaryggig rosenfink;;;;;;;;
 9907;9864;Carpodacus pulcherrimus;Himalayan Beautiful Rosefinch;Praktrosenfink;;;;;;;;
 9908;9864;Carpodacus davidianus;Chinese Beautiful Rosefinch;Ametistrosenfink;;;;;;;;
 9909;9864;Carpodacus waltoni;Pink-rumped Rosefinch;Stresemanns rosenfink;;;;;;;;
@@ -9671,7 +9671,7 @@
 9914;9864;Carpodacus vinaceus;Vinaceous Rosefinch;Vinröd rosenfink;;;;;;;;
 9915;9864;Carpodacus formosanus;Taiwan Rosefinch;Taiwanrosenfink;;;;;;;;
 9916;9864;Carpodacus synoicus;Sinai Rosefinch;Sinairosenfink;;U;;;;;;
-9917;9864;Carpodacus stoliczkae;Pale Rosefinch;Blek rosenfink;;;;;;;;
+9917;9864;Carpodacus stoliczkae;Pale Rosefinch;Blek rosenfink;;U;;;;;;
 9918;9864;Carpodacus roborowskii;Tibetan Rosefinch;Roborovskijrosenfink;;;;;;;;
 9919;9864;Carpodacus sibiricus;Long-tailed Rosefinch;Långstjärtad rosenfink;233827;I;NA;;;;;
 9920;9864;Carpodacus roseus;Pallas's Rosefinch;Sibirisk rosenfink;266893;U;;;;;;
@@ -9722,7 +9722,7 @@
 9965;9864;Chloris monguilloti;Vietnamese Greenfinch;Vietnamgrönfink;;;;;;;;
 9966;9864;Chloris ambigua;Black-headed Greenfinch;Svarthuvad grönfink;;;;;;;;
 9967;9864;Rhodospiza obsoleta;Desert Finch;Ökenfink;;U;;;;;;
-9968;9864;Rhynchostruthus socotranus;Socotra Golden-winged Grosbeak;Sokotraguldvingefink;;U;;;;;;
+9968;9864;Rhynchostruthus socotranus;Socotra Golden-winged Grosbeak;Sokotraguldvingefink;;;;;;;;
 9969;9864;Rhynchostruthus percivali;Arabian Golden-winged Grosbeak;Arabisk guldvingefink;;;;;;;;
 9970;9864;Rhynchostruthus louisae;Somali Golden-winged Grosbeak;Somalisk guldvingefink;;;;;;;;
 9971;9864;Linurgus olivaceus;Oriole Finch;Gyllingfink;;;;;;;;
@@ -9745,7 +9745,7 @@
 9988;9864;Crithagra mozambica;Yellow-fronted Canary;Savannsiska;;;;;;;;
 9989;9864;Crithagra dorsostriata;White-bellied Canary;Vitbukig siska;;;;;;;;
 9990;9864;Crithagra ankoberensis;Ankober Serin;Ankobersiska;;;;;;;;
-9991;9864;Crithagra menachensis;Yemen Serin;Jemensiska;;;;;;;;
+9991;9864;Crithagra menachensis;Yemen Serin;Jemensiska;;U;;;;;;
 9992;9864;Crithagra totta;Cape Siskin;Kapsiska;;;;;;;;
 9993;9864;Crithagra symonsi;Drakensberg Siskin;Drakensbergsiska;;;;;;;;
 9994;9864;Crithagra donaldsoni;Northern Grosbeak-Canary;Somaliasiska;;;;;;;;
@@ -9777,7 +9777,7 @@
 10020;9864;Chrysocorythus estherae;Mountain Serin;Bergsiska;;;;;;;;
 10021;9864;Carduelis carduelis;European Goldfinch;Steglits;103043;B;LC;21000;49000;35000;P;B
 10022;9864;Carduelis citrinella;Citril Finch;Citronsiska;;U;;;;;;
-10023;9864;Carduelis corsicana;Corsican Finch;Korsikansk siska;;;;;;;;
+10023;9864;Carduelis corsicana;Corsican Finch;Korsikansk siska;;U;;;;;;
 10024;9864;Serinus pusillus;Red-fronted Serin;Rödpannad gulhämpling;;U;;;;;;
 10025;9864;Serinus serinus;European Serin;Gulhämpling;100129;B;VU;30;60;40;P;B
 10026;9864;Serinus syriacus;Syrian Serin;Levantsiska;;U;;;;;;
@@ -9790,7 +9790,7 @@
 10033;9864;Spinus lawrencei;Lawrence's Goldfinch;Kaliforniensiska;;;;;;;;
 10034;9864;Spinus tristis;American Goldfinch;Guldsiska;;;;;;;;
 10035;9864;Spinus psaltria;Lesser Goldfinch;Småsiska;;;;;;;;
-10036;9864;Spinus spinus;Eurasian Siskin;Grönsiska;;;;493000;1134000;820000;P;B
+10036;9864;Spinus spinus;Eurasian Siskin;Grönsiska;103044;B;LC;493000;1134000;820000;P;B
 10037;9864;Spinus dominicensis;Antillean Siskin;Hispaniolasiska;;;;;;;;
 10038;9864;Spinus pinus;Pine Siskin;Tallsiska;;;;;;;;
 10039;9864;Spinus atriceps;Black-capped Siskin;Svartkronad siska;;;;;;;;
@@ -9840,8 +9840,8 @@
 10083;9864;Chlorophonia callophrys;Golden-browed Chlorophonia;Guldbrynad klorofonia;;;;;;;;
 10085;10084;Seiurus aurocapilla;Ovenbird;Rödkronad piplärksångare;;U;;;;;;
 10086;10084;Helmitheros vermivorum;Worm-eating Warbler;Beigebrynad skogssångare;;;;;;;;
-10087;10084;Parkesia motacilla;Louisiana Waterthrush;Sydlig piplärksångare;;;;;;;;
-10088;10084;Parkesia noveboracensis;Northern Waterthrush;Nordlig piplärksångare;;;;;;;;
+10087;10084;Parkesia motacilla;Louisiana Waterthrush;Sydlig piplärksångare;;U;;;;;;
+10088;10084;Parkesia noveboracensis;Northern Waterthrush;Nordlig piplärksångare;;U;;;;;;
 10089;10084;Vermivora bachmanii;Bachman's Warbler;Bachmanskogssångare;;;;;;;;
 10090;10084;Vermivora chrysoptera;Golden-winged Warbler;Guldvingad skogssångare;;U;;;;;;
 10091;10084;Vermivora cyanoptera;Blue-winged Warbler;Blåvingad skogssångare;;U;;;;;;
@@ -9878,17 +9878,17 @@
 10122;10084;Setophaga angelae;Elfin Woods Warbler;Elfinskogssångare;;;;;;;;
 10123;10084;Setophaga pharetra;Arrowhead Warbler;Jamaicaskogssångare;;;;;;;;
 10124;10084;Setophaga citrina;Hooded Warbler;Kapuschongskogssångare;;U;;;;;;
-10125;10084;Setophaga ruticilla;American Redstart;Rödstjärtad skogssångare;;U;;;;;;
+10125;10084;Setophaga ruticilla;American Redstart;Rödstjärtad skogssångare;;;;;;;;
 10126;10084;Setophaga kirtlandii;Kirtland's Warbler;Kirtlandskogssångare;;;;;;;;
 10127;10084;Setophaga tigrina;Cape May Warbler;Brunkindad skogssångare;;U;;;;;;
 10128;10084;Setophaga cerulea;Cerulean Warbler;Blåvit skogssångare;;U;;;;;;
-10129;10084;Setophaga americana;Northern Parula;Messångare;;;;;;;;
+10129;10084;Setophaga americana;Northern Parula;Messångare;266898;U;;;;;;
 10130;10084;Setophaga pitiayumi;Tropical Parula;Tropisk messångare;;;;;;;;
 10131;10084;Setophaga magnolia;Magnolia Warbler;Magnoliaskogssångare;;U;;;;;;
 10132;10084;Setophaga castanea;Bay-breasted Warbler;Brunbröstad skogssångare;;U;;;;;;
 10133;10084;Setophaga fusca;Blackburnian Warbler;Orangestrupig skogssångare;;U;;;;;;
-10134;10084;Setophaga aestiva;American Yellow Warbler;Gul skogssångare;;;;;;;;
-10135;10084;Setophaga petechia;Mangrove Warbler;Mangroveskogssångare;;U;;;;;;
+10134;10084;Setophaga aestiva;American Yellow Warbler;Gul skogssångare;;U;;;;;;
+10135;10084;Setophaga petechia;Mangrove Warbler;Mangroveskogssångare;;;;;;;;
 10136;10084;Setophaga pensylvanica;Chestnut-sided Warbler;Brunsidig skogssångare;;U;;;;;;
 10137;10084;Setophaga striata;Blackpoll Warbler;Vitkindad skogssångare;266897;U;;;;;;
 10138;10084;Setophaga caerulescens;Black-throated Blue Warbler;Blåryggig skogssångare;;U;;;;;;
@@ -10091,7 +10091,7 @@
 10339;10323;Emberiza striolata;Striolated Bunting;Bergsparv;;U;;;;;;
 10340;10323;Emberiza sahari;House Bunting;Hussparv;;U;;;;;;
 10341;10323;Emberiza impetuani;Lark-like Bunting;Karroosparv;;;;;;;;
-10342;10323;Emberiza tahapisi;Cinnamon-breasted Bunting;Zebrasparv;;U;;;;;;
+10342;10323;Emberiza tahapisi;Cinnamon-breasted Bunting;Zebrasparv;;;;;;;;
 10343;10323;Emberiza goslingi;Gosling's Bunting;Goslingsparv;;;;;;;;
 10344;10323;Emberiza socotrana;Socotra Bunting;Granitsparv;;;;;;;;
 10345;10323;Emberiza capensis;Cape Bunting;Kapsparv;;;;;;;;
@@ -10118,7 +10118,7 @@
 10366;10323;Emberiza yessoensis;Japanese Reed Bunting;Amursävsparv;;;;;;;;
 10367;10323;Emberiza schoeniclus;Common Reed Bunting;Sävsparv;103057;B;VU;192000;448000;320000;P;B
 10368;10323;Calamospiza melanocorys;Lark Bunting;Svartsparv;;;;;;;;
-10369;10323;Passerella iliaca;Red Fox Sparrow;Rosträvsparv;;U;;;;;;
+10369;10323;Passerella iliaca;Red Fox Sparrow;Rosträvsparv;;;;;;;;
 10370;10323;Passerella unalaschcensis;Sooty Fox Sparrow;Brun rävsparv;;;;;;;;
 10371;10323;Passerella schistacea;Slate-colored Fox Sparrow;Skifferrävsparv;;;;;;;;
 10372;10323;Passerella megarhyncha;Large-billed Fox Sparrow;Tjocknäbbad rävsparv;;;;;;;;

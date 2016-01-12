@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -28,9 +29,11 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.CombinedData;
+import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.ScatterData;
 import com.github.mikephil.charting.data.ScatterDataSet;
+import com.github.mikephil.charting.formatter.YAxisValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 
 import java.text.SimpleDateFormat;
@@ -118,17 +121,19 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
 
         Bird currentBird = getCurrentBird();
         String chosenCountyId = null;
+        String chosenCountyName = null;
         for (String countyId : countyMenuItems.keySet()) {
             MenuItem countyItem = countyMenuItems.get(countyId);
             if (countyItem == item) {
                 countyItem.setChecked(true);
                 chosenCountyId = countyId;
+                chosenCountyName = item.getTitle().toString();
             } else {
                 countyItem.setChecked(false);
             }
         }
         if (chosenCountyId != null) {
-            saveCountyId(chosenCountyId);
+            saveCountyId(chosenCountyId, chosenCountyName);
             loadBird(currentBird);
             return true;
         } else {
@@ -136,10 +141,11 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
         }
     }
 
-    private void saveCountyId(String countyId) {
+    private void saveCountyId(String countyId, String countyName) {
         SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(Constants.SELECTED_COUNTY_ID, countyId);
+        editor.putString(Constants.SELECTED_COUNTY_NAME, countyName);
         editor.commit();
     }
 
@@ -149,25 +155,37 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
         return countyId;
     }
 
+    private String getSavedCountyName() {
+        SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, 0);
+        String countyId = settings.getString(Constants.SELECTED_COUNTY_NAME, null);
+        return countyId;
+    }
+
     public void loadBirdInternal(Bird bird) {
         if (bird.getMinPopulationEstimate() >= 0 && bird.getMaxPopulationEstimate() >= 0 && bird.getBestPopulationEstimate() >= 0) {
             BirdFormatter birdFormatter = new BirdFormatter();
-            ((TextView) getView().findViewById(R.id.bestEstimate)).setText(birdFormatter.getFormattedPopulation(bird));
+            TextView tv = (TextView) getView().findViewById(R.id.bestEstimate);
+            tv.setText(birdFormatter.getFormattedPopulation(bird));
+            tv.setTypeface(tv.getTypeface(), Typeface.BOLD);
             ((TextView) getView().findViewById(R.id.rangeEstimate)).setText("(" + birdFormatter.getFormattedPopulationRange(bird) + ")");
         } else {
-            ((TextView) getView().findViewById(R.id.bestEstimate)).setText("");
-            ((TextView) getView().findViewById(R.id.rangeEstimate)).setText("Estimat saknas");
+            TextView tv = (TextView) getView().findViewById(R.id.bestEstimate);
+            tv.setText("Estimat saknas");
+            tv.setTypeface(tv.getTypeface(), Typeface.NORMAL);
+            ((TextView) getView().findViewById(R.id.rangeEstimate)).setText("");
         }
 
-        String countyId = getSavedCountyId();
-        String countyName = countyMenuItems.get(countyId) != null ? ((MenuItem) countyMenuItems.get(countyId)).getTitle().toString() : null;
+        String countyName = getSavedCountyName();
         if (countyName != null) {
             ((TextView) getView().findViewById(R.id.observationsHeading)).setText(String.format("Observationer i %1$s", countyName));
             ((TextView) getView().findViewById(R.id.locationsHeading)).setText(String.format("Oftast observerad i %1$s", countyName));
+            getView().findViewById(R.id.birdStatsCombinedchart).setVisibility(View.VISIBLE);
+            initializeObservationsChart(bird);
+            initializeLocationStats(bird);
+        } else {
+            getView().findViewById(R.id.birdStatsCombinedchart).setVisibility(View.INVISIBLE);
         }
 
-        initializeObservationsChart(bird);
-        initializeLocationStats(bird);
     }
 
     private void initializeLocationStats(Bird bird) {
@@ -237,7 +255,11 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
 
         CombinedData data = new CombinedData(observationData.getXVals());
         data.setData(observationData);
-        //data.setData(scatterData);
+        // Ugly way to exclude the "today" marker if set is
+        // empty to in turn make no data available text appear
+        if (!((DataSet) observationData.getDataSets().get(0)).getYVals().isEmpty()) {
+            data.setData(scatterData);
+        }
 
         chart.setData(data);
     }
@@ -255,10 +277,10 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
         set.setDrawValues(false);
         set.setValueTextSize(15f);
         scatterData.addDataSet(set);
-        return scatterData;observationData.get
+        return scatterData;
     }
 
-    private BarData initBarChart(BobservationData.getird bird, String countyId) {
+    private BarData initBarChart(Bird bird, String countyId) {
         chart = (CombinedChart) getView().findViewById(R.id.birdStatsCombinedchart);
 
         chart.clear();
@@ -293,6 +315,12 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
         YAxis leftAxis = chart.getAxisLeft();
         leftAxis.setTextColor(Color.WHITE);
         leftAxis.setDrawGridLines(false);
+        leftAxis.setValueFormatter(new YAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, YAxis yAxis) {
+                return "" + ((int) value);
+            }
+        });
         YAxis rightAxis = chart.getAxisRight();
         rightAxis.setEnabled(false);
 

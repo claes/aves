@@ -45,6 +45,7 @@ public class CountyListDialogFragment extends DialogFragment {
                         SharedPreferences settings = getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, 0);
                         SharedPreferences.Editor editor = settings.edit();
                         editor.putString(Constants.SELECTED_COUNTY_ID, countyIds[which]);
+                        editor.putString(Constants.SELECTED_COUNTY_NAME, countyNames[which]);
                         editor.commit();
                     }
                 });
