@@ -7,26 +7,31 @@ package se.eliga.aves.model;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
-import java.io.BufferedReader;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observer;
 import java.util.Set;
 
 /**
  * Created by Claes on 2013-07-19.
  */
-public class DatabaseHandler extends SQLiteOpenHelper {
+public class DatabaseHandler  {
 
-    // All Static variables
-    // Database Version
-    private static final int DATABASE_VERSION = 9;
 
-    // Database Name
-    private static final String DATABASE_NAME = "birdsDb12";
+    private static String TAG = DatabaseHandler.class.getName();
+
 
     public static final String FAMILY_SORTORDER_KEY_COLUMN = "familySortOrder_id";
     public static final String LATIN_ORDER_COLUMN = "latinOrder";
@@ -67,173 +72,60 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String LAN_NAME = "lanName";
     public static final String LAN_ID = "lanId";
 
-    private final Context context;
+    private static final String DATABASE_FILE = "aves.db";
 
-    public DatabaseHandler(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        this.context = context;
+    private SQLiteDatabase db;
+
+    public DatabaseHandler() {
     }
 
-    // Creating Tables
-    @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void downloadAndInitializeDatabase(Context context) throws IOException {
 
-        try {
+        File databaseFile = context.getDatabasePath(DATABASE_FILE);
+        if (!databaseFile.exists()) {
+            InputStream in = null;
+            OutputStream out = null;
+            try {
+                initStatus = new InitStatus("Laddar ned databas", 10);
+                notifyObserver();
 
-            {
-                db.execSQL("create table ordersAndFamilies(" +
-                        FAMILY_SORTORDER_KEY_COLUMN + " text, " +
-                        LATIN_ORDER_COLUMN + " text, " +
-                        ENGLISH_ORDER_COLUMN + " text, " +
-                        SWEDISH_ORDER_COLUMN + " text, " +
-                        LATIN_FAMILY_COLUMN + " text, " +
-                        ENGLISH_FAMILY_COLUMN + " text, " +
-                        SWEDISH_FAMILY_COLUMN + " text)");
-
-                InputStream is = context.getAssets().open("data/ordersAndFamilies.txt");
-                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    String columns[] = line.split(";");
-                    db.execSQL("insert into ordersAndFamilies values(?,?,?,?,?,?,?)", columns);
+                URL url = new URL("https://s3-eu-west-1.amazonaws.com/files.eliga.se/fagelappen/aves.db");
+                URLConnection urlConnection = url.openConnection();
+                in = new BufferedInputStream(urlConnection.getInputStream());
+                databaseFile.getParentFile().mkdirs();
+                databaseFile.createNewFile();
+                out = new FileOutputStream(databaseFile);
+                byte[] buffer = new byte[1024];
+                int read = 0;
+                while ((read = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, read);
                 }
-                reader.close();
+                in.close();
+                out.close();
+            } catch (IOException e) {
+                Log.e(TAG, "Exception while downloading database ", e);
 
-                db.execSQL("create index cafIdx on ordersAndFamilies(" + FAMILY_SORTORDER_KEY_COLUMN + ")");
-            }
-
-            {
-                db.execSQL("create table speciesData(" +
-                                SPECIES_SORTORDER_KEY_COLUMN + " text, " +
-                                FAMILY_SORTORDER_FK_COLUMN + " text, " +
-                                LATIN_SPECIES_COLUMN + " text, " +
-                                ENGLISH_SPECIES_COLUMN + " text, " +
-                                SWEDISH_SPECIES_COLUMN + " text, " +
-                                DYNTAXA_TAXONID_COLUMN + " text, " +
-                                SOF_STATUS_COLUMN + " text, " +
-                                SWEDISH_REDLIST_CATEGORY_COLUMN + " text," +
-                                POPULATION_MIN_ESTIMATE_COLUMN + " text," +
-                                POPULATION_MAX_ESTIMATE_COLUMN + " text," +
-                                POPULATION_BEST_ESTIMATE_COLUMN + " text," +
-                                POPULATION_UNIT_COLUMN + " text," +
-                                POPULATION_TYPE_COLUMN + " text)"
-                );
-                    InputStream is = context.getAssets().open("data/iocAndSofData.txt");
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        String columns[] = line.split(";");
-                        db.execSQL("insert into speciesData values(?,?,?,?,?,?,?,?,?,?,?,?,?)", columns);
-                    }
-                    reader.close();
-
-                db.execSQL("create index sdIdx1 on speciesData(" + SPECIES_SORTORDER_KEY_COLUMN + ")");
-                db.execSQL("create index sdIdx2 on speciesData(" + FAMILY_SORTORDER_FK_COLUMN + ")");
-            }
-
-            {
-                db.execSQL("create table birdlifeData(" +
-                        IOC_LATIN_SPECIES_COLUMN + " text, " +
-                        BIRDLIFE_LATIN_SPECIES_COLUMN + " text, " +
-                        BIRDLIFE_RECOGNIZED_SPECIES_COLUMN + " text, " +
-                        GLOBAL_REDLIST_CATEGORY_COLUMN + " text, " +
-                        SIS_RECID_COLUMN + " text, " +
-                        SPC_RECID_COLUMN + " text)");
-
-                InputStream is = context.getAssets().open("data/birdLifeData.txt");
-                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    String columns[] = line.split(";");
-                    db.execSQL("insert into birdlifeData values(?,?,?,?,?,?)", columns);
+                databaseFile.delete();
+                if (in != null) {
+                    in.close();
                 }
-                reader.close();
-            }
-
-            {
-                db.execSQL("create table locationStats(" +
-                        DYNTAXA_TAXONID_COLUMN + " text, " +
-                        AREA_ID + " text, " +
-                        LOCATION + " text, " +
-                        LATITUDE + " number, " +
-                        LONGITUDE + " number, " +
-                        OBSERVATIONS + " integer)");
-
-                InputStream is = context.getAssets().open("data/localityStats.txt");
-                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    String columns[] = line.split(";");
-                    db.execSQL("insert into locationStats values(?,?,?,?,?,?)", columns);
+                if (out != null) {
+                    out.close();
                 }
-                reader.close();
-                db.execSQL("create index dyntaxaLocIdx on locationStats(" + DYNTAXA_TAXONID_COLUMN + ")");
-                db.execSQL("create index areaLocIdx on locationStats(" + AREA_ID + ")");
+                initStatus = new InitStatus("Nedladdning misslyckades", 20);
+                notifyObserver();
+                return;
             }
-
-            {
-                db.execSQL("create table observationStats(" +
-                        DYNTAXA_TAXONID_COLUMN + " text, " +
-                        AREA_ID + " text, " +
-                        PERIOD_VALUE + " integer, " +
-                        PERIOD_TYPE + " text, " +
-                        OBSERVATIONS + " integer, " +
-                        OBSERVED_INDIVIDUALS + " integer)");
-                {
-                    InputStream is = context.getAssets().open("data/observationData.txt");
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        String columns[] = line.split(";");
-                        String remappedColumns[] = new String[] {columns[2], columns[3], columns[4], columns[5], columns[0], columns[1]};
-                        db.execSQL("insert into observationStats values(?,?,?,?,?,?)", remappedColumns);
-                    }
-                    reader.close();
-                }
-                db.execSQL("create index dyntaxaObsIdx on observationStats(" + DYNTAXA_TAXONID_COLUMN + ")");
-                db.execSQL("create index areaObsIdx on observationStats(" + AREA_ID + ")");
-                db.execSQL("create index periodTypeIdx on observationStats(" + PERIOD_TYPE + ")");
-            }
-
-            {
-                db.execSQL("create table lan(" +
-                        LAN_ID + " text, " +
-                        LAN_NAME + " text)");
-                {
-                    InputStream is = context.getAssets().open("data/lan.txt");
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        String columns[] = line.split(";");
-                        db.execSQL("insert into lan values(?,?)", columns);
-                    }
-                    reader.close();
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            initStatus = new InitStatus("Databas nedladdad", 20);
+            notifyObserver();
         }
-    }
 
-    // Upgrading database
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Drop older table if existed
-        db.execSQL("drop table if exists ordersAndFamilies;");
-        db.execSQL("drop table if exists speciesData;");
-        db.execSQL("drop table if exists birdlifeData;");
-        db.execSQL("drop table if exists observationStats;");
-        db.execSQL("drop table if exists locationStats;");
-        db.execSQL("drop table if exists lan;");
-
-        // Create tables again
-        onCreate(db);
+        db = context.openOrCreateDatabase(databaseFile.getAbsolutePath(), Context.MODE_PRIVATE, null);
+        initStatus = new InitStatus("Databas öppnad", 30);
+        notifyObserver();
     }
 
     public String getSpcRecId(String iocLatinSpecies) {
-        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor;
         StringBuffer query = new StringBuffer("select * from speciesData inner join birdlifeData" +
                 " on speciesData." + LATIN_SPECIES_COLUMN + " = birdlifeData." + IOC_LATIN_SPECIES_COLUMN +
@@ -255,7 +147,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public String getSisRecId(String iocLatinSpecies) {
-        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor;
         StringBuffer query = new StringBuffer("select * from speciesData inner join birdlifeData" +
                 " on speciesData." + LATIN_SPECIES_COLUMN + " = birdlifeData." + IOC_LATIN_SPECIES_COLUMN +
@@ -278,7 +169,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public List<Bird> getAllSpecies(String filterString, String filterFamily, Set<Bird.SofStatus> validStatusSet) {
         List<Bird> birds = new ArrayList<Bird>();
-        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor;
 
         StringBuffer query = new StringBuffer("select * from ordersAndFamilies inner join speciesData" +
@@ -344,7 +234,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public List<LocationStats> getLocationStats(String taxonId, String areaId) {
 
         List<LocationStats> stats = new ArrayList<LocationStats>();
-        SQLiteDatabase db = this.getReadableDatabase();
         StringBuffer query = new StringBuffer("select * from locationStats where 1=1");
         query.append(" AND " + DYNTAXA_TAXONID_COLUMN + " = '" + taxonId + "' ");
         query.append(" AND " + AREA_ID + " = '" + areaId + "' ");
@@ -369,7 +258,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public List<ObsStats> getObsStats(String taxonId, String areaId) {
         List<ObsStats> stats = new ArrayList<ObsStats>();
-        SQLiteDatabase db = this.getReadableDatabase();
         StringBuffer query = new StringBuffer("select * from observationStats where 1=1");
         query.append(" AND " + DYNTAXA_TAXONID_COLUMN + " = '" + taxonId + "' ");
         query.append(" AND " + AREA_ID + " = '" + areaId + "' ");
@@ -395,7 +283,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public List<County> getCounties() {
         List<County> counties = new ArrayList<County>();
-        SQLiteDatabase db = this.getReadableDatabase();
         StringBuffer query = new StringBuffer("select * from lan order by " + LAN_NAME);
         String queryString = query.toString();
         Cursor cursor = db.rawQuery(queryString, null);
@@ -411,5 +298,47 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return counties;
     }
 
+
+    private InitStatus initStatus = new InitStatus("Oinitierad", 0);
+    private boolean initialized = false;
+    private Observer initObserver;
+
+    public InitStatus getInitStatus() {
+        return initStatus;
+    }
+
+    public boolean isInitialized() {
+        return initialized;
+    }
+
+    public class InitStatus {
+
+        private String step;
+        private int progress;
+
+
+        public InitStatus(String step, int progress) {
+            this.step = step;
+            this.progress = progress;
+        }
+
+        public String getStep() {
+            return step;
+        }
+
+        public int getProgress() {
+            return progress;
+        }
+    }
+
+    public void notifyObserver() {
+        if (initObserver != null) {
+            initObserver.update(null, null);
+        }
+    }
+
+    public void setInitObserver(Observer initObserver) {
+        this.initObserver = initObserver;
+    }
 
 }

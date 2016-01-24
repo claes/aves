@@ -27,7 +27,7 @@ public class CountyListDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         DatabaseHandler databaseHandler = ((BirdApp) getActivity().getApplication())
-                .getDbHandler();
+                .getDbHandler(getActivity());
         List<County> counties = databaseHandler.getCounties();
 
         Map<String, String> countyMap = new LinkedHashMap<String, String>();

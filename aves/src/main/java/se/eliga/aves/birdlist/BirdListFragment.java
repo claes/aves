@@ -243,7 +243,7 @@ public class BirdListFragment extends ListFragment {
 
     public BirdListAdapter createAdapter() {
         DatabaseHandler databaseHandler = ((BirdApp) getActivity().getApplication())
-                .getDbHandler();
+                .getDbHandler(getActivity());
         return new BirdListAdapter(getActivity(), databaseHandler);
     }
 

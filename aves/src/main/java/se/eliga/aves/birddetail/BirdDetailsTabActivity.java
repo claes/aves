@@ -173,7 +173,7 @@ public class BirdDetailsTabActivity extends FragmentActivity {
 
 	public BirdListSpinnerAdapter createAdapter() {
 		DatabaseHandler databaseHandler = ((BirdApp) getApplication())
-				.getDbHandler();
+				.getDbHandler(this);
 		return new BirdListSpinnerAdapter(this, databaseHandler);
 	}
 
@@ -203,7 +203,7 @@ public class BirdDetailsTabActivity extends FragmentActivity {
 	}
 
 	protected String getIUCNRangeMapUrl(Bird bird) {
-		DatabaseHandler dbHandler = ((BirdApp) getApplicationContext()).getDbHandler();
+		DatabaseHandler dbHandler = ((BirdApp) getApplicationContext()).getDbHandler(this);
 		String sisRecId = dbHandler.getSisRecId(bird.getLatinSpecies());
 		return "http://maps.iucnredlist.org/map.html?id="+ sisRecId;
 	}

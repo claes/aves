@@ -87,7 +87,7 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
         inflater.inflate(R.menu.facts_menu, menu);
 
         DatabaseHandler databaseHandler = ((BirdApp) getActivity().getApplication())
-                .getDbHandler();
+                .getDbHandler(getActivity());
         List<County> counties = databaseHandler.getCounties();
 
 
@@ -194,7 +194,7 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
             return;
         }
         DatabaseHandler databaseHandler = ((BirdApp) getActivity().getApplication())
-                .getDbHandler();
+                .getDbHandler(getActivity());
 
         List<LocationStats> stats = databaseHandler.getLocationStats(bird.getDyntaxaTaxonId(), countyId);
 
@@ -324,7 +324,7 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
         YAxis rightAxis = chart.getAxisRight();
         rightAxis.setEnabled(false);
 
-        DatabaseHandler databaseHandler = ((BirdApp) getActivity().getApplication()).getDbHandler();
+        DatabaseHandler databaseHandler = ((BirdApp) getActivity().getApplication()).getDbHandler(getActivity());
         List<ObsStats> stats = databaseHandler.getObsStats(bird.getDyntaxaTaxonId(), countyId);
         return getObservationBarData(stats);
     }

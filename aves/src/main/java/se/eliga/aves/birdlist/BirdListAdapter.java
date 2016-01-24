@@ -268,6 +268,7 @@ public class BirdListAdapter extends BaseAdapter implements SectionIndexer {
 
 	public void refresh() {
 
+
 		Set<Bird.SofStatus> validStatusSet = new HashSet<Bird.SofStatus>();
 		if (showBreeding) validStatusSet.add(Bird.SofStatus.BREEDING);
 		if (showBreedingUnclear) validStatusSet.add(Bird.SofStatus.BREEDING_UNCLEAR);

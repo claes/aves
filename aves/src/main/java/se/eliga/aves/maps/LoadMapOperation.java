@@ -37,7 +37,7 @@ public class LoadMapOperation extends
     protected String[] doInBackground(String... params) {
         try {
             String swedishTaxonKey = GBIFLoader.getSwedishTaxonKey(params[0]);
-            DatabaseHandler dbHandler = ((BirdApp) view.getContext().getApplicationContext()).getDbHandler();
+            DatabaseHandler dbHandler = ((BirdApp) view.getContext().getApplicationContext()).getDbHandler(view.getContext());
             String birdLifeSpcRecId = dbHandler.getSpcRecId(bird.getLatinSpecies());
             return new String[] {swedishTaxonKey, birdLifeSpcRecId};
         } catch (Exception e) {

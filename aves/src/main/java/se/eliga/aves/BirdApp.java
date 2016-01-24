@@ -5,11 +5,13 @@
 package se.eliga.aves;
 
 import android.app.Application;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -21,14 +23,18 @@ import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
 
+import se.eliga.aves.model.Bird;
 import se.eliga.aves.model.DatabaseHandler;
 
 /**
  * Created by Claes on 2013-07-19.
  */
 @ReportsCrashes(
-        mailTo = "claespost-birdapp@yahoo.se", // my email here
+        mailTo = "fagelappen@gmail.com",
         mode = ReportingInteractionMode.TOAST,
         resToastText = R.string.crash_toast_text
 )
@@ -46,8 +52,10 @@ public class BirdApp extends Application {
         if (BuildConfig.REPORT_CRASHES) {
             ACRA.init(this);
         }
+        dbHandler = new DatabaseHandler();
         enableHttpResponseCache();
         enableLocationAwareness();
+
     }
 
     private void enableLocationAwareness() {
@@ -96,16 +104,78 @@ public class BirdApp extends Application {
             Log.e(TAG, "Exception while instantiating HttpResponseCache", e);
         }
 
-        dbHandler = new DatabaseHandler(this);
     }
 
-	public DatabaseHandler getDbHandler() {
-		return dbHandler;
-	}
+	public DatabaseHandler getDbHandler(Context context) {
+        return dbHandler;
+    }
 
     public Location getLocation() {
         return location;
     }
-    
+
+    /*
+    public void initializeDatabase(MainActivity context) {
+        try {
+            dbHandler = new DatabaseHandler();
+            DbProgressTask dbProgressTask = new DbProgressTask(context);
+            dbProgressTask.execute(context);
+            dbProgressTask.get();
+        } catch (Exception e) {
+            Log.e(TAG, "Exception while creating database handler", e);
+        }
+	}
+
+    class DbProgressTask extends AsyncTask<Context, Void, Void> implements Observer {
+
+
+        private MainActivity context;
+
+        DbProgressTask(MainActivity context) {
+            this.context = context;
+        }
+        @Override
+        public void update(Observable observable, Object o) {
+            publishProgress();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            //show your dialog here
+            context.progressDialog = new ProgressDialog(getApplicationContext());
+            context.progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            context.progressDialog.setIndeterminate(false);
+            context.progressDialog.setProgress(0);
+            context.progressDialog.setMax(100);
+            context.progressDialog.show(this.context, "Initierar data. Var god vänta.", "");
+        }
+
+        @Override
+        protected Void doInBackground(Context... params) {
+            //update your DB - it will run in a different thread
+            dbHandler.setInitObserver(this);
+            try {
+                dbHandler.downloadAndInitializeDatabase(params[0]);
+            } catch (IOException e) {
+                Log.e(TAG, "Exception while downloading / initializing database", e);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            context.progressDialog.setMessage(dbHandler.getInitStatus().getStep());
+            context.progressDialog.setProgress(dbHandler.getInitStatus().getProgress());
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            //hide your dialog here
+            context.progressDialog.dismiss();
+        }
+
+
+    }
+*/
 
 }
