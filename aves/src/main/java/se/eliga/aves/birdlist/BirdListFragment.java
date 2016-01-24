@@ -70,15 +70,21 @@ public class BirdListFragment extends ListFragment {
         super.onActivityCreated(savedInstanceState);
         ListView listView = getListView();
         listView.setFastScrollEnabled(true);
+        setHasOptionsMenu(true);
 
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         BirdListAdapter birdListAdapter = createAdapter();
         birdListAdapter.initialize(getActivity().getSharedPreferences(Constants.BIRD_APP_SETTINGS, Context.MODE_PRIVATE));
         birdListAdapter.refresh();
         birdListAdapter.notifyDataSetChanged();
         setListAdapter(birdListAdapter);
-        setHasOptionsMenu(true);
-    }
 
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

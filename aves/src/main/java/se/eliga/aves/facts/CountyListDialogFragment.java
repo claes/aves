@@ -32,7 +32,7 @@ public class CountyListDialogFragment extends DialogFragment {
 
         Map<String, String> countyMap = new LinkedHashMap<String, String>();
         for (County county : counties) {
-            countyMap.put(county.getId(), county.getName());
+            countyMap.put(county.getId(), county.getName() + " län");
         }
 
         final String[] countyIds = countyMap.keySet().toArray(new String[]{});

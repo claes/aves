@@ -7,6 +7,8 @@ package se.eliga.aves;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -80,7 +82,14 @@ public class MainActivity extends FragmentActivity {
         };
         drawerLayout.setDrawerListener(drawerToggle);
 
+        checkProceed(this);
 
+        progressDialog = ProgressDialog.show(this, "Initierar data. Var god vänta.",
+                "", true);
+
+        DatabaseHandler dbHandler = ((BirdApp) getApplication()).getDbHandler(this);
+        DbProgressTask dbProgressTask = new DbProgressTask(dbHandler);
+        dbProgressTask.execute();
     }
 
     /* Called whenever we call invalidateOptionsMenu() */
@@ -149,12 +158,6 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        progressDialog = ProgressDialog.show(this, "Initierar data. Var god vänta.",
-                "", true);
-
-        DatabaseHandler dbHandler = ((BirdApp) getApplication()).getDbHandler(this);
-        DbProgressTask dbProgressTask = new DbProgressTask(dbHandler);
-        dbProgressTask.execute();
     }
 
 
@@ -189,8 +192,6 @@ public class MainActivity extends FragmentActivity {
 
         @Override
         protected Void doInBackground(Void ... params) {
-
-            //update your DB - it will run in a different thread
             dbHandler.setInitObserver(this);
             try {
                 dbHandler.downloadAndInitializeDatabase(MainActivity.this);
@@ -218,6 +219,17 @@ public class MainActivity extends FragmentActivity {
             progressDialog.dismiss();
             selectItem(0); //Start BirdListFragment
         }
+    }
+
+    private boolean checkProceed(Context context) {
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        boolean isWiFi = activeNetwork.getType() == ConnectivityManager.TYPE_WIFI;
+        return isConnected && isWiFi;
     }
 
  }
