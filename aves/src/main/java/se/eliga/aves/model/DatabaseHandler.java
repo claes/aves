@@ -76,7 +76,13 @@ public class DatabaseHandler  {
 
     private SQLiteDatabase db;
 
-    public DatabaseHandler() {
+    public boolean checkAndOpenDatabaseIfExists(Context context) {
+        File databaseFile = context.getDatabasePath(DATABASE_FILE);
+        boolean exists = databaseFile.exists();
+        if (exists) {
+            db = context.openOrCreateDatabase(databaseFile.getAbsolutePath(), Context.MODE_PRIVATE, null);
+        }
+        return exists;
     }
 
     public void downloadAndInitializeDatabase(Context context) throws IOException {
@@ -97,8 +103,11 @@ public class DatabaseHandler  {
                 out = new FileOutputStream(databaseFile);
                 byte[] buffer = new byte[1024];
                 int read = 0;
+                int i = 0;
                 while ((read = in.read(buffer)) != -1) {
                     out.write(buffer, 0, read);
+                    initStatus = new InitStatus( (i++) + " kilobyte nedladdat", 20);
+                    notifyObserver();
                 }
                 in.close();
                 out.close();

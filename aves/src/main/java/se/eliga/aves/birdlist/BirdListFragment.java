@@ -71,8 +71,6 @@ public class BirdListFragment extends ListFragment {
         ListView listView = getListView();
         listView.setFastScrollEnabled(true);
         setHasOptionsMenu(true);
-
-
     }
 
     @Override
@@ -83,7 +81,6 @@ public class BirdListFragment extends ListFragment {
         birdListAdapter.refresh();
         birdListAdapter.notifyDataSetChanged();
         setListAdapter(birdListAdapter);
-
     }
 
     @Override

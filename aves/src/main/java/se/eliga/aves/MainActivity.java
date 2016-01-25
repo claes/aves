@@ -4,7 +4,7 @@
 
 package se.eliga.aves;
 
-import android.app.ProgressDialog;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
@@ -12,17 +12,23 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.util.Observable;
@@ -38,7 +44,7 @@ public class MainActivity extends FragmentActivity {
     private DrawerLayout drawerLayout;
     private ListView drawerList;
     private ActionBarDrawerToggle drawerToggle;
-    static ProgressDialog progressDialog;
+    static DownloadDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,14 +88,11 @@ public class MainActivity extends FragmentActivity {
         };
         drawerLayout.setDrawerListener(drawerToggle);
 
-        checkProceed(this);
-
-        progressDialog = ProgressDialog.show(this, "Initierar data. Var god vänta.",
-                "", true);
-
-        DatabaseHandler dbHandler = ((BirdApp) getApplication()).getDbHandler(this);
-        DbProgressTask dbProgressTask = new DbProgressTask(dbHandler);
-        dbProgressTask.execute();
+        if (! ((BirdApp) getApplication()).getDbHandler(this).checkAndOpenDatabaseIfExists(this)) {
+            progressDialog = createAndShowDownloadDialog();
+        } else {
+            selectItem(0); //Start BirdListFragment
+        }
     }
 
     /* Called whenever we call invalidateOptionsMenu() */
@@ -154,13 +157,6 @@ public class MainActivity extends FragmentActivity {
         drawerLayout.closeDrawer(drawerList);
     }
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -176,25 +172,26 @@ public class MainActivity extends FragmentActivity {
     }
 
 
-    class DbProgressTask extends AsyncTask<Void, Void, Void> implements Observer {
-
+    public static class DbProgressTask extends AsyncTask<Void, Void, Void> implements Observer {
 
         private DatabaseHandler dbHandler;
+        private MainActivity activity;
 
-        DbProgressTask(DatabaseHandler dbHandler) {
+        public DbProgressTask(DatabaseHandler dbHandler, MainActivity activity) {
             this.dbHandler = dbHandler;
+            this.activity = activity;
         }
+
         @Override
         public void update(Observable observable, Object o) {
             publishProgress();
         }
 
-
         @Override
         protected Void doInBackground(Void ... params) {
             dbHandler.setInitObserver(this);
             try {
-                dbHandler.downloadAndInitializeDatabase(MainActivity.this);
+                dbHandler.downloadAndInitializeDatabase(activity);
             } catch (IOException e) {
                 Log.e(TAG, "Exception while downloading / initializing database", e);
             }
@@ -204,32 +201,88 @@ public class MainActivity extends FragmentActivity {
         @Override
         protected void onProgressUpdate(Void... values) {
             progressDialog.setMessage(dbHandler.getInitStatus().getStep());
-            progressDialog.setProgress(dbHandler.getInitStatus().getProgress());
-        }
-
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             progressDialog.dismiss();
-            selectItem(0); //Start BirdListFragment
+            activity.selectItem(0); //Start BirdListFragment
         }
     }
 
-    private boolean checkProceed(Context context) {
-        ConnectivityManager cm =
-                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null &&
-                activeNetwork.isConnectedOrConnecting();
-        boolean isWiFi = activeNetwork.getType() == ConnectivityManager.TYPE_WIFI;
-        return isConnected && isWiFi;
+    private DownloadDialog createAndShowDownloadDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        DownloadDialog downloadDialog = new DownloadDialog();
+        downloadDialog.show(fm, "downloadDialog");
+        return downloadDialog;
+    }
+
+    public static class DownloadDialog extends DialogFragment {
+
+        private TextView downloadStatus;
+        private TextView downloadNoWifiStatus;
+        private Button continueButton;
+        private Button cancelButton;
+        private MainActivity activity;
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+
+
+            ConnectivityManager cm =
+                    (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            boolean isConnected = activeNetwork != null &&
+                    activeNetwork.isConnectedOrConnecting();
+            boolean isWiFi = activeNetwork.getType() == ConnectivityManager.TYPE_WIFI;
+
+            View view = inflater.inflate(R.layout.download_dialog, container);
+            downloadStatus = (TextView) view.findViewById(R.id.downloadStatus);
+            downloadNoWifiStatus = (TextView) view.findViewById(R.id.downloadNoWifiStatus);
+
+            continueButton = (Button) view.findViewById(R.id.downloadContinue);
+            cancelButton = (Button) view.findViewById(R.id.downloadCancel);
+
+            if (!isConnected) {
+                continueButton.setVisibility(View.GONE);
+            }
+            if (isWiFi) {
+                downloadNoWifiStatus.setVisibility(View.GONE);
+            }
+
+            continueButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    DatabaseHandler dbHandler = ((BirdApp) getActivity().getApplication()).getDbHandler(getActivity());
+                    DbProgressTask dbProgressTask = new DbProgressTask(dbHandler, activity);
+                    dbProgressTask.execute();
+                }
+            });
+
+            cancelButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    activity.moveTaskToBack(true);
+                    android.os.Process.killProcess(android.os.Process.myPid());
+                    System.exit(1);
+                }
+            });
+
+            return view;
+        }
+
+        public void onAttach(Activity activity) {
+            super.onAttach(activity);
+            this.activity = (MainActivity) activity;
+        }
+        public void setMessage(String message) {
+            downloadStatus.setText(message);
+        }
+
     }
 
  }
