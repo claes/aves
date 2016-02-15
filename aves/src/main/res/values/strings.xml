@@ -88,4 +88,10 @@
     <string name="tab_wikipedia">Wikipedia</string>
     <string name="county_list">Län</string>
 
+    <string name="downloadDatabaseDescription">Fågeldatabasen behöver laddas ned. Den är cirka 20 megabyte stor.</string>
+    <string name="downloadNoWifiDescription">Du är inte uppkopplad med wifi. Nedladdningen kan kosta pengar.</string>
+    <string name="downloadNoNetworkDescription">Du har ingen nätverksförbindelse för närvarande.</string>
+    <string name="downloadCancel">Avbryt</string>
+    <string name="downloadContinue">Fortsätt</string>
+
 </resources>

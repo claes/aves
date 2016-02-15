@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_horizontal_margin">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Fågeldatabasen laddas ned. Den är ca 20 MB stor."
+        android:text="@string/downloadDatabaseDescription"
         android:id="@+id/downloadDescription" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Du är inte uppkopplad med WiFi, nedladdningen kan kosta pengar"
+        android:text="@string/downloadNoWifiDescription"
         android:id="@+id/downloadNoWifiStatus" />
 
     <TextView
@@ -26,18 +27,19 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Avbryt"
+            android:text="@string/downloadCancel"
             android:id="@+id/downloadCancel" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fortsätt"
+            android:text="@string/downloadContinue"
             android:id="@+id/downloadContinue" />
 
     </LinearLayout>

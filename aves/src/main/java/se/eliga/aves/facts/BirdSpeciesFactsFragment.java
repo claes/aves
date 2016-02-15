@@ -70,7 +70,8 @@ public class BirdSpeciesFactsFragment extends AbstractBirdSpeciesFragment {
         setHasOptionsMenu(true);
 
         if (getSavedCountyId() == null) {
-            DialogFragment dialog = new CountyListDialogFragment();
+            CountyListDialogFragment dialog = new CountyListDialogFragment();
+            dialog.setParentFragment(this);
             dialog.show(getFragmentManager(), "CountyListFragment");
         }
 

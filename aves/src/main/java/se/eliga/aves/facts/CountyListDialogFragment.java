@@ -15,6 +15,7 @@ import java.util.Map;
 import se.eliga.aves.BirdApp;
 import se.eliga.aves.Constants;
 import se.eliga.aves.R;
+import se.eliga.aves.birddetail.AbstractBirdSpeciesFragment;
 import se.eliga.aves.model.County;
 import se.eliga.aves.model.DatabaseHandler;
 
@@ -22,6 +23,13 @@ import se.eliga.aves.model.DatabaseHandler;
  * Created by vagrant on 1/10/16.
  */
 public class CountyListDialogFragment extends DialogFragment {
+
+
+    private AbstractBirdSpeciesFragment parentFragment;
+
+    public void setParentFragment(AbstractBirdSpeciesFragment fragment) {
+        this.parentFragment = fragment;
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -47,6 +55,7 @@ public class CountyListDialogFragment extends DialogFragment {
                         editor.putString(Constants.SELECTED_COUNTY_ID, countyIds[which]);
                         editor.putString(Constants.SELECTED_COUNTY_NAME, countyNames[which]);
                         editor.commit();
+                        parentFragment.loadBird(parentFragment.getCurrentBird());
                     }
                 });
         return builder.create();

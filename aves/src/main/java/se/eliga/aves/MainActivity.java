@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -231,14 +232,16 @@ public class MainActivity extends FragmentActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
 
+            getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 
             ConnectivityManager cm =
                     (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
 
             NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-            boolean isConnected = activeNetwork != null &&
-                    activeNetwork.isConnectedOrConnecting();
-            boolean isWiFi = activeNetwork.getType() == ConnectivityManager.TYPE_WIFI;
+
+            boolean isConnected = (activeNetwork != null) &&
+                    (activeNetwork.isConnectedOrConnecting());
+            boolean isWiFi = (activeNetwork != null) && (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI);
 
             View view = inflater.inflate(R.layout.download_dialog, container);
             downloadStatus = (TextView) view.findViewById(R.id.downloadStatus);
@@ -249,8 +252,9 @@ public class MainActivity extends FragmentActivity {
 
             if (!isConnected) {
                 continueButton.setVisibility(View.GONE);
-            }
-            if (isWiFi) {
+                downloadNoWifiStatus.setVisibility(View.GONE);
+                downloadStatus.setText(R.string.downloadNoNetworkDescription);
+            } else if (isWiFi) {
                 downloadNoWifiStatus.setVisibility(View.GONE);
             }
 
